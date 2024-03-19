@@ -14,27 +14,25 @@
             font-family: 'Arial Narrow', Helvetica, Arial;
             background-color: #000000;
         }
-
-        .column {
-            float: left;
-            width: 25%;
-            padding: 3px;
+        
+        .column .img-container {
+            position: relative;
+            display: inline-block;
         }
-
-
-/* Specifically target only the main images, not the overlay */
-.img-container > img:first-child {
-    width: 100%;
-    display: inline-block;
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 64px; /* Set this to your desired fixed width */
-    height: 32px; /* Maintain aspect ratio */
-}
+        
+        /* Target only the main images for width: 100% */
+        .column .img-container > img:not(.overlay) {
+            width: 100%;
+            display: block; /* This removes the bottom gap */
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 64px; /* Set this to your desired fixed width */
+            height: 32px; /* Maintain aspect ratio */
+        }
 
 
         /* Clear floats after the columns */

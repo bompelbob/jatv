@@ -43,6 +43,27 @@ a {
 a:hover {
   color: #7997ad;
 }
+
+
+.column .img-container {
+  position: relative;
+  display: inline-block; /* Makes the container wrap around the image size */
+}
+
+.column .img-container img {
+  width: 100%;
+  display: block; /* Removes bottom space/gap */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* Adjust size of the overlay PNG as needed */
+  width: 32px; /* Example size, adjust based on your needs */
+  height: auto; /* Maintain aspect ratio */
+}
+	    
     </style>
 </head>
 <body>
@@ -60,6 +81,30 @@ a:hover {
 </div>
 
 <script>
+
+function createImageElementWithOverlay(src, overlaySrc) {
+    var container = document.createElement('div');
+    container.className = 'img-container';
+
+    var img = document.createElement('img');
+    img.src = src;
+
+    var overlay = document.createElement('img');
+    overlay.src = overlaySrc;
+    overlay.className = 'overlay';
+
+    container.appendChild(img);
+    container.appendChild(overlay);
+
+    return container;
+}
+
+selectedImages.forEach(function(path, index) {
+    // Assuming 'overlay.png' is your overlay image stored in the 'images/' directory
+    var imgContainer = createImageElementWithOverlay(path, 'jatv.png');
+    columns[index % 4].appendChild(imgContainer); // Distribute image containers across columns
+});	
+	
 document.addEventListener('DOMContentLoaded', function() {
     var imagePaths = [];
     for (var i = 1; i <= 219; i++) {

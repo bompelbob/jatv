@@ -59,7 +59,8 @@ a:hover {
 document.addEventListener('DOMContentLoaded', function() {
     var imagePaths = [];
     for (var i = 1; i <= 200; i++) {
-        imagePaths.push('images/' + ('000000' + i).slice(-6) + '.jpeg');
+        var filename = ('000000' + i).slice(-6) + '.jpeg';
+        imagePaths.push('images/' + filename);
     }
 
     function shuffleArray(array) {
@@ -77,13 +78,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     shuffleArray(imagePaths);
+    var selectedImages = imagePaths.slice(0, 16); // Select only the first 16 images
 
     var columns = ['', '', '', ''].map(function() { return document.createElement('div'); });
     columns.forEach(function(column) { column.className = 'column'; });
 
-    imagePaths.forEach(function(path, index) {
+    selectedImages.forEach(function(path, index) {
         var img = createImageElement(path);
-        columns[index % 4].appendChild(img);
+        columns[index % 4].appendChild(img); // Distribute images across columns
     });
 
     var photoGrid = document.getElementById('photoGrid');

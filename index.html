@@ -119,12 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function createImageElement(src) {
-        var img = document.createElement('img');
-        img.src = src;
-        img.style.width = '100%';
-        return img;
-    }
+
 
     shuffleArray(imagePaths);
     var selectedImages = imagePaths.slice(0, 16); // Select only the first 16 images

@@ -24,7 +24,8 @@
         
         .column .img-container {
             position: relative;
-            display: inline-block;
+            display: block; /* Changed from inline-block to block */
+            width: 100%; /* Ensure it takes the full width of its parent */
         }
         
         /* Target only the main images for width: 100% */
@@ -36,8 +37,8 @@
         
         .overlay {
             position: absolute;
-            top: 20;
-            right: 20;
+            top: 20px;
+            right: 20px;
             width: 64px; /* Set this to your desired fixed width */
             height: 32px; /* Maintain aspect ratio */
             opacity: .3;

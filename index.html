@@ -21,25 +21,23 @@
             padding: 3px;
         }
 
-        .img-container {
-            position: relative;
-            display: inline-block; /* Makes the container wrap around the image size */
-        }
+.img-container img {
+    display: block; /* Removes bottom space/gap */
+}
 
-        .img-container img {
-            width: 100%;
-            display: block; /* Removes bottom space/gap */
-        }
+/* Specifically target only the main images, not the overlay */
+.img-container > img:first-child {
+    width: 100%;
+}
 
-        .overlay {
-            position: absolute;
-            top: 0;
-            right: 0;
-            /* Adjust size of the overlay PNG as needed */
-            width: 64px; /* Example size, adjust based on your needs */
-            height: 32px; /* Maintain aspect ratio */
-            opacity: .3;
-        }
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 64px; /* Set this to your desired fixed width */
+    height: auto; /* Maintain aspect ratio */
+}
+
 
         /* Clear floats after the columns */
         .row:after {

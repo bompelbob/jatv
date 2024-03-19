@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
     columns.forEach(function(column) { column.className = 'column'; });
 
     selectedImages.forEach(function(path, index) {
-        var imgContainer = createImageElementWithOverlay(path, 'overlay.png');
+        var imgContainer = createImageElementWithOverlay(path, 'jatv.png');
         columns[index % 4].appendChild(imgContainer); // Distribute image containers across columns
     });
 

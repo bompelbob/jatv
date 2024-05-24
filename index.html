@@ -108,9 +108,9 @@ document.addEventListener('DOMContentLoaded', function() {
     shuffleArray(imagePaths);
     var selectedImages = imagePaths.slice(0, 15); // Select only the first 15 images
 
-    // Insert logo.png at a random position in the array
+    // Insert logo at a random position in the array
     var logoIndex = Math.floor(Math.random() * 16);
-    selectedImages.splice(logoIndex, 0, '../logo.jpg'); // Insert 'logo.png' into the array
+    selectedImages.splice(logoIndex, 0, '../logo.jpg'); // Insert logo into the array
 
     var columns = ['', '', '', ''].map(function() { return document.createElement('div'); });
     columns.forEach(function(column) { column.className = 'column'; });

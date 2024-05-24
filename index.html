@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="robots" content="noindex,nofollow">
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
     <title>jaTELEVISION</title>
     <style>
         * {
@@ -109,14 +110,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Insert logo.png at a random position in the array
     var logoIndex = Math.floor(Math.random() * 16);
-    selectedImages.splice(logoIndex, 0, 'logo.png'); // Insert 'logo.png' into the array
+    selectedImages.splice(logoIndex, 0, '../logo.png'); // Insert 'logo.png' into the array
 
     var columns = ['', '', '', ''].map(function() { return document.createElement('div'); });
     columns.forEach(function(column) { column.className = 'column'; });
 
     selectedImages.forEach(function(path, index) {
         var imgContainer;
-        if (path === 'logo.jpg') {
+        if (path === '../logo.jpg') {
             imgContainer = createImageElementWithOverlay(path, 'overlay.png'); // Adjust if logo also needs overlay
         } else {
             imgContainer = createImageElementWithOverlay(path, 'jatv.png');

@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Insert logo.png at a random position in the array
     var logoIndex = Math.floor(Math.random() * 16);
-    selectedImages.splice(logoIndex, 0, '../logo.png'); // Insert 'logo.png' into the array
+    selectedImages.splice(logoIndex, 0, '../logo.jpg'); // Insert 'logo.png' into the array
 
     var columns = ['', '', '', ''].map(function() { return document.createElement('div'); });
     columns.forEach(function(column) { column.className = 'column'; });

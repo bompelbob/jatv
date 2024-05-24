@@ -118,11 +118,12 @@ document.addEventListener('DOMContentLoaded', function() {
     selectedImages.forEach(function(path, index) {
         var imgContainer;
         if (path === '../logo.jpg') {
-            // imgContainer = createImageElementWithOverlay(path, 'overlay.png'); Adjust if logo also needs overlay
+            // imgContainer = createImageElementWithOverlay(path, 'overlay.png'); //Adjust if logo also needs overlay
         } else {
             imgContainer = createImageElementWithOverlay(path, 'jatv.png');
+            columns[index % 4].appendChild(imgContainer); // Distribute image containers across columns
         }
-        columns[index % 4].appendChild(imgContainer); // Distribute image containers across columns
+        
     });
 
     var photoGrid = document.getElementById('photoGrid');

@@ -105,13 +105,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     shuffleArray(imagePaths);
-    var selectedImages = imagePaths.slice(0, 16); // Select only the first 16 images
+    var selectedImages = imagePaths.slice(0, 15); // Select only the first 15 images
+
+    // Insert logo.png at a random position in the array
+    var logoIndex = Math.floor(Math.random() * 16);
+    selectedImages.splice(logoIndex, 0, 'logo.png'); // Insert 'logo.png' into the array
 
     var columns = ['', '', '', ''].map(function() { return document.createElement('div'); });
     columns.forEach(function(column) { column.className = 'column'; });
 
     selectedImages.forEach(function(path, index) {
-        var imgContainer = createImageElementWithOverlay(path, 'jatv.png');
+        var imgContainer;
+        if (path === 'logo.png') {
+            imgContainer = createImageElementWithOverlay(path, 'overlay.png'); // Adjust if logo also needs overlay
+        } else {
+            imgContainer = createImageElementWithOverlay(path, 'jatv.png');
+        }
         columns[index % 4].appendChild(imgContainer); // Distribute image containers across columns
     });
 

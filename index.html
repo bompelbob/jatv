@@ -232,6 +232,31 @@
       line-height: 1.45;
     }
 
+    .rating-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .rating-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .rating-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      opacity: 0.9;
+      fill: currentColor;
+    }
+
     dialog {
       width: min(420px, calc(100vw - 32px));
       border: 1px solid var(--border);
@@ -533,7 +558,10 @@
       "Indexeintrag",
       "Bandkopie",
       "Restmaterial",
-      "Überwachter Fund"
+      "Überwachter Fund",
+      "Beunruhigende Fragmente",
+      "Aufklärungsvideo",
+      "Orientierungsfilm"
     ];
 
     const titleSuffixes = [
@@ -548,7 +576,14 @@
       "ohne Zeitstempel",
       "Sperrvermerk",
       "Vorläufig klassifiziert",
-      "schwer lesbar"
+      "schwer lesbar",
+      "kopiergeschützt",
+      "VHS-Transfer auf Digibeta",
+      "inhaltlich unbestätigt",
+      "Farbverschiebungen",
+      "Rundfunkqualität",
+      "ausstrahlungssicher",
+      "nicht qualitätsgesichert"
     ];
 
     const searchMessages = [
@@ -564,7 +599,7 @@
       "Diese Seite ist derzeit nicht verfügbar. Die zugehörigen Inhalte wurden noch nicht für den öffentlichen Zugriff bereitgestellt.",
       "Die angeforderte Serviceseite konnte nicht geladen werden, weil der Eintrag im Navigationsindex fehlt.",
       "Dieser Bereich wird momentan überarbeitet. Bitte versuchen Sie es später erneut.",
-      "Die Anfrage konnte keinem aktiven jaTV Informationsbereich zugeordnet werden."
+      "Die Anfrage konnte keinem aktiven jaTV-Informationsbereich zugeordnet werden."
     ];
 
     const videoGrid = document.getElementById("videoGrid");
@@ -609,8 +644,12 @@
       return copy;
     }
 
+    function formatNumber(number) {
+      return new Intl.NumberFormat("de-DE").format(number);
+    }
+
     function formatViews(number) {
-      return new Intl.NumberFormat("de-DE").format(number) + " Aufrufe";
+      return formatNumber(number) + " Aufrufe";
     }
 
     function createArchiveNumber() {
@@ -628,6 +667,23 @@
 
     function createTitle() {
       return `${randomItem(titlePrefixes)} ${createArchiveNumber()}: ${randomItem(titleSuffixes)}`;
+    }
+
+    function createEngagement(viewCount) {
+      const maxTotalReactions = Math.max(12, Math.floor(viewCount * randomInteger(3, 18) / 100));
+      let likes = Math.max(1, Math.round(maxTotalReactions / 12));
+      let dislikes = likes * randomInteger(10, 12);
+
+      if (likes + dislikes >= viewCount) {
+        const safeTotal = Math.max(2, viewCount - 1);
+        likes = Math.max(1, Math.floor(safeTotal / 12));
+        dislikes = Math.max(1, safeTotal - likes);
+      }
+
+      return {
+        likes,
+        dislikes
+      };
     }
 
     function createImagePool() {
@@ -651,6 +707,8 @@
       selectedImages.forEach((imageNumber) => {
         const paddedNumber = padImageNumber(imageNumber);
         const imagePath = `${IMAGE_FOLDER}${paddedNumber}${IMAGE_EXTENSION}`;
+        const viewCount = randomInteger(257, 98000);
+        const engagement = createEngagement(viewCount);
         const card = document.createElement("article");
         card.className = "video-card";
         card.tabIndex = 0;
@@ -664,10 +722,26 @@
             <span class="duration">${createDuration()}</span>
           </div>
           <div class="video-info">
-            <div class="avatar">ja</div>
+            <div class="avatar"><img style="width: 32px;" src="logo.png" alt="jaTV Logo" /></div>
             <div>
               <h3 class="video-title">${createTitle()}</h3>
-              <div class="meta">jaTV Archiv<br>${formatViews(randomInteger(257, 98000))} · vor ${randomInteger(2, 19)} Jahren archiviert</div>
+              <div class="meta">
+                ${formatViews(viewCount)} · vor ${randomInteger(2, 19)} Jahren archiviert
+                <div class="rating-meta" aria-label="Bewertungen">
+                  <span class="rating-item">
+                    <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
+                    </svg>
+                    ${formatNumber(engagement.likes)}
+                  </span>
+                  <span class="rating-item">
+                    <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
+                    </svg>
+                    ${formatNumber(engagement.dislikes)}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         `;

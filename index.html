@@ -1,142 +1,724 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8" />
     <meta name="robots" content="noindex,nofollow">
     <link rel="icon" type="image/x-icon" href="/favicon.png">
-    <title>jaTELEVISION</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <title>Just Another Tape Vault</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #181818;
+      --surface-light: #242424;
+      --text: #f1f1f1;
+      --muted: #aaa;
+      --accent: #ff0033;
+      --accent-dark: #b80025;
+      --border: #303030;
+      --input: #121212;
+    }
 
-        body {
-            margin: 0;
-            font-family: 'Arial Narrow', Helvetica, Arial;
-            background-color: #000000;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .column {
-            position: relative;
-            float: left;
-            width: 25%;
-            padding: 3px;
-        }
-        
-        .column .img-container {
-            position: relative;
-            display: block; /* Changed from inline-block to block */
-            width: 100%; /* Ensure it takes the full width of its parent */
-        }
-        
-        /* Target only the main images for width: 100% */
-        .column .img-container > img:not(.overlay) {
-            width: 100%;
-            display: block; /* This removes the bottom gap */
-            margin-bottom: 6px;
-        }
-        
-        .overlay {
-            position: absolute;
-            top: 3%;
-            right: 3%;
-            width: 10%; /* Set this to your desired fixed width */
-            height: auto; /* Maintain aspect ratio */
-            opacity: .3;
-        }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
 
+    header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 15, 15, 0.96);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
 
-        /* Clear floats after the columns */
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
 
-        a {
-            text-decoration: none;
-            color: #dddddd;
-        }
+    .brand-logo {
+      width: 58px;
+      height: auto;
+      display: block;
+      opacity: 0.96;
+    }
 
-        a:hover {
-            color: #7997ad;
-        }
-        
-        /* Media Query for small screens */
-        @media (max-width: 600px) {
-            .column {
-                width: 50%; /* Two columns */
-            }
-        }
-    </style>
+    .brand span:last-child {
+      color: var(--text);
+    }
+
+    .searchbar {
+      flex: 1;
+      max-width: 620px;
+      margin: 0 32px;
+      display: flex;
+      height: 38px;
+    }
+
+    .searchbar input {
+      flex: 1;
+      background: var(--input);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 20px 0 0 20px;
+      padding: 0 18px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .searchbar button {
+      width: 64px;
+      border: 1px solid var(--border);
+      border-left: 0;
+      background: var(--surface-light);
+      color: var(--muted);
+      border-radius: 0 20px 20px 0;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .top-action {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 28px 24px 56px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .archive-hero {
+      margin-bottom: 28px;
+      padding: 28px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #202020, #111 60%, #210009);
+      border: 1px solid var(--border);
+    }
+
+    .archive-hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 48px);
+      letter-spacing: -0.06em;
+    }
+
+    .archive-hero p {
+      margin: 0;
+      max-width: 780px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px 20px;
+    }
+
+    .video-card {
+      cursor: pointer;
+      min-width: 0;
+    }
+
+    .thumb-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.22s ease, filter 0.22s ease;
+    }
+
+    .video-card:hover img {
+      transform: scale(1.035);
+      filter: brightness(1.08);
+    }
+
+    .duration {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      padding: 3px 6px;
+      background: rgba(0, 0, 0, 0.78);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 5px;
+    }
+
+    .lock-badge {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      padding: 3px 7px;
+      background: rgba(255, 0, 51, 0.9);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .video-info {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #555, #1d1d1d);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .video-title {
+      margin: 0 0 6px;
+      font-size: 16px;
+      line-height: 1.32;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    dialog {
+      width: min(420px, calc(100vw - 32px));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #1b1b1b;
+      color: var(--text);
+      padding: 0;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.65);
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(5px);
+    }
+
+    .dialog-inner {
+      padding: 28px;
+    }
+
+    .dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .dialog-header h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .close-button {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface-light);
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .login-note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      margin: 0 0 18px;
+    }
+
+    .login-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .login-form label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .login-form input {
+      width: 100%;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      padding: 0 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .login-form input:focus {
+      border-color: var(--accent);
+    }
+
+    .primary-button {
+      height: 44px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .primary-button:hover {
+      background: var(--accent-dark);
+    }
+
+    .error-message {
+      min-height: 22px;
+      color: #ff6b7d;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 4px 0 0;
+    }
+
+    .register-line {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .register-line a {
+      color: var(--text);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      cursor: pointer;
+    }
+
+    .site-footer {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px 34px;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 22px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 980px) {
+      .video-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .searchbar {
+        margin: 0 18px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      header {
+        height: auto;
+        padding: 14px 16px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+      }
+
+      .searchbar {
+        grid-column: 1 / -1;
+        order: 3;
+        margin: 0;
+        max-width: none;
+      }
+
+      main {
+        padding: 18px 14px 42px;
+      }
+
+      .archive-hero {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 26px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="brand" aria-label="jaTV Archiv">
+      <img class="brand-logo" src="logo.png" alt="jaTV Logo" />
+      <span style="font-size: 16px;">Just Another Tape Vault</span>
+    </div>
 
-<div class="row" id="photoGrid">
-    <!-- Columns will be filled by JavaScript -->
-</div>
+    <form class="searchbar" id="searchForm" aria-label="Archivsuche">
+      <input type="search" placeholder="Im Archiv suchen" />
+      <button type="submit" aria-label="Suchen">⌕</button>
+    </form>
 
-<div style="width: 100%; height: 64px; font-family: 'Arial Narrow', Arial, Helvetica; font-size: 16px; text-align: center; padding: 32px;">
-    <a href="impdaten.html">Impressum & Datenschutz</a>
-</div>
+    <button class="top-action" id="headerLoginButton">Anmelden</button>
+  </header>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var imagePaths = [];
-    for (var i = 1; i <= 200; i++) {
-        var filename = ('000000' + i).slice(-6) + '.jpeg';
-        imagePaths.push('images/' + filename);
+  <main>
+    <section class="archive-hero">
+      <h1>Alle</h1>
+      <p>Entdecke neue Videos, alte Aufnahmen und ausgewählte Clips aus dem jaTV-Bestand.</p>
+    </section>
+
+    <h2 class="section-title">Empfohlene Archivfunde</h2>
+    <section class="video-grid" id="videoGrid" aria-live="polite"></section>
+  </main>
+
+  <footer class="site-footer">
+    <nav class="footer-links" aria-label="Footer Navigation">
+      <a href="impdaten.html">Impressum</a>
+      <a href="#" class="broken-footer-link">Datenschutz</a>
+      <a href="#" class="broken-footer-link">Nutzungsbedingungen</a>
+      <a href="#" class="broken-footer-link">Hilfe</a>
+      <a href="#" class="broken-footer-link">Kontakt</a>
+    </nav>
+  </footer>
+
+  <dialog id="footerErrorDialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2>Seite nicht verfügbar</h2>
+        <button class="close-button" id="closeFooterErrorDialog" aria-label="Dialog schließen">×</button>
+      </div>
+      <p class="login-note" id="footerErrorText">Diese Seite konnte nicht geladen werden.</p>
+      <button class="primary-button" id="footerErrorOkButton">Verstanden</button>
+    </div>
+  </dialog>
+
+  <dialog id="searchDialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2>Suchindex nicht verfügbar</h2>
+        <button class="close-button" id="closeSearchDialog" aria-label="Dialog schließen">×</button>
+      </div>
+      <p class="login-note" id="searchDialogText">Die Abfrage konnte nicht ausgeführt werden.</p>
+      <button class="primary-button" id="searchOkButton">Verstanden</button>
+    </div>
+  </dialog>
+
+  <dialog id="loginDialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2>Zugriff auf jaTV</h2>
+        <button class="close-button" id="closeDialog" aria-label="Dialog schließen">×</button>
+      </div>
+
+      <p class="login-note">Dieses Archivmaterial ist geschützt. Bitte melden Sie sich mit Ihren Zugangsdaten an.</p>
+
+      <form class="login-form" id="loginForm">
+        <label>
+          Benutzername
+          <input type="text" autocomplete="username" required />
+        </label>
+
+        <label>
+          Passwort
+          <input type="password" autocomplete="current-password" required />
+        </label>
+
+        <button class="primary-button" type="submit">Einloggen</button>
+        <p class="error-message" id="errorMessage"></p>
+      </form>
+
+      <p class="register-line">Noch keinen Zugang? <a href="#" id="registerLink">Jetzt registrieren</a></p>
+    </div>
+  </dialog>
+
+  <dialog id="registerDialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2>Registrierung nicht möglich</h2>
+        <button class="close-button" id="closeRegisterDialog" aria-label="Dialog schließen">×</button>
+      </div>
+      <p class="login-note">Aufgrund der Vielzahl an Anmeldungen können derzeit keine neuen jaTV-Zugänge erstellt werden. Bitte versuchen Sie es zu einem unbestimmten späteren Zeitpunkt erneut.</p>
+      <button class="primary-button" id="registerOkButton">Verstanden</button>
+    </div>
+  </dialog>
+
+  <script>
+    const IMAGE_FOLDER = "images/";
+    const IMAGE_EXTENSION = ".jpeg";
+    const FIRST_IMAGE = 1;
+    const LAST_IMAGE = 251;
+    const NUMBER_OF_CARDS = 9;
+
+    const titlePrefixes = [
+      "Archivfragment",
+      "Sichtungskopie",
+      "Materialprobe",
+      "Sendeband",
+      "Rohschnitt",
+      "Interne Aufnahme",
+      "Ungeklärtes Segment",
+      "Privatmitschnitt",
+      "Indexeintrag",
+      "Bandkopie",
+      "Restmaterial",
+      "Überwachter Fund"
+    ];
+
+    const titleSuffixes = [
+      "Nordflügel",
+      "Keller 3",
+      "Sommerbestand",
+      "Fehlender Kontext",
+      "Nur Tonspur geprüft",
+      "Nicht freigegeben",
+      "Teilrekonstruktion",
+      "Version B",
+      "ohne Zeitstempel",
+      "Sperrvermerk",
+      "Vorläufig klassifiziert",
+      "schwer lesbar"
+    ];
+
+    const searchMessages = [
+      "Die Suche wurde abgebrochen, weil der öffentliche Index nicht mit dem internen Sichtungsverzeichnis synchronisiert ist.",
+      "Für diese Abfrage liegt nur ein fragmentierter Metadatensatz vor. Die Ergebnisliste wurde aus Konsistenzgründen unterdrückt.",
+      "Der Suchbegriff fällt in einen noch nicht freigegebenen Archivbereich. Bitte verwenden Sie eine präzisere oder ältere Anfragekennung.",
+      "Die Volltextsuche ist derzeit auf passive Sichtung beschränkt. Direkte Trefferlisten können vor Abschluss der Neuindizierung nicht ausgegeben werden.",
+      "Die Anfrage wurde vom temporären Zugriffsknoten angenommen, aber vom Langzeitarchiv nicht bestätigt.",
+      "Der Index antwortet mit Status 409: widersprüchliche Klassifizierung zwischen Vorschaumaterial und Archivsignatur."
+    ];
+
+    const footerErrorMessages = [
+      "Diese Seite ist derzeit nicht verfügbar. Die zugehörigen Inhalte wurden noch nicht für den öffentlichen Zugriff bereitgestellt.",
+      "Die angeforderte Serviceseite konnte nicht geladen werden, weil der Eintrag im Navigationsindex fehlt.",
+      "Dieser Bereich wird momentan überarbeitet. Bitte versuchen Sie es später erneut.",
+      "Die Anfrage konnte keinem aktiven jaTV Informationsbereich zugeordnet werden."
+    ];
+
+    const videoGrid = document.getElementById("videoGrid");
+    const footerErrorDialog = document.getElementById("footerErrorDialog");
+    const closeFooterErrorDialog = document.getElementById("closeFooterErrorDialog");
+    const footerErrorOkButton = document.getElementById("footerErrorOkButton");
+    const footerErrorText = document.getElementById("footerErrorText");
+    const brokenFooterLinks = document.querySelectorAll(".broken-footer-link");
+    const searchForm = document.getElementById("searchForm");
+    const searchDialog = document.getElementById("searchDialog");
+    const closeSearchDialog = document.getElementById("closeSearchDialog");
+    const searchOkButton = document.getElementById("searchOkButton");
+    const searchDialogText = document.getElementById("searchDialogText");
+    const loginDialog = document.getElementById("loginDialog");
+    const registerDialog = document.getElementById("registerDialog");
+    const closeDialog = document.getElementById("closeDialog");
+    const closeRegisterDialog = document.getElementById("closeRegisterDialog");
+    const registerOkButton = document.getElementById("registerOkButton");
+    const loginForm = document.getElementById("loginForm");
+    const registerLink = document.getElementById("registerLink");
+    const headerLoginButton = document.getElementById("headerLoginButton");
+    const errorMessage = document.getElementById("errorMessage");
+
+    function padImageNumber(number) {
+      return String(number).padStart(6, "0");
+    }
+
+    function randomInteger(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
     }
 
     function shuffleArray(array) {
-        for (var i = array.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
     }
 
-    function createImageElementWithOverlay(src, overlaySrc) {
-        var container = document.createElement('div');
-        container.className = 'img-container';
-
-        var img = document.createElement('img');
-        img.src = src;
-
-        var overlay = document.createElement('img');
-        overlay.src = overlaySrc;
-        overlay.className = 'overlay';
-
-        container.appendChild(img);
-        container.appendChild(overlay);
-
-        return container;
+    function formatViews(number) {
+      return new Intl.NumberFormat("de-DE").format(number) + " Aufrufe";
     }
 
-    shuffleArray(imagePaths);
-    var selectedImages = imagePaths.slice(0, 15); // Select only the first 15 images
+    function createArchiveNumber() {
+      const blockA = randomInteger(100, 999);
+      const blockB = randomInteger(1000, 9999);
+      const blockC = randomInteger(10, 99);
+      return `JA-${blockA}-${blockB}-${blockC}`;
+    }
 
-    // Insert logo at a random position in the array
-    var logoIndex = Math.floor(Math.random() * 6);
-    selectedImages.splice(logoIndex, 0, '../logo.jpg'); // Insert logo into the array
+    function createDuration() {
+      const minutes = randomInteger(1, 47);
+      const seconds = String(randomInteger(0, 59)).padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
 
-    var columns = ['', '', '', ''].map(function() { return document.createElement('div'); });
-    columns.forEach(function(column) { column.className = 'column'; });
+    function createTitle() {
+      return `${randomItem(titlePrefixes)} ${createArchiveNumber()}: ${randomItem(titleSuffixes)}`;
+    }
 
-    selectedImages.forEach(function(path, index) {
-        var imgContainer;
-        if (path === '../logo.jpg') {
-            imgContainer = createImageElementWithOverlay(path, '../blank.png'); //Adjust if logo also needs overlay
-        } else {
-            imgContainer = createImageElementWithOverlay(path, 'jatv.png');           
-        }
-        columns[index % 4].appendChild(imgContainer); // Distribute image containers across columns
+    function createImagePool() {
+      const pool = [];
+      for (let i = FIRST_IMAGE; i <= LAST_IMAGE; i++) {
+        pool.push(i);
+      }
+      return pool;
+    }
+
+    function openLoginDialog() {
+      errorMessage.textContent = "";
+      loginForm.reset();
+      loginDialog.showModal();
+    }
+
+    function renderCards() {
+      const selectedImages = shuffleArray(createImagePool()).slice(0, NUMBER_OF_CARDS);
+      videoGrid.innerHTML = "";
+
+      selectedImages.forEach((imageNumber) => {
+        const paddedNumber = padImageNumber(imageNumber);
+        const imagePath = `${IMAGE_FOLDER}${paddedNumber}${IMAGE_EXTENSION}`;
+        const card = document.createElement("article");
+        card.className = "video-card";
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", "Archivvideo öffnen");
+
+        card.innerHTML = `
+          <div class="thumb-wrap">
+            <img src="${imagePath}" alt="jaTV Archivbild ${paddedNumber}" loading="lazy" />
+            <span class="lock-badge">Locked</span>
+            <span class="duration">${createDuration()}</span>
+          </div>
+          <div class="video-info">
+            <div class="avatar">ja</div>
+            <div>
+              <h3 class="video-title">${createTitle()}</h3>
+              <div class="meta">jaTV Archiv<br>${formatViews(randomInteger(257, 98000))} · vor ${randomInteger(2, 19)} Jahren archiviert</div>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener("click", openLoginDialog);
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openLoginDialog();
+          }
+        });
+
+        videoGrid.appendChild(card);
+      });
+    }
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      errorMessage.textContent = "Benutzername oder Passwort falsch. Der Zugriff wurde verweigert.";
     });
 
-    var photoGrid = document.getElementById('photoGrid');
-    columns.forEach(function(column) { photoGrid.appendChild(column); });
-});
-</script>
+    registerLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      loginDialog.close();
+      registerDialog.showModal();
+    });
 
+    searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      searchDialogText.textContent = randomItem(searchMessages);
+      searchDialog.showModal();
+    });
+
+    closeDialog.addEventListener("click", () => loginDialog.close());
+    closeSearchDialog.addEventListener("click", () => searchDialog.close());
+    searchOkButton.addEventListener("click", () => searchDialog.close());
+    closeRegisterDialog.addEventListener("click", () => registerDialog.close());
+    registerOkButton.addEventListener("click", () => registerDialog.close());
+    headerLoginButton.addEventListener("click", openLoginDialog);
+    closeFooterErrorDialog.addEventListener("click", () => footerErrorDialog.close());
+    footerErrorOkButton.addEventListener("click", () => footerErrorDialog.close());
+
+    brokenFooterLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        footerErrorText.textContent = randomItem(footerErrorMessages);
+        footerErrorDialog.showModal();
+      });
+    });
+
+    renderCards();
+  </script>
 </body>
 </html>

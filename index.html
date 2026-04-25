@@ -1212,7 +1212,7 @@
     function createEngagement(viewCount) {
       const maxTotalReactions = Math.max(12, Math.floor(viewCount * randomInteger(3, 18) / 100));
       let likes = Math.max(1, Math.round(maxTotalReactions / 12));
-      let dislikes = likes * randomInteger(10, 12);
+      let dislikes = likes * randomInteger(11, 13);
 
       if (likes + dislikes >= viewCount) {
         const safeTotal = Math.max(2, viewCount - 1);

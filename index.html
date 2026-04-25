@@ -709,6 +709,7 @@
         const imagePath = `${IMAGE_FOLDER}${paddedNumber}${IMAGE_EXTENSION}`;
         const viewCount = randomInteger(257, 98000);
         const engagement = createEngagement(viewCount);
+        const commentCount = randomInteger(1, 99);
         const card = document.createElement("article");
         card.className = "video-card";
         card.tabIndex = 0;
@@ -727,7 +728,7 @@
               <h3 class="video-title">${createTitle()}</h3>
               <div class="meta">
                 ${formatViews(viewCount)} · vor ${randomInteger(2, 19)} Jahren archiviert
-                <div class="rating-meta" aria-label="Bewertungen">
+                <div class="rating-meta" aria-label="Bewertungen und Kommentare">
                   <span class="rating-item">
                     <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
@@ -739,6 +740,12 @@
                       <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
                     </svg>
                     ${formatNumber(engagement.dislikes)}
+                  </span>
+                  <span class="rating-item">
+                    <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H9.4L4 22v-4H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm0 2v10h2v2l2.7-2H20V6H4Z"></path>
+                    </svg>
+                    ${formatNumber(commentCount)}
                   </span>
                 </div>
               </div>

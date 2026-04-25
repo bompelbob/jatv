@@ -43,6 +43,78 @@
       z-index: 10;
       backdrop-filter: blur(12px);
     }
+    
+    .upload-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.upload-callout p {
+  margin: 0;
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.upload-button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background: var(--accent-dark);
+}
+
+.upload-step {
+  display: none;
+}
+
+.upload-step.is-active {
+  display: block;
+}
+
+.upload-options {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.upload-options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.upload-options input {
+  margin-top: 2px;
+}
+
+@media (max-width: 680px) {
+  .upload-callout {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .upload-button {
+    width: 100%;
+  }
+}
 
     .brand {
       display: flex;
@@ -132,11 +204,87 @@
       font-size: 16px;
     }
 
-    .section-title {
-      margin: 0 0 18px;
-      font-size: 20px;
-      font-weight: 700;
-    }
+.section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+}
+
+.sort-menu {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 13px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sort-button::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--muted);
+  margin-top: 2px;
+}
+
+.sort-options {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 178px;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #1b1b1b;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+  display: none;
+  z-index: 5;
+}
+
+.sort-menu.is-open .sort-options {
+  display: grid;
+  gap: 2px;
+}
+
+.sort-option {
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  padding: 9px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sort-option:hover,
+.sort-option:focus {
+  background: var(--surface-light);
+  color: var(--text);
+  outline: none;
+}
 
     .video-grid {
       display: grid;
@@ -229,7 +377,7 @@
     .meta {
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.45;
+      line-height: .8;
     }
 
     .rating-meta {
@@ -440,6 +588,25 @@
         grid-template-columns: 1fr;
         gap: 26px;
       }
+      .section-header {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.sort-menu {
+  width: 100%;
+}
+
+.sort-button {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sort-options {
+  left: 0;
+  right: auto;
+  width: 100%;
+}
     }
   </style>
 </head>
@@ -462,10 +629,33 @@
     <section class="archive-hero">
       <h1>Archiv</h1>
       <p>Entdecke neue Videos, alte Aufnahmen und ausgewählte Clips aus dem jaTV-Bestand.</p>
+    
+      <div class="upload-callout">
+        <p>
+          Hilf mit, das jaTV-Archiv endlich zu vervollständigen. Wenn du private Sendemitschnitte, alte Kassetten oder bislang nicht erfasste Aufzeichnungen besitzt, kannst du diese zur Prüfung einreichen.
+        </p>
+        <button class="upload-button" id="uploadButton" type="button">Sendemitschnitt hochladen</button>
+      </div>
     </section>
 
-    <h2 class="section-title">Empfohlene Archivfunde</h2>
-    <section class="video-grid" id="videoGrid" aria-live="polite"></section>
+<div class="section-header">
+  <h2 class="section-title">Empfohlene Archivfunde</h2>
+
+  <div class="sort-menu">
+    <button class="sort-button" type="button" aria-haspopup="true" aria-expanded="false">
+      Sortierung: empfohlene
+    </button>
+
+    <div class="sort-options" role="menu" aria-label="Sortierung auswählen">
+      <button class="sort-option" type="button" role="menuitem">neueste</button>
+      <button class="sort-option" type="button" role="menuitem">beste</button>
+      <button class="sort-option" type="button" role="menuitem">kontroverseste</button>
+      <button class="sort-option" type="button" role="menuitem">nonchalanteste</button>
+    </div>
+  </div>
+</div>
+
+<section class="video-grid" id="videoGrid" aria-live="polite"></section>
   </main>
 
   <footer class="site-footer">
@@ -499,6 +689,74 @@
       <button class="primary-button" id="searchOkButton">Verstanden</button>
     </div>
   </dialog>
+  
+  <dialog id="uploadDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>jaTV-Mitschnitt einreichen</h2>
+      <button class="close-button" id="closeUploadDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="upload-step is-active" id="uploadStepLegal">
+      <p class="login-note">
+        Bevor der Upload vorbereitet werden kann, bestätige bitte die Herkunft des Materials.
+      </p>
+
+      <div class="upload-options">
+        <label>
+          <input type="checkbox" id="confirmJatvMaterial">
+          Die Aufnahme ist tatsächlich eine jaTV-Aufnahme oder enthält eindeutig identifizierbares jaTV-Material.
+        </label>
+
+        <label>
+          <input type="checkbox" id="confirmLegalRecording">
+          Die Aufnahme wurde auf legalem Wege angefertigt und befindet sich rechtmäßig in meinem Besitz.
+        </label>
+
+        <label>
+          <input type="checkbox" id="confirmNoManipulation">
+          Das Material wurde nicht sinnverändernd bearbeitet, rekonstruiert oder nachträglich mit fremden Sendeteilen versetzt.
+        </label>
+      </div>
+
+      <p class="error-message" id="uploadLegalError"></p>
+      <button class="primary-button" id="uploadLegalNextButton" type="button">Weiter</button>
+    </div>
+
+    <div class="upload-step" id="uploadStepFormat">
+      <p class="login-note">
+        Wähle das Ausgangsformat der vorliegenden Aufnahme aus. Bei unsicherer Herkunft wähle bitte die technisch naheliegendste Option.
+      </p>
+
+      <div class="upload-options">
+        <label><input type="radio" name="uploadFormat" value="VHS"> VHS</label>
+        <label><input type="radio" name="uploadFormat" value="S-VHS"> S-VHS</label>
+        <label><input type="radio" name="uploadFormat" value="Video 8"> Video 8</label>
+        <label><input type="radio" name="uploadFormat" value="Hi8"> Hi8</label>
+        <label><input type="radio" name="uploadFormat" value="Digital8"> Digital8</label>
+        <label><input type="radio" name="uploadFormat" value="MiniDV"> MiniDV</label>
+        <label><input type="radio" name="uploadFormat" value="Betamax"> Betamax</label>
+        <label><input type="radio" name="uploadFormat" value="Betacam SP"> Betacam SP</label>
+        <label><input type="radio" name="uploadFormat" value="U-matic"> U-matic</label>
+        <label><input type="radio" name="uploadFormat" value="Video 2000"> Video 2000</label>
+        <label><input type="radio" name="uploadFormat" value="VCR Longplay"> VCR Longplay</label>
+        <label><input type="radio" name="uploadFormat" value="LaserDisc"> LaserDisc</label>
+        <label><input type="radio" name="uploadFormat" value="DVCAM"> DVCAM</label>
+        <label><input type="radio" name="uploadFormat" value="DigiBeta"> Digital Betacam</label>
+        <label><input type="radio" name="uploadFormat" value="MII"> Panasonic MII</label>
+        <label><input type="radio" name="uploadFormat" value="1-Zoll-C"> 1-Zoll-C-Format</label>
+        <label><input type="radio" name="uploadFormat" value="EIAJ-1-2-Zoll"> EIAJ 1/2-Zoll Open Reel</label>
+        <label><input type="radio" name="uploadFormat" value="Cartrivision"> Cartrivision</label>
+        <label><input type="radio" name="uploadFormat" value="VX"> Quasar VX</label>
+        <label><input type="radio" name="uploadFormat" value="V-Cord"> Sanyo V-Cord</label>
+        <label><input type="radio" name="uploadFormat" value="Archivspule 11B"> Archivspule 11B</label>
+      </div>
+
+      <p class="error-message" id="uploadFormatError"></p>
+      <button class="primary-button" id="uploadFormatNextButton" type="button">Weiter</button>
+    </div>
+  </div>
+</dialog>
 
   <dialog id="loginDialog">
     <div class="dialog-inner">
@@ -507,7 +765,7 @@
         <button class="close-button" id="closeDialog" aria-label="Dialog schließen">×</button>
       </div>
 
-      <p class="login-note">Dieses Archivmaterial ist geschützt. Bitte melden Sie sich mit Ihren Zugangsdaten an.</p>
+      <p class="login-note">Bitte melde dich mit deinen Zugangsdaten an.</p>
 
       <form class="login-form" id="loginForm">
         <label>
@@ -534,7 +792,7 @@
         <h2>Registrierung nicht möglich</h2>
         <button class="close-button" id="closeRegisterDialog" aria-label="Dialog schließen">×</button>
       </div>
-      <p class="login-note">Aufgrund der Vielzahl an Anmeldungen können derzeit keine neuen jaTV-Zugänge erstellt werden. Bitte versuchen Sie es zu einem unbestimmten späteren Zeitpunkt erneut.</p>
+      <p class="login-note">Aufgrund der Vielzahl an Anmeldungen können derzeit keine neuen jaTV-Zugänge erstellt werden. Bitte versuche es zu einem unbestimmten späteren Zeitpunkt erneut.</p>
       <button class="primary-button" id="registerOkButton">Verstanden</button>
     </div>
   </dialog>
@@ -559,9 +817,109 @@
       "Bandkopie",
       "Restmaterial",
       "Überwachter Fund",
-      "Beunruhigende Fragmente",
-      "Aufklärungsvideo",
-      "Orientierungsfilm"
+      "MAZ physisch beschädigt",
+      "Magnetband",
+      "Kubikkassette",
+      "Vorschaumaterial",
+        "Bestandsaufnahme",
+        "Medienvermerk",
+        "Katalogeintrag",
+        "Sperrkopie",
+        "Sendefenster",
+        "Überspielrest",
+        "Prüfmaterial",
+        "Freigabefassung",
+        "Altbestand",
+        "Restband",
+        "Zwischenkopie",
+        "Quellmaterial",
+        "Sichtungsvermerk",
+        "Archivnotiz",
+        "Programmrest",
+        "Bandabschnitt",
+        "Referenzkopie",
+        "Ausgangsmaterial",
+        "Dokumentationsspur",
+        "Übernahmefassung",
+        "Kassettenfund",
+        "Rückläufermaterial",
+        "Kontrollschnitt",
+        "Magazinbeitrag",
+        "Prüfbestand",
+        "Sendeauszug",
+        "Vorsortierung",
+        "Medienfund",
+        "Bestandsfragment",
+        "Rückkopierbestand",
+        "Freigabevermerk",
+        "Sendeprotokoll",
+        "Vorschauauszug",
+        "Medienrest",
+        "Zwischenarchiv",
+        "Prüfsequenz",
+        "Transferkopie",
+        "Rohmaterialfund",
+        "Bestandsverweis",
+        "Ausspielkopie",
+        "Sicherungsfragment",
+        "Redaktionsrest",
+        "Programmschatten",
+        "Kassetteneintrag",
+        "Vorlaufmaterial",
+        "Nachsichtung",
+        "Kontrollfassung",
+        "Archivspur",
+        "Sendesplitter",
+        "Materialnachtrag",
+        "Indexvermerk",
+        "Vorsichtungsrest",
+        "Bandprotokoll",
+        "Freigabeschatten",
+        "Medienanhang",
+        "Technikfassung",
+        "Restsequenz",
+        "Katalogsplitter",
+        "Sichtungsfund",
+        "Programmvermerk",
+        "Auswertungsclip",
+        "Altbandnotiz",
+        "Übernahmeclip",
+        "Transfereintrag",
+        "Prüfkopie",
+        "Schnittrest",
+        "Signalprobe",
+        "Medienlauf",
+        "Archivreserve",
+        "Sendemuster",
+        "Vorschaubestand",
+        "Rücklaufkopie",
+        "Quellverweis",
+        "Katalogrest",
+        "Bildprotokoll",
+        "Tonvermerk",
+        "Sperrbestand",
+        "Materialindex",
+        "Referenzsplitter",
+        "Kontrollmaterial",
+        "Arbeitsfassung",
+        "Vorsortierungsfund",
+        "Restaufzeichnung",
+        "Signalfragment",
+        "Mediennotiz",
+        "Archivdurchlauf",
+        "Sendeanhang",
+        "Importvermerk",
+        "Ausgabefassung",
+        "Bestandssplitter",
+        "Prüfauszug",
+        "Materialschatten",
+        "Katalogprobe",
+        "Freigaberest",
+        "Sendearchivnotiz",
+        "Digitalisierungsfund",
+        "Sichtungsclip",
+        "Rohdatenverweis",
+        "Programmausschnitt"
     ];
 
     const titleSuffixes = [
@@ -583,23 +941,190 @@
       "Farbverschiebungen",
       "Rundfunkqualität",
       "ausstrahlungssicher",
-      "nicht qualitätsgesichert"
+      "beunruhigende Szenen",
+      "Preis unklar",
+      "nicht qualitätsgesichert",
+      "nachträglich digitalisiert",
+        "ohne eindeutige Quellenlage",
+        "aus laufender Sicherung",
+        "nur intern verschlagwortet",
+        "mit beschädigter Tonspur",
+        "aus Bestand 4B",
+        "vorläufig gesperrt",
+        "unklarer Sendekontext",
+        "nicht vollständig geprüft",
+        "mit manuellem Prüfvermerk",
+        "aus dem Übergabebestand",
+        "teilweise rekonstruiert",
+        "mit abweichender Laufzeit",
+        "ohne redaktionelle Zuordnung",
+        "aus technischer Vorsichtung",
+        "nur als Arbeitskopie vorhanden",
+        "nicht im Hauptkatalog geführt",
+        "mit uneinheitlicher Metadatenlage",
+        "aus Altbestand übernommen",
+        "vorläufig im Sichtungsarchiv",
+        "mit fragmentierter Inhaltsangabe",
+        "nicht sendefähige Fassung",
+        "aus ungesichertem Import",
+        "mit fehlendem Herkunftsnachweis",
+        "unter Vorbehalt indexiert",
+        "aus Zwischenablagebestand",
+        "nicht eindeutig datiert",
+        "mit beschädigtem Vorspann",
+        "nur über Signatur auffindbar",
+        "aus automatischer Migration",
+        "mit unvollständigem Freigabestatus",
+        "nicht öffentlich gelistet",
+        "unter falscher Rubrik abgelegt",
+        "aus technischer Rückkopie",
+        "mit nachträglicher Titelkorrektur",
+        "ohne bestätigte Rechtekette",
+        "als Dublette markiert",
+        "mit instabiler Medienkennung",
+        "aus nicht dokumentierter Lieferung",
+        "nur in niedriger Auflösung geprüft",
+        "mit widersprüchlicher Archivnotiz",
+        "vorläufig zusammengeführt",
+        "aus beschädigtem Quellordner",
+        "mit alternativer Schnittfassung",
+        "nicht abschließend klassifiziert",
+        "aus passiver Bestandserfassung",
+        "mit fehlendem Abspann",
+        "unter ehemaliger Programmkennung",
+        "nur in Sichtungsqualität verfügbar",
+        "mit abgebrochener Transkodierung",
+        "aus historischer Programmstrecke",
+        "ohne gesicherte Sendefassung",
+        "mit manuell gesetztem Sperrvermerk",
+        "aus Restmaterial übernommen",
+        "nicht eindeutig zuordenbar",
+        "mit fehlerhafter Kapitelmarke",
+        "aus nicht synchronisiertem Bestand",
+        "nur teilweise katalogisiert",
+        "mit veraltetem Rechtehinweis",
+        "unter Vorversion gespeichert",
+        "aus Sammelimport extrahiert",
+        "mit unbestätigter Kurzbeschreibung",
+        "nicht für externe Ausgabe vorgesehen",
+        "aus redundanter Sicherung",
+        "mit beschädigtem Indexeintrag",
+        "ohne gültige Vorschaudatei",
+        "unter technischer Beobachtung",
+        "aus Archivlauf 12",
+        "mit nachträglich gesetztem Zeitcode",
+        "nicht vollständig übertragen",
+        "aus redaktionellem Nebenbestand",
+        "mit unklarer Zielgruppe",
+        "nur als Vorschaureferenz vorhanden",
+        "mit abweichender Tonmischung",
+        "aus temporärem Medienpool",
+        "nicht in Endfassung bestätigt",
+        "mit ungeprüfter Bildstrecke",
+        "unter alter Sammlungskennung",
+        "aus manuellem Nachtrag",
+        "mit inkonsistenter Dateibenennung",
+        "nicht im öffentlichen Index",
+        "aus teilweiser Wiederherstellung",
+        "mit fehlerhaftem Prüfsummenvermerk",
+        "unter interner Seriennummer",
+        "aus unvollständiger Bandliste",
+        "mit unklarer Programmsparte",
+        "nur über Altverknüpfung erreichbar",
+        "mit nicht bestätigter Laufzeit",
+        "aus Sichtungslauf 3C",
+        "ohne konsistente Inhaltsmarker",
+        "mit widersprüchlichem Sperrstatus",
+        "aus stillgelegtem Medienbereich",
+        "nicht final verschlagwortet",
+        "mit technischer Randnotiz",
+        "aus unbenanntem Übernahmeordner",
+        "nur als Katalogschatten vorhanden",
+        "mit abweichendem Vorschaubild",
+        "aus nicht priorisierter Prüfung",
+        "mit unvollständiger Archivsignatur",
+        "nicht zuverlässig abspielbar"
     ];
 
     const searchMessages = [
       "Die Suche wurde abgebrochen, weil der öffentliche Index nicht mit dem internen Sichtungsverzeichnis synchronisiert ist.",
       "Für diese Abfrage liegt nur ein fragmentierter Metadatensatz vor. Die Ergebnisliste wurde aus Konsistenzgründen unterdrückt.",
-      "Der Suchbegriff fällt in einen noch nicht freigegebenen Archivbereich. Bitte verwenden Sie eine präzisere oder ältere Anfragekennung.",
+      "Der Suchbegriff fällt in einen noch nicht freigegebenen Archivbereich. Bitte verwende eine präzisere oder ältere Anfragekennung.",
       "Die Volltextsuche ist derzeit auf passive Sichtung beschränkt. Direkte Trefferlisten können vor Abschluss der Neuindizierung nicht ausgegeben werden.",
       "Die Anfrage wurde vom temporären Zugriffsknoten angenommen, aber vom Langzeitarchiv nicht bestätigt.",
-      "Der Index antwortet mit Status 409: widersprüchliche Klassifizierung zwischen Vorschaumaterial und Archivsignatur."
+      "Bitte starte deine Suchanfrage mit dem Indexregisterexzerpt.",
+      "Dieser Suchbegriff konnte nicht gefunden werden.",
+      "Aufgrund der hohen Last an Suchanfragen kann die Suche momentan nicht durchgeführt werden",
+      "Der Index antwortet mit Status 409: widersprüchliche Klassifizierung zwischen Vorschaumaterial und Archivsignatur.",
+      "Der Suchlauf wurde gestoppt, weil die Trefferliste mehrdeutige Vorschaurechte enthält.",
+        "Die Anfrage konnte nicht abgeschlossen werden, da der Metadatenabgleich in Warteschlange 7 festhängt.",
+        "Für diesen Suchbegriff liegen ausschließlich nicht normalisierte Altbestände vor.",
+        "Der Index hat geantwortet, aber keine ausgabefähige Trefferstruktur zurückgegeben.",
+        "Die Suche wurde ausgesetzt, weil mehrere Archivsignaturen auf denselben Medienverweis zeigen.",
+        "Die Ergebnisanzeige ist derzeit deaktiviert, da der Sichtungsstatus der Treffer nicht eindeutig ist.",
+        "Die Abfrage wurde verarbeitet, jedoch vom Freigabemodul als vorläufig unzustellbar markiert.",
+        "Der Suchbegriff überschneidet sich mit einem Bereich, dessen öffentliche Benennung noch nicht abgeschlossen ist.",
+        "Die Treffer konnten nicht angezeigt werden, weil der Kontextindex nur teilweise initialisiert wurde.",
+        "Die Suchanfrage enthält Begriffe, die im aktuellen Katalog nur als interne Platzhalter geführt werden.",
+        "Die Ergebnisliste wurde verworfen, da mindestens ein Treffer ohne gültigen Herkunftsvermerk geladen wurde.",
+        "Der Zugriffsknoten meldet eine nicht auflösbare Differenz zwischen Titelindex und Vorschaumatrix.",
+        "Die Suche wurde angenommen, aber wegen fehlender Katalogbindung nicht zur Anzeige freigegeben.",
+        "Für diese Anfrage existieren Treffer, deren Reihenfolge derzeit nicht verlässlich rekonstruiert werden kann.",
+        "Die Indexantwort enthält veraltete Sichtungsmarker und wurde daher nicht ausgegeben.",
+        "Die Anfrage kann nicht angezeigt werden, solange der Vorschaubestand im Lesemodus blockiert ist.",
+        "Der Suchdienst meldet eine erfolgreiche Nullantwort mit widersprüchlichem Archivstatus.",
+        "Die Trefferliste wurde nicht geladen, weil der temporäre Index älter ist als die angefragte Signaturgruppe.",
+        "Dieser Suchbegriff ist im öffentlichen Bereich bekannt, aber noch keiner sichtbaren Sammlung zugeordnet.",
+        "Die Anfrage wurde vom Katalogsystem zurückgestellt, da zu viele Teiltreffer denselben Prüfvermerk tragen.",
+        "Der Suchindex befindet sich für diesen Begriff in einem nicht darstellbaren Zwischenzustand.",
+        "Die Ergebnisse konnten nicht sortiert werden, weil die Zeitstempel nicht mit der Medienkennung übereinstimmen.",
+        "Die Abfrage wurde aus Konsistenzgründen beendet, nachdem der Vorschauzähler einen negativen Bestand gemeldet hat.",
+        "Der Suchbegriff wurde erkannt, aber die zugehörigen Medienobjekte sind derzeit nur als Schatteneinträge verfügbar.",
+        "Die Trefferanzeige wurde deaktiviert, weil der Abgleich zwischen Bestand und Oberfläche nicht bestätigt wurde.",
+        "Der Katalogserver hat die Anfrage beantwortet, aber keine für Nutzer freigegebene Darstellung geliefert.",
+        "Die Suchergebnisse liegen vor, konnten jedoch keinem aktiven Ausgabekanal zugewiesen werden.",
+        "Die Anfrage wurde nicht ausgeführt, da der Archivpfad zwar existiert, aber keinen stabilen Endpunkt besitzt.",
+        "Die Treffer wurden aus der Ausgabe entfernt, weil ihre Klassifizierung während der Anfrage gewechselt hat.",
+        "Der Suchlauf wurde beendet, nachdem der Index eine gültige, aber nicht interpretierbare Antwort geliefert hat."
     ];
 
     const footerErrorMessages = [
-      "Diese Seite ist derzeit nicht verfügbar. Die zugehörigen Inhalte wurden noch nicht für den öffentlichen Zugriff bereitgestellt.",
+      "Diese Seite ist derzeit nicht verfügbar. Die zugehörigen Inhalte wurden wegen Bedenklichkeit noch nicht für den öffentlichen Zugriff bereitgestellt.",
       "Die angeforderte Serviceseite konnte nicht geladen werden, weil der Eintrag im Navigationsindex fehlt.",
-      "Dieser Bereich wird momentan überarbeitet. Bitte versuchen Sie es später erneut.",
-      "Die Anfrage konnte keinem aktiven jaTV-Informationsbereich zugeordnet werden."
+      "Dieser Bereich wird momentan überarbeitet. Bitte versuche es später erneut.",
+      "Aufgrund der hohen derzeitigen Besucheranzahl kann die Seite nicht angezeigt werden.",
+      "Aufgrund beunruhigender Inhalte ist der bereich nur für angemeldete Benutzer zugänglich.",
+      "Die Anfrage konnte keinem aktiven jaTV-Informationsbereich zugeordnet werden.",
+      "Diese Seite wurde aus dem öffentlichen Menü entfernt, ist aber in älteren Navigationszuständen weiterhin referenziert.",
+        "Der angeforderte Bereich befindet sich derzeit in einer administrativen Übergangsphase.",
+        "Die Seite konnte nicht geladen werden, weil der zugehörige Inhaltsknoten keine aktive Ausgabe besitzt.",
+        "Dieser Link verweist auf einen Bereich, dessen Veröffentlichung noch nicht abschließend bestätigt wurde.",
+        "Die Anfrage wurde angenommen, aber keinem gültigen Servicemodul zugeordnet.",
+        "Der Navigationspunkt ist vorhanden, jedoch aktuell nicht mit einer auslieferbaren Seite verbunden.",
+        "Die Zielseite ist im System registriert, aber für den aktuellen Zugriffskanal nicht freigegeben.",
+        "Der Seitenaufruf wurde gestoppt, weil die Inhaltskennung nicht mit der Navigationsfreigabe übereinstimmt.",
+        "Dieser Bereich ist vorübergehend ausgeblendet, bis die zugehörigen Informationsfragmente neu geprüft wurden.",
+        "Die angeforderte Serviceseite konnte aufgrund eines unvollständigen Routingvermerks nicht geöffnet werden.",
+        "Die Seite existiert im Katalog, wurde aber noch nicht für die öffentliche Darstellung kompiliert.",
+        "Der Link ist gültig, führt aber derzeit auf keinen stabilen Informationsendpunkt.",
+        "Die Darstellung wurde blockiert, weil der Bereich keine bestätigte Textfassung enthält.",
+        "Dieser Navigationspunkt befindet sich im passiven Modus und kann momentan nicht geöffnet werden.",
+        "Die Anfrage konnte nicht abgeschlossen werden, da der Seitenstatus zwischen Entwurf und Archiv schwankt.",
+        "Der Inhalt wurde gefunden, aber nicht als anzeigefähige Oberfläche markiert.",
+        "Die Zielseite ist temporär entkoppelt, vermutlich wegen einer noch offenen Strukturprüfung.",
+        "Der Zugriff wurde nicht verweigert, aber auch nicht sinnvoll ermöglicht.",
+        "Dieser Bereich ist derzeit nur als Platzhalter im Navigationsschema vorhanden.",
+        "Die Seite konnte nicht ausgeliefert werden, weil ihr öffentlicher Kontext fehlt.",
+        "Der Link verweist auf einen Informationsbereich, der momentan keine bestätigte Zuständigkeit besitzt.",
+        "Die angeforderte Seite wurde zur Stabilisierung des Menüs vorläufig deaktiviert.",
+        "Die Navigation kennt diesen Eintrag, der Inhaltsserver widerspricht jedoch vorsichtig.",
+        "Der Seitenaufruf wurde verworfen, weil mehrere interne Beschreibungen auf denselben Bereich zeigen.",
+        "Diese Seite ist nicht offline, sie ist lediglich nicht ausreichend online.",
+        "Der Zielbereich wurde wegen inkonsistenter Metadaten aus der Ausgabe entfernt.",
+        "Die Anfrage wurde beendet, da der Inhalt nur in einer nicht freigegebenen Vorschauvariante vorliegt.",
+        "Dieser Link wurde beibehalten, obwohl sein Ziel derzeit nicht eindeutig bestimmbar ist.",
+        "Die Serviceseite kann erst geladen werden, wenn ihr interner Beschreibungsstand abgeschlossen ist.",
+        "Der Informationsbereich wurde gefunden, aber seine öffentliche Bedeutung ist momentan ungeklärt."
     ];
 
     const videoGrid = document.getElementById("videoGrid");
@@ -622,6 +1147,21 @@
     const registerLink = document.getElementById("registerLink");
     const headerLoginButton = document.getElementById("headerLoginButton");
     const errorMessage = document.getElementById("errorMessage");
+    const sortOptions = document.querySelectorAll(".sort-option");
+    const sortMenu = document.querySelector(".sort-menu");
+    const sortButton = document.querySelector(".sort-button");
+    const uploadButton = document.getElementById("uploadButton");
+    const uploadDialog = document.getElementById("uploadDialog");
+    const closeUploadDialog = document.getElementById("closeUploadDialog");
+    const uploadStepLegal = document.getElementById("uploadStepLegal");
+    const uploadStepFormat = document.getElementById("uploadStepFormat");
+    const uploadLegalNextButton = document.getElementById("uploadLegalNextButton");
+    const uploadFormatNextButton = document.getElementById("uploadFormatNextButton");
+    const uploadLegalError = document.getElementById("uploadLegalError");
+    const uploadFormatError = document.getElementById("uploadFormatError");
+    const confirmJatvMaterial = document.getElementById("confirmJatvMaterial");
+    const confirmLegalRecording = document.getElementById("confirmLegalRecording");
+    const confirmNoManipulation = document.getElementById("confirmNoManipulation");
 
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
@@ -781,6 +1321,72 @@
       searchDialogText.textContent = randomItem(searchMessages);
       searchDialog.showModal();
     });
+    
+    sortButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const isOpen = sortMenu.classList.toggle("is-open");
+  sortButton.setAttribute("aria-expanded", String(isOpen));
+});
+
+uploadButton.addEventListener("click", () => {
+  uploadLegalError.textContent = "";
+  uploadFormatError.textContent = "";
+
+  confirmJatvMaterial.checked = false;
+  confirmLegalRecording.checked = false;
+  confirmNoManipulation.checked = false;
+
+  document.querySelectorAll('input[name="uploadFormat"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  uploadStepLegal.classList.add("is-active");
+  uploadStepFormat.classList.remove("is-active");
+
+  uploadDialog.showModal();
+});
+
+closeUploadDialog.addEventListener("click", () => {
+  uploadDialog.close();
+});
+
+uploadLegalNextButton.addEventListener("click", () => {
+  const allConfirmed =
+    confirmJatvMaterial.checked &&
+    confirmLegalRecording.checked &&
+    confirmNoManipulation.checked;
+
+  if (!allConfirmed) {
+    uploadLegalError.textContent = "Bitte bestätige alle Herkunfts- und Rechtsangaben, bevor der Upload vorbereitet werden kann.";
+    return;
+  }
+
+  uploadLegalError.textContent = "";
+  uploadStepLegal.classList.remove("is-active");
+  uploadStepFormat.classList.add("is-active");
+});
+
+uploadFormatNextButton.addEventListener("click", () => {
+  const selectedFormat = document.querySelector('input[name="uploadFormat"]:checked');
+
+  if (!selectedFormat) {
+    uploadFormatError.textContent = "Bitte wähle das Ausgangsformat des Mitschnitts aus.";
+    return;
+  }
+
+  uploadFormatError.textContent = "";
+  uploadDialog.close();
+  openLoginDialog();
+});
+
+document.addEventListener("click", (event) => {
+  if (!sortMenu.contains(event.target)) {
+    sortMenu.classList.remove("is-open");
+    sortButton.setAttribute("aria-expanded", "false");
+  }
+});
 
     closeDialog.addEventListener("click", () => loginDialog.close());
     closeSearchDialog.addEventListener("click", () => searchDialog.close());
@@ -798,6 +1404,14 @@
         footerErrorDialog.showModal();
       });
     });
+sortOptions.forEach((option) => {
+  option.addEventListener("click", (event) => {
+    event.preventDefault();
+    sortMenu.classList.remove("is-open");
+    sortButton.setAttribute("aria-expanded", "false");
+    openLoginDialog();
+  });
+});
 
     renderCards();
   </script>

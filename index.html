@@ -125,12 +125,15 @@
       letter-spacing: -0.04em;
     }
 
-    .brand-logo {
-      width: 58px;
-      height: auto;
-      display: block;
-      opacity: 0.96;
-    }
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  display: block;
+  opacity: 0.96;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
 
     .brand span:last-child {
       color: var(--text);
@@ -353,18 +356,24 @@
       margin-top: 12px;
     }
 
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #555, #1d1d1d);
-      display: grid;
-      place-items: center;
-      color: var(--accent);
-      font-weight: 900;
-      font-size: 12px;
-      border: 1px solid var(--border);
-    }
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+}
 
     .video-title {
       margin: 0 0 8px 0;
@@ -1305,7 +1314,9 @@
             <span class="duration">${createDuration()}</span>
           </div>
           <div class="video-info">
-            <div class="avatar"><img style="width: 20px;" src="logo.png" alt="jaTV Logo" /></div>
+            <div class="avatar">
+                <img src="logo.png" alt="jaTV Logo" />
+            </div>
             <div>
               <h3 class="video-title">${createTitle()}</h3>
               <div class="meta">

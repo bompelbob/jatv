@@ -437,6 +437,42 @@
       font-size: 22px;
       letter-spacing: -0.03em;
     }
+    
+    .load-more-wrap {
+
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 38px;
+
+}
+
+.load-more-button {
+
+  border: 1px solid var(--border);
+
+  border-radius: 999px;
+
+  background: var(--surface);
+
+  color: var(--text);
+
+  padding: 11px 22px;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+}
+
+.load-more-button:hover {
+
+  background: var(--surface-light);
+
+}
 
     .close-button {
       width: 34px;
@@ -656,6 +692,11 @@
 </div>
 
 <section class="video-grid" id="videoGrid" aria-live="polite"></section>
+<div class="load-more-wrap">
+  <button class="load-more-button" id="loadMoreButton" type="button">
+    mehr anzeigen
+  </button>
+</div>
   </main>
 
   <footer class="site-footer">
@@ -1162,6 +1203,7 @@
     const confirmJatvMaterial = document.getElementById("confirmJatvMaterial");
     const confirmLegalRecording = document.getElementById("confirmLegalRecording");
     const confirmNoManipulation = document.getElementById("confirmNoManipulation");
+    const loadMoreButton = document.getElementById("loadMoreButton");
 
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
@@ -1304,6 +1346,10 @@
         videoGrid.appendChild(card);
       });
     }
+    
+    loadMoreButton.addEventListener("click", () => {
+  openLoginDialog();
+});
 
     loginForm.addEventListener("submit", (event) => {
       event.preventDefault();

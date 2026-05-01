@@ -135,6 +135,19 @@
   border: 1px solid var(--border);
 }
 
+.brand-button {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.brand-button:hover span {
+  color: var(--accent);
+}
+
     .brand span:last-child {
       color: var(--text);
     }
@@ -670,14 +683,307 @@
   width: 100%;
 }
     }
+    
+    .view-hidden {
+  display: none !important;
+}
+
+.watch-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+.player-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.player-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.78) contrast(1.08);
+}
+
+.player-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.18), transparent 35%, rgba(0,0,0,0.68)),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.035),
+      rgba(255,255,255,0.035) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  pointer-events: none;
+}
+
+.player-play-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 76px;
+  height: 76px;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.72);
+  color: white;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.player-play-button svg {
+  width: 34px;
+  height: 34px;
+  fill: currentColor;
+  margin-left: 4px;
+}
+
+.player-status {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.78);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.watch-title {
+  margin: 18px 0 8px;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.18;
+  letter-spacing: -0.04em;
+}
+
+.watch-meta {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.watch-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 22px;
+}
+
+.watch-action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 9px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.watch-action-button:hover {
+  background: var(--surface-light);
+}
+
+.watch-action-button svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.comments-panel {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.comments-panel h3,
+.related-column h3 {
+  font-size: 18px;
+}
+
+.comments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.comments-header h3 {
+  margin: 0;
+}
+
+.comment-write-button {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 13px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.comment-write-button:hover {
+  background: var(--surface-light);
+}
+
+@media (max-width: 560px) {
+  .comments-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .comment-write-button {
+    width: 100%;
+  }
+}
+
+.comment-item {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 11px;
+  margin-bottom: 18px;
+}
+
+.comment-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #555, #1d1d1d);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.comment-user {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.comment-text {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.related-list {
+  display: grid;
+  gap: 14px;
+}
+
+.related-card {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.related-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.related-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.related-duration {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  padding: 2px 5px;
+  background: rgba(0,0,0,0.78);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.related-title {
+  margin: 0 0 5px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.related-meta {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.back-to-grid {
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  padding: 8px 13px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.back-to-grid:hover {
+  background: var(--surface-light);
+}
+
+@media (max-width: 980px) {
+  .watch-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .related-card {
+    grid-template-columns: 120px 1fr;
+  }
+
+  .watch-actions {
+    display: grid;
+  }
+
+  .watch-action-button {
+    justify-content: center;
+  }
+}
   </style>
 </head>
 <body>
   <header>
-    <div class="brand" aria-label="jaTV Archiv">
-      <img class="brand-logo" src="logo.png" alt="jaTV Logo" />
-      <span style="font-size: 16px;">Just Another Tape Vault</span>
-    </div>
+<button class="brand brand-button" id="brandHomeButton" type="button" aria-label="Zur Hauptansicht">
+  <img class="brand-logo" src="logo.png" alt="jaTV Logo" />
+  <span style="font-size: 16px;">Just Another Tape Vault</span>
+</button>
 
     <form class="searchbar" id="searchForm" aria-label="Archivsuche">
       <input type="search" placeholder="Im Archiv suchen" />
@@ -691,7 +997,8 @@
     <button class="top-action" id="headerLoginButton">Anmelden</button>
   </header>
 
-  <main>
+ <main>
+  <div id="archiveView">
     <section class="archive-hero">
       <h1>Archiv</h1>
       <p>Entdecke neue Videos, alte Aufnahmen und ausgewählte Clips aus dem jaTV-Bestand.</p>
@@ -704,30 +1011,99 @@
       </div>
     </section>
 
-<div class="section-header">
-  <h2 class="section-title">Empfohlene Archivfunde</h2>
+    <div class="section-header">
+      <h2 class="section-title">Empfohlene Archivfunde</h2>
 
-  <div class="sort-menu">
-    <button class="sort-button" type="button" aria-haspopup="true" aria-expanded="false">
-      Sortierung: empfohlene
-    </button>
+      <div class="sort-menu">
+        <button class="sort-button" type="button" aria-haspopup="true" aria-expanded="false">
+          Sortierung: empfohlene
+        </button>
 
-    <div class="sort-options" role="menu" aria-label="Sortierung auswählen">
-      <button class="sort-option" type="button" role="menuitem">neueste</button>
-      <button class="sort-option" type="button" role="menuitem">beste</button>
-      <button class="sort-option" type="button" role="menuitem">kontroverseste</button>
-      <button class="sort-option" type="button" role="menuitem">nonchalanteste</button>
+        <div class="sort-options" role="menu" aria-label="Sortierung auswählen">
+          <button class="sort-option" type="button" role="menuitem">neueste</button>
+          <button class="sort-option" type="button" role="menuitem">beste</button>
+          <button class="sort-option" type="button" role="menuitem">kontroverseste</button>
+          <button class="sort-option" type="button" role="menuitem">nonchalanteste</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="video-grid" id="videoGrid" aria-live="polite"></section>
+
+    <div class="load-more-wrap">
+      <button class="load-more-button" id="loadMoreButton" type="button">
+        mehr anzeigen
+      </button>
     </div>
   </div>
-</div>
 
-<section class="video-grid" id="videoGrid" aria-live="polite"></section>
-<div class="load-more-wrap">
-  <button class="load-more-button" id="loadMoreButton" type="button">
-    mehr anzeigen
+  <section id="playerView" class="view-hidden">
+    <button class="back-to-grid" id="backToGridButton" type="button">Zurück zur Übersicht</button>
+
+    <div class="watch-layout">
+      <div class="watch-main">
+        <div class="player-frame">
+          <img id="playerImage" src="" alt="">
+          <div class="player-overlay"></div>
+
+          <button class="player-play-button" id="fakePlayButton" type="button" aria-label="Video abspielen">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7L8 5Z"></path>
+            </svg>
+          </button>
+
+          <div class="player-status">Wiedergabe vorbereitet · Anmeldung erforderlich</div>
+        </div>
+
+        <h1 class="watch-title" id="playerTitle"></h1>
+        <div class="watch-meta" id="playerMeta"></div>
+
+        <div class="watch-actions">
+          <button class="watch-action-button login-required-action" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
+            </svg>
+            <span id="playerLikes"></span>
+          </button>
+
+          <button class="watch-action-button login-required-action" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
+            </svg>
+            <span id="playerDislikes"></span>
+          </button>
+
+          <button class="watch-action-button login-required-action" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H9.4L4 22v-4H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm0 2v10h2v2l2.7-2H20V6H4Z"></path>
+            </svg>
+            <span id="playerComments"></span>
+          </button>
+        </div>
+
+<section class="comments-panel">
+  <div class="comments-header">
+    <h3>Kommentare</h3>
+    <button class="comment-write-button" id="writeCommentButton" type="button">
+      Kommentar verfassen
+    </button>
+  </div>
+
+  <div id="commentsList"></div>
+
+  <button class="load-more-button" id="loadMoreCommentsButton" type="button">
+    weitere Kommentare laden
   </button>
-</div>
-  </main>
+</section>
+      </div>
+
+      <aside class="related-column">
+        <h3>Ähnliche Videos</h3>
+        <div class="related-list" id="relatedList"></div>
+      </aside>
+    </div>
+  </section>
+</main>
 
   <footer class="site-footer">
     <nav class="footer-links" aria-label="Footer Navigation">
@@ -1197,6 +1573,352 @@
         "Die Serviceseite kann erst geladen werden, wenn ihr interner Beschreibungsstand abgeschlossen ist.",
         "Der Informationsbereich wurde gefunden, aber seine öffentliche Bedeutung ist momentan ungeklärt."
     ];
+    
+    const negativeComments = [
+  "Warum ist der Dreck überhaupt online? Das sieht aus wie die Kopie einer Kopie einer Ausrede.",
+  "Ton kaputt, Bild kaputt, Inhalt vermutlich auch.",
+  "Ich habe drei Minuten gewartet, bis etwas passiert. Es war offenbar schon passiert.",
+  "Das Tracking ist stabiler als die redaktionelle Idee dahinter.",
+  "Wer hat das freigegeben und warum war diese Person allein im Raum?",
+  "Das ist nicht nostalgisch, das ist ein technischer Hilferuf.",
+  "Ich erkenne nichts, aber ich bin mir sicher, dass es zu lang ist.",
+  "Der Moderator wirkt, als hätte er selbst nicht gewusst, dass gesendet wird.",
+  "Bitte nicht restaurieren. Manche Dinge wollen unscharf bleiben.",
+  "Die Tonspur links hat mehr Aussage als das ganze Segment.",
+  "Ich hatte bessere Bildqualität auf einem Fernseher mit Zimmerantenne im Keller.",
+  "Das wirkt wie Material, das selbst beim Digitalisieren Einspruch eingelegt hat.",
+  "Kann jemand bestätigen, dass das absichtlich so anfängt?",
+  "Das ist der erste Clip, bei dem der Dropout wie eine Verbesserung wirkt.",
+"Was soll der Käse?",
+"Habt ihr sie noch alle?",
+"Spinner.",
+"Was habe ich da gerade gesehen?",
+"Wer gibt mir meine Lebenszeit zurück?",
+"Das ist doch nicht euer Ernst.",
+"Kompletter Quatsch.",
+"Warum existiert das?",
+"Ich bereue jeden Klick.",
+"Was für ein Unsinn.",
+"Bitte sofort wieder löschen.",
+"Das war ja mal gar nichts.",
+"Peinlich.",
+"Alter, was war das denn?",
+"Ich verstehe nicht, warum man sowas hochlädt.",
+"Das tut ja fast körperlich weh.",
+"Nein. Einfach nein.",
+"Hat dafür jemand wirklich Zeit verschwendet?",
+"Das ist doch Verarsche.",
+"Ich will eine Entschuldigung.",
+"Kann man das melden?",
+"Das war unnötig.",
+"Wer schaut sich sowas freiwillig an?",
+"Ich hätte es besser nicht angeklickt.",
+"Das ist ja grausam.",
+"Was stimmt mit euch nicht?",
+"Bitte weniger davon.",
+"Das war unterirdisch.",
+"Ich bin raus.",
+"Absoluter Müll.",
+"Nicht mal ironisch gut.",
+"Das macht mich müde.",
+"Wer hat das freigegeben?",
+"Ich möchte das ungesehen machen.",
+"Warum wurde mir das vorgeschlagen?",
+"Das ist ja komplett sinnlos.",
+"Ich habe Fragen. Viele.",
+"Das war Zeitverschwendung mit Ansage.",
+"Schlimmer als erwartet.",
+"Und dafür habe ich WLAN benutzt.",
+"Das kann weg.",
+"Ich fühle mich betrogen.",
+"Bitte nie wieder.",
+"Was für ein Blödsinn.",
+"Ich dachte kurz, es passiert noch was. Fehler.",
+"Das ist schon frech.",
+"Da hat aber jemand Mut zur Bedeutungslosigkeit.",
+"Ich hätte lieber auf einen Ladefehler gestarrt.",
+"Nicht euer bester Moment.",
+"Das war nichts.",
+"Komplett daneben.",
+"Ich bin ehrlich verwirrt.",
+"Was soll das darstellen?",
+"Das ist unangenehm.",
+"Bitte erklärt mir niemand den Sinn.",
+"Ich will ihn gar nicht wissen.",
+"Das war aktiv schlecht.",
+"Da war der Titel schon zu viel Versprechen.",
+"Ich habe schlechtere Laune als vorher.",
+"Kann man sowas zurückgeben?",
+"Das ist kein Inhalt.",
+"Das ist Beschäftigungstherapie.",
+"Ich schäme mich stellvertretend.",
+"Einfach nur komisch. Nicht gut komisch.",
+"Das hätte im Ordner bleiben sollen.",
+"Warum klickt man sowas an? Ach ja, ich.",
+"Das ist schon hart.",
+"Ich habe verloren.",
+"Mein Beileid an alle Beteiligten.",
+"Selten so unnötig.",
+"Was soll der Käse? Ich habe wirklich versucht, dem Ganzen eine Chance zu geben. Aber nach einer Minute war klar: Das wird nichts mehr.",
+"Habt ihr sie noch alle? Man klickt hier neugierig drauf und bekommt dann einfach nur kompletten Quatsch serviert. Danke für nichts.",
+"Ich weiß nicht, was ich erwartet habe. Aber sicher nicht das hier. Das wirkt wie etwas, das man versehentlich hochlädt und dann aus Scham vergisst.",
+"Wer gibt mir meine verlorene Lebenszeit zurück? Ich habe bis zum Ende gewartet, weil ich dachte, da kommt noch irgendwas. Kam aber nicht.",
+"Das ist schon hart unnötig. Nicht mal auf eine charmante Art seltsam. Einfach nur so ein Clip, nach dem man kurz still aus dem Fenster schaut.",
+"Was soll das darstellen? Ernst gemeinte Frage. Ich sehe da weder Idee noch Pointe noch irgendeinen Grund, warum ich das gesehen haben musste.",
+"Ich bin ehrlich beeindruckt, wie wenig hier passiert. Und trotzdem schafft es das Ganze, irgendwie anstrengend zu sein. Muss man auch erstmal hinkriegen.",
+"Das war wirklich gar nichts. Nicht schlimm genug, um spannend zu sein. Nicht gut genug, um irgendwas zu rechtfertigen. Einfach nur leerer Bildschirmlärm.",
+"Spinner. Anders kann ich mir das nicht erklären. Irgendwer hat das produziert, hochgeladen und dann vermutlich gedacht: Ja, genau so muss das.",
+"Ich hätte lieber weiter auf die Wand gestarrt. Die hatte mehr Struktur, mehr Handlung und wahrscheinlich auch bessere Dialoge. Ganz schwache Nummer.",
+"Warum wurde mir das vorgeschlagen? Habe ich dem Algorithmus etwas getan? Das fühlt sich an wie eine kleine persönliche Strafe.",
+"Das ist kein Inhalt, das ist ein Unfall mit Dateinamen. Ich verstehe wirklich nicht, wie man sowas anschaut und sagt: Ja, veröffentlichen.",
+"Ich dachte zuerst, das sei ironisch gemeint. Dann dachte ich, vielleicht kommt noch was. Am Ende war ich nur noch müde.",
+"Kann man das zurückgeben? Ich möchte nicht mal mein Geld zurück, nur den Zustand von vor dem Anklicken. Das reicht mir schon.",
+"Das ist schon frech. Da steckt man mehr Energie ins Wegklicken als hier offenbar in die ganze Produktion. Respekt auf die falsche Art.",
+"Ich will niemandem zu nahe treten, aber das war wirklich Quatsch. Nicht lustig, nicht spannend, nicht mysteriös. Einfach nur Quatsch mit Ansage.",
+"Da hat aber jemand sehr viel Vertrauen in die Geduld anderer Menschen. Leider komplett unbegründet. Ich war nach zwanzig Sekunden innerlich weg.",
+"Ich habe selten so schnell bereut, neugierig gewesen zu sein. Der Titel klang wenigstens nach irgendwas. Das Video dann leider nicht.",
+"Was stimmt mit euch nicht? Man kann ja vieles machen, aber das hier wirkt wie eine bewusste Entscheidung gegen den Zuschauer.",
+"Das ist genau die Art Clip, bei der man danach erstmal prüft, ob man aus Versehen auf irgendwas anderes geklickt hat. Leider nein.",
+"Bitte nie wieder. Ich meine das nicht mal böse. Doch, vielleicht ein bisschen. Aber hauptsächlich aus Selbstschutz.",
+"Das war so unnötig, dass es fast schon wieder ein Konzept sein könnte. Aber eben nur fast. Der Rest ist einfach Leerlauf.",
+"Ich habe bis zum Schluss gewartet, weil ich dachte, irgendwann muss es ja Sinn ergeben. Falsch gedacht. Wieder was gelernt.",
+"Was für ein Blödsinn. Da hätte man auch einen Karton filmen können. Der hätte wenigstens nicht so getan, als wäre er wichtig.",
+"Ich bin nicht sauer, nur enttäuscht. Und ein bisschen sauer. Vor allem, weil ich das hier freiwillig angeklickt habe.",
+"Das wirkt wie ein Clip, den man jemandem zeigt, wenn man testen will, wie lange er höflich bleibt. Bei mir waren es elf Sekunden.",
+"Ich verstehe den Punkt nicht. Vielleicht gibt es keinen. Vielleicht ist genau das der Punkt. Dann ist der Punkt aber schlecht.",
+"Das ist einfach nur merkwürdig, aber nicht auf die gute Weise. Eher so, dass man danach den Browserverlauf aus Prinzip schließen möchte.",
+"Wer auch immer das hochgeladen hat: Warum? Diese Frage ist nicht rhetorisch. Ich brauche wirklich eine Erklärung.",
+"Ich habe schon schlechtere Sachen gesehen, aber selten so entschlossen sinnlose. Das hier marschiert direkt ins Nichts und nimmt sich dabei ernst.",
+  "Was soll der Mist? Ist das witzig?",
+  "Ich hab wirklich versucht das irgendwie zu verstehen. Am Anfang dachte ich noch, okay vieleicht kommt da gleich noch was. Aber nein, es wurde nur immer seltsamer und am Ende sitz ich hier und frage mich, warum ich nicht einfach früher ausgemacht habe.",
+"Was soll der Käse eigentlich? Man klickt drauf, wartet auf irgendwas und bekommt dann einfach nur dieses komische Durcheinander. Ich weiss nicht ob das lustig gemeint ist, aber falls ja, ist es ziemlich weit daran vorbei geflogen.",
+"Habt ihr sie noch alle? Ehrlich jetzt. Das wirkt wie etwas, das jemand nachts um halb zwei hochgeladen hat, weil er sich selbst nicht mehr sicher war, ob es Müll ist oder Kunst. Ich tippe mal ganz vorsichtig auf Müll.",
+"Ich will ja nicht direkt gemein sein, aber das hier macht es einem echt schwer. Da ist keine Idee, kein Timing, kein Punkt. Einfach nur irgendwas auf den Bildschirm geworfen und gehofft, dass Leute so tun als wäre es interessant.",
+"Wer gibt mir meine verlorene Lebenszeit wieder? Ich meine das nicht mal dramatisch. Ich hab wirklich das Gefühl, dass ich diese Minuten besser damit verbracht hätte, eine Wand anzustarren. Die hätte wenigstens nicht so getan als wäre sie Inhalt.",
+"Ich verstehe ja, dass Geschmäcker verschieden sind. Aber dafür braucht man erstmal irgendwas, worüber man Geschmack haben kann. Hier ist einfach nur so ein seltsames Nichts, das sich viel zu lange wichtig macht.",
+"Das ist so ein Ding, bei dem man nach 20 Sekunden denkt, okay das kann nur schlechter werden. Und dann wird es schlechter. Und dann nochmal. Irgendwann bewundert man fast die Konsequenz, aber gut ist es dadurch halt trotzdem nicht.",
+"Ich habe selten so lange auf den Moment gewartet, an dem irgendwas Sinn ergibt. Der Moment kam nicht. Stattdessen kam dieses flaue Gefühl, dass ich gerade einem Fehler beim Wachsen zugesehen habe.",
+"Sorry, aber was genau war hier der Plan? Es sieht aus wie eine Idee, die man in der Mittagspause hatte und dann leider niemand mehr gelöscht hat. Manchmal ist nicht veröffentlichen auch eine Form von Qualitätssicherung.",
+"Das hier ist nicht geheimnisvoll, das ist einfach nur unklar. Manche verwechseln ja gerne verwirrend mit tiefsinnig. Aber nur weil man nicht versteht was passiert, heißt das noch lange nicht, dass da was dahinter steckt.",
+"Ich hab echt nichts gegen komische Sachen. Komische Sachen können super sein. Aber das hier ist nicht komisch auf gute Art, sondern eher so auf die Art, wo man im Raum steht und keiner weiss, warum das Licht flackert.",
+"Warum tut man sowas online? Also wirklich. Es muss doch irgendwann einen Moment gegeben haben, wo jemand auf die Datei geschaut und gedacht hat, ja, genau das sollen fremde Menschen jetzt sehen. Dieser Moment war falsch.",
+"Das wirkt als hätte jemand sehr viel Vertrauen in eine sehr dünne Idee gehabt. Leider trägt die Idee nicht mal bis zur Hälfte. Danach hängt alles nur noch irgendwie herum und wartet darauf, dass es vorbei ist.",
+"Ich dachte erst, mein Browser spinnt, weil so wenig passiert. Dann wurde mir klar, nein, das gehört wohl so. Das ist irgendwie noch schlimmer. Ein technisches Problem hätte man wenigstens neu laden können.",
+"Manchmal ist schlechter Content wenigstens unterhaltsam schlecht. Das hier ist eher anstrengend schlecht. Nicht laut genug um lustig zu sein, nicht klug genug um interessant zu sein und nicht kurz genug um egal zu sein.",
+"Ich möchte kurz festhalten, dass ich wirklich freiwillig draufgeklickt habe. Das macht es leider nicht besser. Eigentlich macht es es schlimmer, weil ich jetzt mit meiner eigenen Entscheidung leben muss.",
+"Was für ein Quatsch. Und nicht mal der gute Quatsch, den man Freunden zeigt und sagt guck mal was ich gefunden hab. Eher der Quatsch, den man versehentlich sieht und danach so tut als wäre nichts passiert.",
+"Ich weiss nicht, ob das ironisch gemeint ist oder ob ich einfach zu wenig Kaffee hatte. Aber es fühlt sich an wie ein Clip, der selbst nicht so richtig weiss, warum er existiert. Und ganz ehrlich, ich weiss es auch nicht.",
+"Das ist die Art Video, nach der man kurz still wird. Nicht weil es einen berührt hat, sondern weil man innerlich prüft, ob man gerade zu hart urteilt. Nach kurzer Prüfung: nein, passt schon.",
+"Ich bin wirklich kein Hater, aber irgendwo muss man auch mal ehrlich sein. Das hier ist einfach schwach. Nicht charmant schwach, nicht nostalgisch schwach, sondern eher so: Warum hat das keiner vorher gestoppt?",
+"Ich habe mich die ganze Zeit gefragt, ob da noch ein Witz kommt. Dann dachte ich, vielleicht war der Witz schon da und ich hab ihn verpasst. Dann dachte ich, nein, da war einfach keiner. Auch eine Antwort.",
+"Das ist schon bemerkenswert. Es schafft, gleichzeitig hektisch und langweilig zu sein. Das muss man erstmal hinbekommen. Leider ist das keine Empfehlung, sondern eher eine Warnung.",
+"Wenn das Absicht war, ist es merkwürdig. Wenn es keine Absicht war, ist es peinlich. Und falls es irgendwas dazwischen sein soll, dann hat diese Zwischenlösung leider komplett versagt.",
+"Ich kann mir richtig vorstellen, wie jemand dachte, das sei total speziell. Ist es auch, aber speziell ist halt nicht automatisch gut. Manche Sachen sind auch speziell, weil sie keiner nochmal sehen will.",
+"Das hätte locker halb so lang sein können und wäre immer noch zu lang gewesen. Es zieht sich wie Kaugummi, nur ohne Geschmack. Am Ende bleibt einfach nur dieses Gefühl von ja gut, schade halt.",
+"Ich hab keine Ahnung, was hier passieren sollte. Und normalerweise finde ich sowas ja manchmal sogar interessant. Aber hier ist es nicht rätselhaft, sondern einfach nur schlecht erklärt und irgendwie lieblos.",
+"Das sieht aus wie etwas, das man aus Versehen in einem alten Ordner findet und dann schnell wieder schliesst. Aber nein, hier wurde es hochgeladen. Das war der eigentliche Fehler in der Kette.",
+"Ich will wirklich wissen, wer dafür die Zielgruppe sein soll. Leute mit zu viel Freizeit? Menschen, die sich selbst testen wollen? Oder einfach alle, die aus Versehen falsch geklickt haben?",
+"Der Anfang war schon schwierig, aber ich dachte mir, komm, bleib fair. Dann wurde es nicht besser. Dann wurde es sogar noch komischer. Irgendwann war Fairness einfach nicht mehr zuständig.",
+"Das fühlt sich an wie ein Insider, bei dem nicht mal die Insider lachen. Man steht daneben, schaut kurz rüber und merkt dann, dass man besser gegangen wäre bevor es unangenehm wird.",
+"Also nee. Manche Sachen darf man ja ruhig ausprobieren. Aber ausprobieren heißt nicht automatisch veröffentlichen. Da fehlt noch mindestens ein Schritt namens nochmal drüber nachdenken.",
+"Ich habe ungefähr drei mal gedacht, jetzt kommt gleich der Punkt. Der Punkt kam nie. Stattdessen kam immer nur noch mehr von diesem Zeug. Irgendwann nimmt man das fast persönlich.",
+"Das ist nicht roh, das ist unfertig. Das ist ein Unterschied. Roh kann spannend sein, unfertig ist meistens einfach nur mühsam. Und hier merkt man leider ziemlich genau, auf welcher Seite es gelandet ist.",
+"Man kann über vieles streiten, aber hier bin ich ziemlich sicher: Das hätte niemand gebraucht. Nicht mal im Hintergrund laufen lassen. Selbst als Hintergrund wäre es noch zu anstrengend.",
+"Ich frage mich, ob jemand das komplett angeschaut hat, bevor es online ging. Falls ja, Respekt für die Ausdauer. Falls nein, erklärt das immerhin einiges und macht die Sache fast verständlicher.",
+"Das Video hat die Energie von jemandem, der eine Geschichte anfängt und dann vergisst, worum es ging. Nur dass man trotzdem weiter zuhören muss, weil der Stopp Knopf offenbar moralisch zu weit weg war.",
+"Ich wollte eigentlich nur kurz reinschauen. Jetzt sitze ich hier mit diesem leeren Blick und frage mich, warum mein Algorithmus mir sowas zutraut. Das hat zwischen uns jetzt Vertrauen gekostet.",
+"Es gibt schlechte Videos, die wenigstens eine klare Meinung auslösen. Hier ist es eher so eine matschige Enttäuschung. Nicht mal ordentlich ärgern kann man sich, weil alles so diffus daneben liegt.",
+"Das hier wirkt wie ein Entwurf von einem Entwurf. Als hätte jemand die falsche Version exportiert und dann gedacht, ach egal, merkt schon keiner. Doch, man merkt es. Man merkt es sehr.",
+"Bitte beim nächsten Mal einfach vorher jemanden fragen, der ehrlich antwortet. Nicht jemanden, der sagt ja cool, mach mal. Sondern jemanden, der sagt, du, vielleicht lieber nicht. Solche Menschen sind wichtig.",
+  "lol was soll das",
+"cringe des tages",
+"bruder nein einfach nein",
+"das is ja mal gar nix",
+"wer hat das erlaubt",
+"peak quatsch hier",
+"aua meine augen",
+"ich bin raus",
+"komplett lost das ding",
+"digga was war das",
+"maximal unnötig",
+"absoluter fiebertraum",
+"bitte löschen danke",
+"wild aber nicht gut",
+"ne sorry das wars",
+"hat null gecatcht",
+"einfach nur warum",
+"bro das tut weh",
+"content aus der hölle",
+"okay genug internet heute",
+"bruh was is das denn",
+"hab direkt wieder zugemacht",
+"größter müll heute",
+"komplett random alter",
+"nein danke next",
+"das war nix chef",
+"mega lost einfach",
+"wer schaut sowas freiwillig",
+"ich bereue den klick",
+"was für ein quatsch",
+"diggi bitte hör auf",
+"das ist so unnötig",
+"null vibe hier",
+"boah ist das schlecht",
+"cringe overload ehrlich",
+"warum wird mir das gezeigt",
+"ich kann das alles nicht mehr",
+"absoluter internetunfall",
+"das muss satire sein",
+"bro geh schlafen",
+"nächster bitte",
+"was fürn käse ey",
+"mein wlan leidet mit",
+"hab besseres erwartet lol",
+"komplett daneben",
+"richtiger reinfall",
+"das is hart peinlich",
+"wer hat danach gefragt",
+"ne digga einfach nein",
+"ich will mein scrollen zurück"
+];
+
+const userNames = [
+  "tracking_otto",
+  "bandlauf87",
+  "vhs_klaus",
+  "spurlage_sven",
+  "dropout_doris",
+  "kopfsignal",
+  "stadtfuchs",
+"nachtschichtler",
+"kaffeekante",
+"regenfenster",
+"sonntagsfahrer",
+"pixelpeter",
+"waldmeisterin",
+"mauersegler",
+"blaubeerhut",
+"nebenraum",
+"teppichkante",
+"halbwach",
+"grauerpullover",
+"taschenfund",
+"lampenlicht",
+"sternhagel",
+"fensterplatz",
+"weichzeichner",
+"kurzvoracht",
+"buerokaktus",
+"flurgespraech",
+"winterjacke",
+"kartoffelmond",
+"schreibtischkind",
+"wolkenzähler",
+"milchkaffee77",
+"abendbrot",
+"randnotiz",
+"treppenhaus",
+"falscherbus",
+"kleinstadtwolf",
+"honigglas",
+"nordlichtchen",
+"matratzenhorst",
+"zimmertanne",
+"bratpfannenchef",
+"orangensofa",
+"wolkenschieber",
+"mittelspur",
+"hausnummer13",
+"regenjacke",
+"sockenpilot",
+"tischkante",
+"pfandbon",
+"sommermensch",
+"apfelrest",
+"haltestelle9",
+"blumenbank",
+"schattenparker",
+"untertasse",
+"morgengrau",
+"fensterkipp",
+"backsteinhund",
+"pappkarton",
+"zimmerpflanze",
+"brotkruste",
+"wasserkocher",
+"glueckskeks",
+"stadtlaterne",
+"briefkasten",
+"flauschjacke",
+"holztisch",
+"mondkalb",
+"nebelbank",
+"grossstadtkind",
+"einkaufswagen",
+"lauterleise",
+"mistwetter",
+"schlafanzug",
+"restkaffee",
+  "longplay_lars",
+  "zeitcodefehler",
+  "mono_tonspur",
+  "kellerfund42",
+  "bildrauschen",
+  "stillframe_ingo",
+  "magnetband_mira",
+  "pausezeichen",
+  "restlaufzeit",
+  "bruhmoment3000",
+"yeetmaschine",
+"lostimscroll",
+"npc_mit_wlan",
+"chad_von_nebenan",
+"cringe_kartoffel",
+"based_brezel",
+"digga_deluxe",
+"lolbert69",
+"meme_manfred",
+"skibidi_sachbearbeiter",
+"rant_ronny",
+"giga_horst",
+"snackosaurus",
+"doomscroll_dieter",
+"lowkey_lurch",
+"highkey_hans",
+"susanne_sus",
+"brokkoli_bro",
+"der_echte_kevin",
+"wlan_wizard",
+"pixel_paule",
+"random_rüdiger",
+"nope_norbert",
+"big_oof_otto",
+"salty_sabine",
+"trashpanda_tim",
+"sideeye_sven",
+"murksmax",
+"glitch_günther",
+"kaffee_klaus",
+"toast_titan",
+"lord_lauch",
+"herr_keks",
+"frau_fomo",
+"midlife_meme",
+"ok_boombert",
+"hashtag_holger",
+"flop_fabian",
+"ragequit_rita",
+"snacc_attack",
+"der_mit_dem_lol",
+"trollbert",
+"moin_meme",
+"zuvielinternet",
+"keinerfragte",
+"scrollknecht",
+"bratwurst_brudi",
+"hyper_hilde",
+"achkomm_alter"
+];
 
     const videoGrid = document.getElementById("videoGrid");
     const footerErrorDialog = document.getElementById("footerErrorDialog");
@@ -1234,6 +1956,22 @@
     const confirmLegalRecording = document.getElementById("confirmLegalRecording");
     const confirmNoManipulation = document.getElementById("confirmNoManipulation");
     const loadMoreButton = document.getElementById("loadMoreButton");
+    const archiveView = document.getElementById("archiveView");
+const playerView = document.getElementById("playerView");
+const backToGridButton = document.getElementById("backToGridButton");
+const playerImage = document.getElementById("playerImage");
+const playerTitle = document.getElementById("playerTitle");
+const playerMeta = document.getElementById("playerMeta");
+const playerLikes = document.getElementById("playerLikes");
+const playerDislikes = document.getElementById("playerDislikes");
+const playerComments = document.getElementById("playerComments");
+const fakePlayButton = document.getElementById("fakePlayButton");
+const commentsList = document.getElementById("commentsList");
+const loadMoreCommentsButton = document.getElementById("loadMoreCommentsButton");
+const relatedList = document.getElementById("relatedList");
+const loginRequiredActions = document.querySelectorAll(".login-required-action");
+const brandHomeButton = document.getElementById("brandHomeButton");
+const writeCommentButton = document.getElementById("writeCommentButton");
 
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
@@ -1311,74 +2049,190 @@
       loginForm.reset();
       loginDialog.showModal();
     }
-
-    function renderCards() {
-      const selectedImages = shuffleArray(createImagePool()).slice(0, NUMBER_OF_CARDS);
-      videoGrid.innerHTML = "";
-
-      selectedImages.forEach((imageNumber) => {
-        const paddedNumber = padImageNumber(imageNumber);
-        const imagePath = `${IMAGE_FOLDER}${paddedNumber}${IMAGE_EXTENSION}`;
-        const viewCount = randomInteger(257, 98000);
-        const engagement = createEngagement(viewCount);
-        const commentCount = randomInteger(1, 99);
-        const card = document.createElement("article");
-        card.className = "video-card";
-        card.tabIndex = 0;
-        card.setAttribute("role", "button");
-        card.setAttribute("aria-label", "Archivvideo öffnen");
-
-        card.innerHTML = `
-          <div class="thumb-wrap">
-            <img src="${imagePath}" alt="jaTV Archivbild ${paddedNumber}" loading="lazy" />
-            <span class="lock-badge">Locked</span>
-            <span class="duration">${createDuration()}</span>
-          </div>
-          <div class="video-info">
-            <div class="avatar">
-                <img src="logo.png" alt="jaTV Logo" />
-            </div>
-            <div>
-              <h3 class="video-title">${createTitle()}</h3>
-              <div class="meta">
-                ${formatViews(viewCount)} · vor ${randomInteger(2, 19)} Jahren archiviert
-                <div class="rating-meta" aria-label="Bewertungen und Kommentare">
-                  <span class="rating-item">
-                    <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
-                    </svg>
-                    ${formatNumber(engagement.likes)}
-                  </span>
-                  <span class="rating-item">
-                    <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
-                    </svg>
-                    ${formatNumber(engagement.dislikes)}
-                  </span>
-                  <span class="rating-item">
-                    <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H9.4L4 22v-4H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm0 2v10h2v2l2.7-2H20V6H4Z"></path>
-                    </svg>
-                    ${formatNumber(commentCount)}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-
-        card.addEventListener("click", openLoginDialog);
-        card.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            openLoginDialog();
-          }
-        });
-
-        videoGrid.appendChild(card);
-      });
-    }
     
+    function createVideoData(imageNumber) {
+  const paddedNumber = padImageNumber(imageNumber);
+  const imagePath = `${IMAGE_FOLDER}${paddedNumber}${IMAGE_EXTENSION}`;
+  const viewCount = randomInteger(257, 98000);
+  const engagement = createEngagement(viewCount);
+  const commentCount = randomInteger(1, 99);
+
+  return {
+    imageNumber,
+    paddedNumber,
+    imagePath,
+    title: createTitle(),
+    viewCount,
+    engagement,
+    commentCount,
+    duration: createDuration(),
+    age: randomInteger(2, 19)
+  };
+}
+
+function createRatingHtml(video) {
+  return `
+    <div class="rating-meta" aria-label="Bewertungen und Kommentare">
+      <span class="rating-item">
+        <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
+        </svg>
+        ${formatNumber(video.engagement.likes)}
+      </span>
+
+      <span class="rating-item">
+        <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
+        </svg>
+        ${formatNumber(video.engagement.dislikes)}
+      </span>
+
+      <span class="rating-item">
+        <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H9.4L4 22v-4H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm0 2v10h2v2l2.7-2H20V6H4Z"></path>
+        </svg>
+        ${formatNumber(video.commentCount)}
+      </span>
+    </div>
+  `;
+}
+
+function renderComments() {
+  const selectedComments = shuffleArray(negativeComments).slice(0, 5);
+  commentsList.innerHTML = "";
+
+  selectedComments.forEach((comment) => {
+    const userName = randomItem(userNames);
+    const commentItem = document.createElement("article");
+    commentItem.className = "comment-item";
+
+    commentItem.innerHTML = `
+      <div class="comment-avatar">${userName.slice(0, 2).toUpperCase()}</div>
+      <div>
+        <div class="comment-user">@${userName} · vor ${randomInteger(2, 11)} Jahren</div>
+        <div class="comment-text">${comment}</div>
+      </div>
+    `;
+
+    commentsList.appendChild(commentItem);
+  });
+}
+
+function renderRelatedVideos(currentVideo) {
+  const relatedVideos = shuffleArray(createImagePool())
+    .filter((imageNumber) => imageNumber !== currentVideo.imageNumber)
+    .slice(0, 11)
+    .map(createVideoData);
+
+  relatedList.innerHTML = "";
+
+  relatedVideos.forEach((video) => {
+    const relatedCard = document.createElement("article");
+    relatedCard.className = "related-card";
+    relatedCard.tabIndex = 0;
+    relatedCard.setAttribute("role", "button");
+    relatedCard.setAttribute("aria-label", "Ähnliches Video öffnen");
+
+    relatedCard.innerHTML = `
+      <div class="related-thumb">
+        <img src="${video.imagePath}" alt="jaTV Archivbild ${video.paddedNumber}" loading="lazy">
+        <span class="related-duration">${video.duration}</span>
+      </div>
+      <div>
+        <h4 class="related-title">${video.title}</h4>
+        <div class="related-meta">${formatViews(video.viewCount)}<br>vor ${video.age} Jahren archiviert</div>
+      </div>
+    `;
+
+    relatedCard.addEventListener("click", () => openPlayer(video));
+
+    relatedCard.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPlayer(video);
+      }
+    });
+
+    relatedList.appendChild(relatedCard);
+  });
+}
+
+function openPlayer(video) {
+  archiveView.classList.add("view-hidden");
+  playerView.classList.remove("view-hidden");
+
+  playerImage.src = video.imagePath;
+  playerImage.alt = `jaTV Archivbild ${video.paddedNumber}`;
+  playerTitle.textContent = video.title;
+  playerMeta.textContent = `${formatViews(video.viewCount)} · vor ${video.age} Jahren archiviert`;
+  playerLikes.textContent = formatNumber(video.engagement.likes);
+  playerDislikes.textContent = formatNumber(video.engagement.dislikes);
+  playerComments.textContent = formatNumber(video.commentCount);
+
+  renderComments();
+  renderRelatedVideos(video);
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function closePlayer() {
+  playerView.classList.add("view-hidden");
+  archiveView.classList.remove("view-hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+   function renderCards() {
+  const selectedImages = shuffleArray(createImagePool()).slice(0, NUMBER_OF_CARDS);
+  videoGrid.innerHTML = "";
+
+  selectedImages.forEach((imageNumber) => {
+    const video = createVideoData(imageNumber);
+
+    const card = document.createElement("article");
+    card.className = "video-card";
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", "Archivvideo öffnen");
+
+    card.innerHTML = `
+      <div class="thumb-wrap">
+        <img src="${video.imagePath}" alt="jaTV Archivbild ${video.paddedNumber}" loading="lazy" />
+        <span class="lock-badge">Locked</span>
+        <span class="duration">${video.duration}</span>
+      </div>
+      <div class="video-info">
+        <div class="avatar">
+          <img src="logo.png" alt="jaTV Logo" />
+        </div>
+        <div>
+          <h3 class="video-title">${video.title}</h3>
+          <div class="meta">
+            ${formatViews(video.viewCount)} · vor ${video.age} Jahren archiviert
+            ${createRatingHtml(video)}
+          </div>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener("click", () => openPlayer(video));
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPlayer(video);
+      }
+    });
+
+    videoGrid.appendChild(card);
+  });
+}    
     loadMoreButton.addEventListener("click", () => {
   openLoginDialog();
 });
@@ -1408,6 +2262,8 @@
   sortButton.setAttribute("aria-expanded", String(isOpen));
 });
 
+writeCommentButton.addEventListener("click", openLoginDialog);
+
 uploadButton.addEventListener("click", () => {
   uploadLegalError.textContent = "";
   uploadFormatError.textContent = "";
@@ -1428,6 +2284,17 @@ uploadButton.addEventListener("click", () => {
 
 closeUploadDialog.addEventListener("click", () => {
   uploadDialog.close();
+});
+
+brandHomeButton.addEventListener("click", () => {
+  if (typeof closePlayer === "function") {
+    closePlayer();
+  } else {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
 });
 
 uploadLegalNextButton.addEventListener("click", () => {
@@ -1489,6 +2356,15 @@ sortOptions.forEach((option) => {
     sortButton.setAttribute("aria-expanded", "false");
     openLoginDialog();
   });
+});
+
+backToGridButton.addEventListener("click", closePlayer);
+
+fakePlayButton.addEventListener("click", openLoginDialog);
+loadMoreCommentsButton.addEventListener("click", openLoginDialog);
+
+loginRequiredActions.forEach((button) => {
+  button.addEventListener("click", openLoginDialog);
 });
 
     renderCards();

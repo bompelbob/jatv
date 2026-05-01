@@ -1,0 +1,2324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
+  <title>Just Another Tape Vault</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #181818;
+      --surface-light: #242424;
+      --text: #f1f1f1;
+      --muted: #aaa;
+      --accent: #ff0033;
+      --accent-dark: #b80025;
+      --border: #303030;
+      --input: #121212;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 15, 15, 0.96);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+    
+    .upload-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.upload-callout p {
+  margin: 0;
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.upload-button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background: var(--accent-dark);
+}
+
+.upload-step {
+  display: none;
+}
+
+.upload-step.is-active {
+  display: block;
+}
+
+.upload-options {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.upload-options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.upload-options input {
+  margin-top: 2px;
+}
+
+@media (max-width: 680px) {
+  .upload-callout {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .upload-button {
+    width: 100%;
+  }
+}
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  display: block;
+  opacity: 0.96;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
+.brand-button {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.brand-button:hover span {
+  color: var(--accent);
+}
+
+    .brand span:last-child {
+      color: var(--text);
+    }
+
+    .searchbar {
+      flex: 1;
+      max-width: 620px;
+      margin: 0 32px;
+      display: flex;
+      height: 38px;
+    }
+
+    .searchbar input {
+      flex: 1;
+      background: var(--input);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 20px 0 0 20px;
+      padding: 0 18px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .searchbar button {
+      width: 64px;
+      border: 1px solid var(--border);
+      border-left: 0;
+      background: var(--surface-light);
+      color: var(--muted);
+      border-radius: 0 20px 20px 0;
+      cursor: pointer;
+      font-size: 17px;
+    }
+    
+    .search-button {
+  display: grid;
+  place-items: center;
+}
+
+.search-icon {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+  opacity: 0.9;
+}
+
+.searchbar button:hover {
+  color: var(--text);
+  background: #2a2a2a;
+}
+
+    .top-action {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 28px 24px 56px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .archive-hero {
+      margin-bottom: 28px;
+      padding: 28px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #202020, #111 60%, #210009);
+      border: 1px solid var(--border);
+    }
+
+    .archive-hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 48px);
+      letter-spacing: -0.06em;
+    }
+
+    .archive-hero p {
+      margin: 0;
+      max-width: 780px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+.section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+}
+
+.sort-menu {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 13px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sort-button::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--muted);
+  margin-top: 2px;
+}
+
+.sort-options {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 178px;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #1b1b1b;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+  display: none;
+  z-index: 5;
+}
+
+.sort-menu.is-open .sort-options {
+  display: grid;
+  gap: 2px;
+}
+
+.sort-option {
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  padding: 9px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sort-option:hover,
+.sort-option:focus {
+  background: var(--surface-light);
+  color: var(--text);
+  outline: none;
+}
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px 20px;
+    }
+
+    .video-card {
+      cursor: pointer;
+      min-width: 0;
+    }
+
+    .thumb-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.22s ease, filter 0.22s ease;
+    }
+
+    .video-card:hover img {
+      transform: scale(1.035);
+      filter: brightness(1.08);
+    }
+
+    .duration {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      padding: 3px 6px;
+      background: rgba(0, 0, 0, 0.78);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 5px;
+    }
+
+    .lock-badge {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      padding: 3px 7px;
+      background: rgba(255, 0, 51, 0.9);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .video-info {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+    .video-title {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      line-height: 1.32;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: .8;
+    }
+
+    .rating-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .rating-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .rating-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      opacity: 0.9;
+      fill: currentColor;
+    }
+
+    dialog {
+      width: min(420px, calc(100vw - 32px));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #1b1b1b;
+      color: var(--text);
+      padding: 0;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.65);
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(5px);
+    }
+
+    .dialog-inner {
+      padding: 28px;
+    }
+
+    .dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .dialog-header h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+    
+    .load-more-wrap {
+
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 38px;
+
+}
+
+.load-more-button {
+
+  border: 1px solid var(--border);
+
+  border-radius: 999px;
+
+  background: var(--surface);
+
+  color: var(--text);
+
+  padding: 11px 22px;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+}
+
+.load-more-button:hover {
+
+  background: var(--surface-light);
+
+}
+
+    .close-button {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface-light);
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .login-note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      margin: 0 0 18px;
+    }
+
+    .login-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .login-form label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .login-form input {
+      width: 100%;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      padding: 0 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .login-form input:focus {
+      border-color: var(--accent);
+    }
+
+    .primary-button {
+      height: 44px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .primary-button:hover {
+      background: var(--accent-dark);
+    }
+
+    .error-message {
+      min-height: 22px;
+      color: #ff6b7d;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 4px 0 0;
+    }
+
+    .register-line {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .register-line a {
+      color: var(--text);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      cursor: pointer;
+    }
+
+    .site-footer {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px 34px;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 22px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 980px) {
+      .video-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .searchbar {
+        margin: 0 18px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      header {
+        height: auto;
+        padding: 14px 16px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+      }
+
+      .searchbar {
+        grid-column: 1 / -1;
+        order: 3;
+        margin: 0;
+        max-width: none;
+      }
+
+      main {
+        padding: 18px 14px 42px;
+      }
+
+      .archive-hero {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 26px;
+      }
+      .section-header {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.sort-menu {
+  width: 100%;
+}
+
+.sort-button {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sort-options {
+  left: 0;
+  right: auto;
+  width: 100%;
+}
+    }
+    
+    .view-hidden {
+  display: none !important;
+}
+
+.watch-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+.player-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.player-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.78) contrast(1.08);
+}
+
+.player-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.18), transparent 35%, rgba(0,0,0,0.68)),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.035),
+      rgba(255,255,255,0.035) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  pointer-events: none;
+}
+
+.player-play-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 76px;
+  height: 76px;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.72);
+  color: white;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.player-play-button svg {
+  width: 34px;
+  height: 34px;
+  fill: currentColor;
+  margin-left: 4px;
+}
+
+.player-status {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.78);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.watch-title {
+  margin: 18px 0 8px;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.18;
+  letter-spacing: -0.04em;
+}
+
+.watch-meta {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.watch-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 22px;
+}
+
+.watch-action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 9px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.watch-action-button:hover {
+  background: var(--surface-light);
+}
+
+.watch-action-button svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.comments-panel {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.comments-panel h3,
+.related-column h3 {
+  margin: 0 0 14px;
+  font-size: 18px;
+}
+
+.comment-item {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 11px;
+  margin-bottom: 18px;
+}
+
+.comment-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #555, #1d1d1d);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.comment-user {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.comment-text {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.related-list {
+  display: grid;
+  gap: 14px;
+}
+
+.related-card {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.related-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.related-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.related-duration {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  padding: 2px 5px;
+  background: rgba(0,0,0,0.78);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.related-title {
+  margin: 0 0 5px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.related-meta {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.back-to-grid {
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  padding: 8px 13px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.back-to-grid:hover {
+  background: var(--surface-light);
+}
+
+@media (max-width: 980px) {
+  .watch-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .related-card {
+    grid-template-columns: 120px 1fr;
+  }
+
+  .watch-actions {
+    display: grid;
+  }
+
+  .watch-action-button {
+    justify-content: center;
+  }
+}
+  </style>
+</head>
+<body>
+  <header>
+<button class="brand brand-button" id="brandHomeButton" type="button" aria-label="Zur Hauptansicht">
+  <img class="brand-logo" src="logo.png" alt="jaTV Logo" />
+  <span style="font-size: 16px;">Just Another Tape Vault</span>
+</button>
+
+    <form class="searchbar" id="searchForm" aria-label="Archivsuche">
+      <input type="search" placeholder="Im Archiv suchen" />
+      <button type="submit" aria-label="Suchen" class="search-button">
+  <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M10.8 4a6.8 6.8 0 1 0 0 13.6 6.8 6.8 0 0 0 0-13.6Zm0 2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6Zm5.2 9.1 4.4 4.4-1.4 1.4-4.4-4.4 1.4-1.4Z"></path>
+  </svg>
+</button>
+    </form>
+
+    <button class="top-action" id="headerLoginButton">Anmelden</button>
+  </header>
+
+ <main>
+  <div id="archiveView">
+    <section class="archive-hero">
+      <h1>Archiv</h1>
+      <p>Entdecke neue Videos, alte Aufnahmen und ausgewählte Clips aus dem jaTV-Bestand.</p>
+    
+      <div class="upload-callout">
+        <p>
+          Hilf mit, das jaTV-Archiv endlich zu vervollständigen. Wenn du private Sendemitschnitte, alte Kassetten oder bislang nicht erfasste Aufzeichnungen besitzt, kannst du diese zur Prüfung einreichen.
+        </p>
+        <button class="upload-button" id="uploadButton" type="button">Sendemitschnitt hochladen</button>
+      </div>
+    </section>
+
+    <div class="section-header">
+      <h2 class="section-title">Empfohlene Archivfunde</h2>
+
+      <div class="sort-menu">
+        <button class="sort-button" type="button" aria-haspopup="true" aria-expanded="false">
+          Sortierung: empfohlene
+        </button>
+
+        <div class="sort-options" role="menu" aria-label="Sortierung auswählen">
+          <button class="sort-option" type="button" role="menuitem">neueste</button>
+          <button class="sort-option" type="button" role="menuitem">beste</button>
+          <button class="sort-option" type="button" role="menuitem">kontroverseste</button>
+          <button class="sort-option" type="button" role="menuitem">nonchalanteste</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="video-grid" id="videoGrid" aria-live="polite"></section>
+
+    <div class="load-more-wrap">
+      <button class="load-more-button" id="loadMoreButton" type="button">
+        mehr anzeigen
+      </button>
+    </div>
+  </div>
+
+  <section id="playerView" class="view-hidden">
+    <button class="back-to-grid" id="backToGridButton" type="button">Zurück zur Übersicht</button>
+
+    <div class="watch-layout">
+      <div class="watch-main">
+        <div class="player-frame">
+          <img id="playerImage" src="" alt="">
+          <div class="player-overlay"></div>
+
+          <button class="player-play-button" id="fakePlayButton" type="button" aria-label="Video abspielen">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7L8 5Z"></path>
+            </svg>
+          </button>
+
+          <div class="player-status">Wiedergabe vorbereitet · Anmeldung erforderlich</div>
+        </div>
+
+        <h1 class="watch-title" id="playerTitle"></h1>
+        <div class="watch-meta" id="playerMeta"></div>
+
+        <div class="watch-actions">
+          <button class="watch-action-button login-required-action" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
+            </svg>
+            <span id="playerLikes"></span>
+          </button>
+
+          <button class="watch-action-button login-required-action" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
+            </svg>
+            <span id="playerDislikes"></span>
+          </button>
+
+          <button class="watch-action-button login-required-action" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H9.4L4 22v-4H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm0 2v10h2v2l2.7-2H20V6H4Z"></path>
+            </svg>
+            <span id="playerComments"></span>
+          </button>
+        </div>
+
+        <section class="comments-panel">
+          <h3>Kommentare</h3>
+          <div id="commentsList"></div>
+          <button class="load-more-button" id="loadMoreCommentsButton" type="button">weitere Kommentare laden</button>
+        </section>
+      </div>
+
+      <aside class="related-column">
+        <h3>Ähnliche Videos</h3>
+        <div class="related-list" id="relatedList"></div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+  <footer class="site-footer">
+    <nav class="footer-links" aria-label="Footer Navigation">
+      <a href="#" class="broken-footer-link">Kontakt</a>
+      <a href="#" class="broken-footer-link">Karriere</a>
+      <a href="#" class="broken-footer-link">Nutzungsbedingungen</a>
+      <a href="impdaten.html">Impressum</a>
+      <a href="#" class="broken-footer-link">Hilfe</a>
+    </nav>
+  </footer>
+
+  <dialog id="footerErrorDialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2>Seite nicht verfügbar</h2>
+        <button class="close-button" id="closeFooterErrorDialog" aria-label="Dialog schließen">×</button>
+      </div>
+      <p class="login-note" id="footerErrorText">Diese Seite konnte nicht geladen werden.</p>
+      <button class="primary-button" id="footerErrorOkButton">Verstanden</button>
+    </div>
+  </dialog>
+
+  <dialog id="searchDialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2>Suchindex nicht verfügbar</h2>
+        <button class="close-button" id="closeSearchDialog" aria-label="Dialog schließen">×</button>
+      </div>
+      <p class="login-note" id="searchDialogText">Die Abfrage konnte nicht ausgeführt werden.</p>
+      <button class="primary-button" id="searchOkButton">Verstanden</button>
+    </div>
+  </dialog>
+  
+  <dialog id="uploadDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>jaTV-Mitschnitt einreichen</h2>
+      <button class="close-button" id="closeUploadDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="upload-step is-active" id="uploadStepLegal">
+      <p class="login-note">
+        Bevor der Upload vorbereitet werden kann, bestätige bitte die Herkunft des Materials.
+      </p>
+
+      <div class="upload-options">
+        <label>
+          <input type="checkbox" id="confirmJatvMaterial">
+          Die Aufnahme ist tatsächlich eine jaTV-Aufnahme oder enthält eindeutig identifizierbares jaTV-Material.
+        </label>
+
+        <label>
+          <input type="checkbox" id="confirmLegalRecording">
+          Die Aufnahme wurde auf legalem Wege angefertigt und befindet sich rechtmäßig in meinem Besitz.
+        </label>
+
+        <label>
+          <input type="checkbox" id="confirmNoManipulation">
+          Das Material wurde nicht sinnverändernd bearbeitet, rekonstruiert oder nachträglich mit fremden Sendeteilen versetzt.
+        </label>
+      </div>
+
+      <p class="error-message" id="uploadLegalError"></p>
+      <button class="primary-button" id="uploadLegalNextButton" type="button">Weiter</button>
+    </div>
+
+    <div class="upload-step" id="uploadStepFormat">
+      <p class="login-note">
+        Wähle das Ausgangsformat der vorliegenden Aufnahme aus. Bei unsicherer Herkunft wähle bitte die technisch naheliegendste Option.
+      </p>
+
+      <div class="upload-options">
+        <label><input type="radio" name="uploadFormat" value="VHS"> VHS</label>
+        <label><input type="radio" name="uploadFormat" value="S-VHS"> S-VHS</label>
+        <label><input type="radio" name="uploadFormat" value="Video 8"> Video 8</label>
+        <label><input type="radio" name="uploadFormat" value="Hi8"> Hi8</label>
+        <label><input type="radio" name="uploadFormat" value="Digital8"> Digital8</label>
+        <label><input type="radio" name="uploadFormat" value="MiniDV"> MiniDV</label>
+        <label><input type="radio" name="uploadFormat" value="Betamax"> Betamax</label>
+        <label><input type="radio" name="uploadFormat" value="Betacam SP"> Betacam SP</label>
+        <label><input type="radio" name="uploadFormat" value="U-matic"> U-matic</label>
+        <label><input type="radio" name="uploadFormat" value="Video 2000"> Video 2000</label>
+        <label><input type="radio" name="uploadFormat" value="VCR Longplay"> VCR Longplay</label>
+        <label><input type="radio" name="uploadFormat" value="LaserDisc"> LaserDisc</label>
+        <label><input type="radio" name="uploadFormat" value="DVCAM"> DVCAM</label>
+        <label><input type="radio" name="uploadFormat" value="DigiBeta"> Digital Betacam</label>
+        <label><input type="radio" name="uploadFormat" value="MII"> Panasonic MII</label>
+        <label><input type="radio" name="uploadFormat" value="1-Zoll-C"> 1-Zoll-C-Format</label>
+        <label><input type="radio" name="uploadFormat" value="EIAJ-1-2-Zoll"> EIAJ 1/2-Zoll Open Reel</label>
+        <label><input type="radio" name="uploadFormat" value="Cartrivision"> Cartrivision</label>
+        <label><input type="radio" name="uploadFormat" value="VX"> Quasar VX</label>
+        <label><input type="radio" name="uploadFormat" value="V-Cord"> Sanyo V-Cord</label>
+        <label><input type="radio" name="uploadFormat" value="Archivspule 11B"> Archivspule 11B</label>
+      </div>
+
+      <p class="error-message" id="uploadFormatError"></p>
+      <button class="primary-button" id="uploadFormatNextButton" type="button">Weiter</button>
+    </div>
+  </div>
+</dialog>
+
+  <dialog id="loginDialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2>Zugriff auf jaTV</h2>
+        <button class="close-button" id="closeDialog" aria-label="Dialog schließen">×</button>
+      </div>
+
+      <p class="login-note">Bitte melde dich mit deinen Zugangsdaten an.</p>
+
+      <form class="login-form" id="loginForm">
+        <label>
+          Benutzername
+          <input type="text" autocomplete="username" required />
+        </label>
+
+        <label>
+          Passwort
+          <input type="password" autocomplete="current-password" required />
+        </label>
+
+        <button class="primary-button" type="submit">Einloggen</button>
+        <p class="error-message" id="errorMessage"></p>
+      </form>
+
+      <p class="register-line">Noch keinen Zugang? <a href="#" id="registerLink">Jetzt registrieren</a></p>
+    </div>
+  </dialog>
+
+  <dialog id="registerDialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <h2>Registrierung nicht möglich</h2>
+        <button class="close-button" id="closeRegisterDialog" aria-label="Dialog schließen">×</button>
+      </div>
+      <p class="login-note">Aufgrund der Vielzahl an Anmeldungen können derzeit keine neuen jaTV-Zugänge erstellt werden. Bitte versuche es zu einem unbestimmten späteren Zeitpunkt erneut.</p>
+      <button class="primary-button" id="registerOkButton">Verstanden</button>
+    </div>
+  </dialog>
+
+  <script>
+    const IMAGE_FOLDER = "images/";
+    const IMAGE_EXTENSION = ".jpeg";
+    const FIRST_IMAGE = 1;
+    const LAST_IMAGE = 487;
+    const NUMBER_OF_CARDS = 9;
+
+    const titlePrefixes = [
+      "Archivfragment",
+      "Sichtungskopie",
+      "Materialprobe",
+      "Sendeband",
+      "Rohschnitt",
+      "Interne Aufnahme",
+      "Ungeklärtes Segment",
+      "Privatmitschnitt",
+      "Indexeintrag",
+      "Bandkopie",
+      "Restmaterial",
+      "Überwachter Fund",
+      "MAZ physisch beschädigt",
+      "Magnetband",
+      "Kubikkassette",
+      "Vorschaumaterial",
+        "Bestandsaufnahme",
+        "Medienvermerk",
+        "Katalogeintrag",
+        "Sperrkopie",
+        "Sendefenster",
+        "Überspielrest",
+        "Prüfmaterial",
+        "Freigabefassung",
+        "Altbestand",
+        "Restband",
+        "Zwischenkopie",
+        "Quellmaterial",
+        "Sichtungsvermerk",
+        "Archivnotiz",
+        "Programmrest",
+        "Bandabschnitt",
+        "Referenzkopie",
+        "Ausgangsmaterial",
+        "Dokumentationsspur",
+        "Übernahmefassung",
+        "Kassettenfund",
+        "Rückläufermaterial",
+        "Kontrollschnitt",
+        "Magazinbeitrag",
+        "Prüfbestand",
+        "Sendeauszug",
+        "Vorsortierung",
+        "Medienfund",
+        "Bestandsfragment",
+        "Rückkopierbestand",
+        "Freigabevermerk",
+        "Sendeprotokoll",
+        "Vorschauauszug",
+        "Medienrest",
+        "Zwischenarchiv",
+        "Prüfsequenz",
+        "Transferkopie",
+        "Rohmaterialfund",
+        "Bestandsverweis",
+        "Ausspielkopie",
+        "Sicherungsfragment",
+        "Redaktionsrest",
+        "Programmschatten",
+        "Kassetteneintrag",
+        "Vorlaufmaterial",
+        "Nachsichtung",
+        "Kontrollfassung",
+        "Archivspur",
+        "Sendesplitter",
+        "Materialnachtrag",
+        "Indexvermerk",
+        "Vorsichtungsrest",
+        "Bandprotokoll",
+        "Freigabeschatten",
+        "Medienanhang",
+        "Technikfassung",
+        "Restsequenz",
+        "Katalogsplitter",
+        "Sichtungsfund",
+        "Programmvermerk",
+        "Auswertungsclip",
+        "Altbandnotiz",
+        "Übernahmeclip",
+        "Transfereintrag",
+        "Prüfkopie",
+        "Schnittrest",
+        "Signalprobe",
+        "Medienlauf",
+        "Archivreserve",
+        "Sendemuster",
+        "Vorschaubestand",
+        "Rücklaufkopie",
+        "Quellverweis",
+        "Katalogrest",
+        "Bildprotokoll",
+        "Tonvermerk",
+        "Sperrbestand",
+        "Materialindex",
+        "Referenzsplitter",
+        "Kontrollmaterial",
+        "Arbeitsfassung",
+        "Vorsortierungsfund",
+        "Restaufzeichnung",
+        "Signalfragment",
+        "Mediennotiz",
+        "Archivdurchlauf",
+        "Sendeanhang",
+        "Importvermerk",
+        "Ausgabefassung",
+        "Bestandssplitter",
+        "Prüfauszug",
+        "Materialschatten",
+        "Katalogprobe",
+        "Freigaberest",
+        "Sendearchivnotiz",
+        "Digitalisierungsfund",
+        "Sichtungsclip",
+        "Rohdatenverweis",
+        "Programmausschnitt"
+    ];
+
+    const titleSuffixes = [
+      "Nordflügel",
+      "Keller 3",
+      "Sommerbestand",
+      "Fehlender Kontext",
+      "Nur Tonspur geprüft",
+      "Nicht freigegeben",
+      "Teilrekonstruktion",
+      "Version B",
+      "ohne Zeitstempel",
+      "Sperrvermerk",
+      "Vorläufig klassifiziert",
+      "schwer lesbar",
+      "kopiergeschützt",
+      "VHS-Transfer auf Digibeta",
+      "inhaltlich unbestätigt",
+      "Farbverschiebungen",
+      "Rundfunkqualität",
+      "ausstrahlungssicher",
+      "beunruhigende Szenen",
+      "Preis unklar",
+      "nicht qualitätsgesichert",
+      "nachträglich digitalisiert",
+        "ohne eindeutige Quellenlage",
+        "aus laufender Sicherung",
+        "nur intern verschlagwortet",
+        "mit beschädigter Tonspur",
+        "aus Bestand 4B",
+        "vorläufig gesperrt",
+        "unklarer Sendekontext",
+        "nicht vollständig geprüft",
+        "mit manuellem Prüfvermerk",
+        "aus dem Übergabebestand",
+        "teilweise rekonstruiert",
+        "mit abweichender Laufzeit",
+        "ohne redaktionelle Zuordnung",
+        "aus technischer Vorsichtung",
+        "nur als Arbeitskopie vorhanden",
+        "nicht im Hauptkatalog geführt",
+        "mit uneinheitlicher Metadatenlage",
+        "aus Altbestand übernommen",
+        "vorläufig im Sichtungsarchiv",
+        "mit fragmentierter Inhaltsangabe",
+        "nicht sendefähige Fassung",
+        "aus ungesichertem Import",
+        "mit fehlendem Herkunftsnachweis",
+        "unter Vorbehalt indexiert",
+        "aus Zwischenablagebestand",
+        "nicht eindeutig datiert",
+        "mit beschädigtem Vorspann",
+        "nur über Signatur auffindbar",
+        "aus automatischer Migration",
+        "mit unvollständigem Freigabestatus",
+        "nicht öffentlich gelistet",
+        "unter falscher Rubrik abgelegt",
+        "aus technischer Rückkopie",
+        "mit nachträglicher Titelkorrektur",
+        "ohne bestätigte Rechtekette",
+        "als Dublette markiert",
+        "mit instabiler Medienkennung",
+        "aus nicht dokumentierter Lieferung",
+        "nur in niedriger Auflösung geprüft",
+        "mit widersprüchlicher Archivnotiz",
+        "vorläufig zusammengeführt",
+        "aus beschädigtem Quellordner",
+        "mit alternativer Schnittfassung",
+        "nicht abschließend klassifiziert",
+        "aus passiver Bestandserfassung",
+        "mit fehlendem Abspann",
+        "unter ehemaliger Programmkennung",
+        "nur in Sichtungsqualität verfügbar",
+        "mit abgebrochener Transkodierung",
+        "aus historischer Programmstrecke",
+        "ohne gesicherte Sendefassung",
+        "mit manuell gesetztem Sperrvermerk",
+        "aus Restmaterial übernommen",
+        "nicht eindeutig zuordenbar",
+        "mit fehlerhafter Kapitelmarke",
+        "aus nicht synchronisiertem Bestand",
+        "nur teilweise katalogisiert",
+        "mit veraltetem Rechtehinweis",
+        "unter Vorversion gespeichert",
+        "aus Sammelimport extrahiert",
+        "mit unbestätigter Kurzbeschreibung",
+        "nicht für externe Ausgabe vorgesehen",
+        "aus redundanter Sicherung",
+        "mit beschädigtem Indexeintrag",
+        "ohne gültige Vorschaudatei",
+        "unter technischer Beobachtung",
+        "aus Archivlauf 12",
+        "mit nachträglich gesetztem Zeitcode",
+        "nicht vollständig übertragen",
+        "aus redaktionellem Nebenbestand",
+        "mit unklarer Zielgruppe",
+        "nur als Vorschaureferenz vorhanden",
+        "mit abweichender Tonmischung",
+        "aus temporärem Medienpool",
+        "nicht in Endfassung bestätigt",
+        "mit ungeprüfter Bildstrecke",
+        "unter alter Sammlungskennung",
+        "aus manuellem Nachtrag",
+        "mit inkonsistenter Dateibenennung",
+        "nicht im öffentlichen Index",
+        "aus teilweiser Wiederherstellung",
+        "mit fehlerhaftem Prüfsummenvermerk",
+        "unter interner Seriennummer",
+        "aus unvollständiger Bandliste",
+        "mit unklarer Programmsparte",
+        "nur über Altverknüpfung erreichbar",
+        "mit nicht bestätigter Laufzeit",
+        "aus Sichtungslauf 3C",
+        "ohne konsistente Inhaltsmarker",
+        "mit widersprüchlichem Sperrstatus",
+        "aus stillgelegtem Medienbereich",
+        "nicht final verschlagwortet",
+        "mit technischer Randnotiz",
+        "aus unbenanntem Übernahmeordner",
+        "nur als Katalogschatten vorhanden",
+        "mit abweichendem Vorschaubild",
+        "aus nicht priorisierter Prüfung",
+        "mit unvollständiger Archivsignatur",
+        "nicht zuverlässig abspielbar"
+    ];
+
+    const searchMessages = [
+      "Die Suche wurde abgebrochen, weil der öffentliche Index nicht mit dem internen Sichtungsverzeichnis synchronisiert ist.",
+      "Für diese Abfrage liegt nur ein fragmentierter Metadatensatz vor. Die Ergebnisliste wurde aus Konsistenzgründen unterdrückt.",
+      "Der Suchbegriff fällt in einen noch nicht freigegebenen Archivbereich. Bitte verwende eine präzisere oder ältere Anfragekennung.",
+      "Die Volltextsuche ist derzeit auf passive Sichtung beschränkt. Direkte Trefferlisten können vor Abschluss der Neuindizierung nicht ausgegeben werden.",
+      "Die Anfrage wurde vom temporären Zugriffsknoten angenommen, aber vom Langzeitarchiv nicht bestätigt.",
+      "Bitte starte deine Suchanfrage mit dem Indexregisterexzerpt.",
+      "Dieser Suchbegriff konnte nicht gefunden werden.",
+      "Aufgrund der hohen Last an Suchanfragen kann die Suche momentan nicht durchgeführt werden",
+      "Der Index antwortet mit Status 409: widersprüchliche Klassifizierung zwischen Vorschaumaterial und Archivsignatur.",
+      "Der Suchlauf wurde gestoppt, weil die Trefferliste mehrdeutige Vorschaurechte enthält.",
+        "Die Anfrage konnte nicht abgeschlossen werden, da der Metadatenabgleich in Warteschlange 7 festhängt.",
+        "Für diesen Suchbegriff liegen ausschließlich nicht normalisierte Altbestände vor.",
+        "Der Index hat geantwortet, aber keine ausgabefähige Trefferstruktur zurückgegeben.",
+        "Die Suche wurde ausgesetzt, weil mehrere Archivsignaturen auf denselben Medienverweis zeigen.",
+        "Die Ergebnisanzeige ist derzeit deaktiviert, da der Sichtungsstatus der Treffer nicht eindeutig ist.",
+        "Die Abfrage wurde verarbeitet, jedoch vom Freigabemodul als vorläufig unzustellbar markiert.",
+        "Der Suchbegriff überschneidet sich mit einem Bereich, dessen öffentliche Benennung noch nicht abgeschlossen ist.",
+        "Die Treffer konnten nicht angezeigt werden, weil der Kontextindex nur teilweise initialisiert wurde.",
+        "Die Suchanfrage enthält Begriffe, die im aktuellen Katalog nur als interne Platzhalter geführt werden.",
+        "Die Ergebnisliste wurde verworfen, da mindestens ein Treffer ohne gültigen Herkunftsvermerk geladen wurde.",
+        "Der Zugriffsknoten meldet eine nicht auflösbare Differenz zwischen Titelindex und Vorschaumatrix.",
+        "Die Suche wurde angenommen, aber wegen fehlender Katalogbindung nicht zur Anzeige freigegeben.",
+        "Für diese Anfrage existieren Treffer, deren Reihenfolge derzeit nicht verlässlich rekonstruiert werden kann.",
+        "Die Indexantwort enthält veraltete Sichtungsmarker und wurde daher nicht ausgegeben.",
+        "Die Anfrage kann nicht angezeigt werden, solange der Vorschaubestand im Lesemodus blockiert ist.",
+        "Der Suchdienst meldet eine erfolgreiche Nullantwort mit widersprüchlichem Archivstatus.",
+        "Die Trefferliste wurde nicht geladen, weil der temporäre Index älter ist als die angefragte Signaturgruppe.",
+        "Dieser Suchbegriff ist im öffentlichen Bereich bekannt, aber noch keiner sichtbaren Sammlung zugeordnet.",
+        "Die Anfrage wurde vom Katalogsystem zurückgestellt, da zu viele Teiltreffer denselben Prüfvermerk tragen.",
+        "Der Suchindex befindet sich für diesen Begriff in einem nicht darstellbaren Zwischenzustand.",
+        "Die Ergebnisse konnten nicht sortiert werden, weil die Zeitstempel nicht mit der Medienkennung übereinstimmen.",
+        "Die Abfrage wurde aus Konsistenzgründen beendet, nachdem der Vorschauzähler einen negativen Bestand gemeldet hat.",
+        "Der Suchbegriff wurde erkannt, aber die zugehörigen Medienobjekte sind derzeit nur als Schatteneinträge verfügbar.",
+        "Die Trefferanzeige wurde deaktiviert, weil der Abgleich zwischen Bestand und Oberfläche nicht bestätigt wurde.",
+        "Der Katalogserver hat die Anfrage beantwortet, aber keine für Nutzer freigegebene Darstellung geliefert.",
+        "Die Suchergebnisse liegen vor, konnten jedoch keinem aktiven Ausgabekanal zugewiesen werden.",
+        "Die Anfrage wurde nicht ausgeführt, da der Archivpfad zwar existiert, aber keinen stabilen Endpunkt besitzt.",
+        "Die Treffer wurden aus der Ausgabe entfernt, weil ihre Klassifizierung während der Anfrage gewechselt hat.",
+        "Der Suchlauf wurde beendet, nachdem der Index eine gültige, aber nicht interpretierbare Antwort geliefert hat."
+    ];
+
+    const footerErrorMessages = [
+      "Diese Seite ist derzeit nicht verfügbar. Die zugehörigen Inhalte wurden wegen Bedenklichkeit noch nicht für den öffentlichen Zugriff bereitgestellt.",
+      "Die angeforderte Serviceseite konnte nicht geladen werden, weil der Eintrag im Navigationsindex fehlt.",
+      "Dieser Bereich wird momentan überarbeitet. Bitte versuche es später erneut.",
+      "Aufgrund der hohen derzeitigen Besucheranzahl kann die Seite nicht angezeigt werden.",
+      "Aufgrund beunruhigender Inhalte ist der bereich nur für angemeldete Benutzer zugänglich.",
+      "Die Anfrage konnte keinem aktiven jaTV-Informationsbereich zugeordnet werden.",
+      "Diese Seite wurde aus dem öffentlichen Menü entfernt, ist aber in älteren Navigationszuständen weiterhin referenziert.",
+        "Der angeforderte Bereich befindet sich derzeit in einer administrativen Übergangsphase.",
+        "Die Seite konnte nicht geladen werden, weil der zugehörige Inhaltsknoten keine aktive Ausgabe besitzt.",
+        "Dieser Link verweist auf einen Bereich, dessen Veröffentlichung noch nicht abschließend bestätigt wurde.",
+        "Die Anfrage wurde angenommen, aber keinem gültigen Servicemodul zugeordnet.",
+        "Der Navigationspunkt ist vorhanden, jedoch aktuell nicht mit einer auslieferbaren Seite verbunden.",
+        "Die Zielseite ist im System registriert, aber für den aktuellen Zugriffskanal nicht freigegeben.",
+        "Der Seitenaufruf wurde gestoppt, weil die Inhaltskennung nicht mit der Navigationsfreigabe übereinstimmt.",
+        "Dieser Bereich ist vorübergehend ausgeblendet, bis die zugehörigen Informationsfragmente neu geprüft wurden.",
+        "Die angeforderte Serviceseite konnte aufgrund eines unvollständigen Routingvermerks nicht geöffnet werden.",
+        "Die Seite existiert im Katalog, wurde aber noch nicht für die öffentliche Darstellung kompiliert.",
+        "Der Link ist gültig, führt aber derzeit auf keinen stabilen Informationsendpunkt.",
+        "Die Darstellung wurde blockiert, weil der Bereich keine bestätigte Textfassung enthält.",
+        "Dieser Navigationspunkt befindet sich im passiven Modus und kann momentan nicht geöffnet werden.",
+        "Die Anfrage konnte nicht abgeschlossen werden, da der Seitenstatus zwischen Entwurf und Archiv schwankt.",
+        "Der Inhalt wurde gefunden, aber nicht als anzeigefähige Oberfläche markiert.",
+        "Die Zielseite ist temporär entkoppelt, vermutlich wegen einer noch offenen Strukturprüfung.",
+        "Der Zugriff wurde nicht verweigert, aber auch nicht sinnvoll ermöglicht.",
+        "Dieser Bereich ist derzeit nur als Platzhalter im Navigationsschema vorhanden.",
+        "Die Seite konnte nicht ausgeliefert werden, weil ihr öffentlicher Kontext fehlt.",
+        "Der Link verweist auf einen Informationsbereich, der momentan keine bestätigte Zuständigkeit besitzt.",
+        "Die angeforderte Seite wurde zur Stabilisierung des Menüs vorläufig deaktiviert.",
+        "Die Navigation kennt diesen Eintrag, der Inhaltsserver widerspricht jedoch vorsichtig.",
+        "Der Seitenaufruf wurde verworfen, weil mehrere interne Beschreibungen auf denselben Bereich zeigen.",
+        "Diese Seite ist nicht offline, sie ist lediglich nicht ausreichend online.",
+        "Der Zielbereich wurde wegen inkonsistenter Metadaten aus der Ausgabe entfernt.",
+        "Die Anfrage wurde beendet, da der Inhalt nur in einer nicht freigegebenen Vorschauvariante vorliegt.",
+        "Dieser Link wurde beibehalten, obwohl sein Ziel derzeit nicht eindeutig bestimmbar ist.",
+        "Die Serviceseite kann erst geladen werden, wenn ihr interner Beschreibungsstand abgeschlossen ist.",
+        "Der Informationsbereich wurde gefunden, aber seine öffentliche Bedeutung ist momentan ungeklärt."
+    ];
+    
+    const negativeComments = [
+  "Warum ist der Dreck überhaupt online? Das sieht aus wie die Kopie einer Kopie einer Ausrede.",
+  "Ton kaputt, Bild kaputt, Inhalt vermutlich auch.",
+  "Ich habe drei Minuten gewartet, bis etwas passiert. Es war offenbar schon passiert.",
+  "Das Tracking ist stabiler als die redaktionelle Idee dahinter.",
+  "Wer hat das freigegeben und warum war diese Person allein im Raum?",
+  "Das ist nicht nostalgisch, das ist ein technischer Hilferuf.",
+  "Ich erkenne nichts, aber ich bin mir sicher, dass es zu lang ist.",
+  "Der Moderator wirkt, als hätte er selbst nicht gewusst, dass gesendet wird.",
+  "Bitte nicht restaurieren. Manche Dinge wollen unscharf bleiben.",
+  "Die Tonspur links hat mehr Aussage als das ganze Segment.",
+  "Ich hatte bessere Bildqualität auf einem Fernseher mit Zimmerantenne im Keller.",
+  "Das wirkt wie Material, das selbst beim Digitalisieren Einspruch eingelegt hat.",
+  "Kann jemand bestätigen, dass das absichtlich so anfängt?",
+  "Das ist der erste Clip, bei dem der Dropout wie eine Verbesserung wirkt.",
+"Was soll der Käse?",
+"Habt ihr sie noch alle?",
+"Spinner.",
+"Was habe ich da gerade gesehen?",
+"Wer gibt mir meine Lebenszeit zurück?",
+"Das ist doch nicht euer Ernst.",
+"Kompletter Quatsch.",
+"Warum existiert das?",
+"Ich bereue jeden Klick.",
+"Was für ein Unsinn.",
+"Bitte sofort wieder löschen.",
+"Das war ja mal gar nichts.",
+"Peinlich.",
+"Alter, was war das denn?",
+"Ich verstehe nicht, warum man sowas hochlädt.",
+"Das tut ja fast körperlich weh.",
+"Nein. Einfach nein.",
+"Hat dafür jemand wirklich Zeit verschwendet?",
+"Das ist doch Verarsche.",
+"Ich will eine Entschuldigung.",
+"Kann man das melden?",
+"Das war unnötig.",
+"Wer schaut sich sowas freiwillig an?",
+"Ich hätte es besser nicht angeklickt.",
+"Das ist ja grausam.",
+"Was stimmt mit euch nicht?",
+"Bitte weniger davon.",
+"Das war unterirdisch.",
+"Ich bin raus.",
+"Absoluter Müll.",
+"Nicht mal ironisch gut.",
+"Das macht mich müde.",
+"Wer hat das freigegeben?",
+"Ich möchte das ungesehen machen.",
+"Warum wurde mir das vorgeschlagen?",
+"Das ist ja komplett sinnlos.",
+"Ich habe Fragen. Viele.",
+"Das war Zeitverschwendung mit Ansage.",
+"Schlimmer als erwartet.",
+"Und dafür habe ich WLAN benutzt.",
+"Das kann weg.",
+"Ich fühle mich betrogen.",
+"Bitte nie wieder.",
+"Was für ein Blödsinn.",
+"Ich dachte kurz, es passiert noch was. Fehler.",
+"Das ist schon frech.",
+"Da hat aber jemand Mut zur Bedeutungslosigkeit.",
+"Ich hätte lieber auf einen Ladefehler gestarrt.",
+"Nicht euer bester Moment.",
+"Das war nichts.",
+"Komplett daneben.",
+"Ich bin ehrlich verwirrt.",
+"Was soll das darstellen?",
+"Das ist unangenehm.",
+"Bitte erklärt mir niemand den Sinn.",
+"Ich will ihn gar nicht wissen.",
+"Das war aktiv schlecht.",
+"Da war der Titel schon zu viel Versprechen.",
+"Ich habe schlechtere Laune als vorher.",
+"Kann man sowas zurückgeben?",
+"Das ist kein Inhalt.",
+"Das ist Beschäftigungstherapie.",
+"Ich schäme mich stellvertretend.",
+"Einfach nur komisch. Nicht gut komisch.",
+"Das hätte im Ordner bleiben sollen.",
+"Warum klickt man sowas an? Ach ja, ich.",
+"Das ist schon hart.",
+"Ich habe verloren.",
+"Mein Beileid an alle Beteiligten.",
+"Selten so unnötig.",
+"Was soll der Käse? Ich habe wirklich versucht, dem Ganzen eine Chance zu geben. Aber nach einer Minute war klar: Das wird nichts mehr.",
+"Habt ihr sie noch alle? Man klickt hier neugierig drauf und bekommt dann einfach nur kompletten Quatsch serviert. Danke für nichts.",
+"Ich weiß nicht, was ich erwartet habe. Aber sicher nicht das hier. Das wirkt wie etwas, das man versehentlich hochlädt und dann aus Scham vergisst.",
+"Wer gibt mir meine verlorene Lebenszeit zurück? Ich habe bis zum Ende gewartet, weil ich dachte, da kommt noch irgendwas. Kam aber nicht.",
+"Das ist schon hart unnötig. Nicht mal auf eine charmante Art seltsam. Einfach nur so ein Clip, nach dem man kurz still aus dem Fenster schaut.",
+"Was soll das darstellen? Ernst gemeinte Frage. Ich sehe da weder Idee noch Pointe noch irgendeinen Grund, warum ich das gesehen haben musste.",
+"Ich bin ehrlich beeindruckt, wie wenig hier passiert. Und trotzdem schafft es das Ganze, irgendwie anstrengend zu sein. Muss man auch erstmal hinkriegen.",
+"Das war wirklich gar nichts. Nicht schlimm genug, um spannend zu sein. Nicht gut genug, um irgendwas zu rechtfertigen. Einfach nur leerer Bildschirmlärm.",
+"Spinner. Anders kann ich mir das nicht erklären. Irgendwer hat das produziert, hochgeladen und dann vermutlich gedacht: Ja, genau so muss das.",
+"Ich hätte lieber weiter auf die Wand gestarrt. Die hatte mehr Struktur, mehr Handlung und wahrscheinlich auch bessere Dialoge. Ganz schwache Nummer.",
+"Warum wurde mir das vorgeschlagen? Habe ich dem Algorithmus etwas getan? Das fühlt sich an wie eine kleine persönliche Strafe.",
+"Das ist kein Inhalt, das ist ein Unfall mit Dateinamen. Ich verstehe wirklich nicht, wie man sowas anschaut und sagt: Ja, veröffentlichen.",
+"Ich dachte zuerst, das sei ironisch gemeint. Dann dachte ich, vielleicht kommt noch was. Am Ende war ich nur noch müde.",
+"Kann man das zurückgeben? Ich möchte nicht mal mein Geld zurück, nur den Zustand von vor dem Anklicken. Das reicht mir schon.",
+"Das ist schon frech. Da steckt man mehr Energie ins Wegklicken als hier offenbar in die ganze Produktion. Respekt auf die falsche Art.",
+"Ich will niemandem zu nahe treten, aber das war wirklich Quatsch. Nicht lustig, nicht spannend, nicht mysteriös. Einfach nur Quatsch mit Ansage.",
+"Da hat aber jemand sehr viel Vertrauen in die Geduld anderer Menschen. Leider komplett unbegründet. Ich war nach zwanzig Sekunden innerlich weg.",
+"Ich habe selten so schnell bereut, neugierig gewesen zu sein. Der Titel klang wenigstens nach irgendwas. Das Video dann leider nicht.",
+"Was stimmt mit euch nicht? Man kann ja vieles machen, aber das hier wirkt wie eine bewusste Entscheidung gegen den Zuschauer.",
+"Das ist genau die Art Clip, bei der man danach erstmal prüft, ob man aus Versehen auf irgendwas anderes geklickt hat. Leider nein.",
+"Bitte nie wieder. Ich meine das nicht mal böse. Doch, vielleicht ein bisschen. Aber hauptsächlich aus Selbstschutz.",
+"Das war so unnötig, dass es fast schon wieder ein Konzept sein könnte. Aber eben nur fast. Der Rest ist einfach Leerlauf.",
+"Ich habe bis zum Schluss gewartet, weil ich dachte, irgendwann muss es ja Sinn ergeben. Falsch gedacht. Wieder was gelernt.",
+"Was für ein Blödsinn. Da hätte man auch einen Karton filmen können. Der hätte wenigstens nicht so getan, als wäre er wichtig.",
+"Ich bin nicht sauer, nur enttäuscht. Und ein bisschen sauer. Vor allem, weil ich das hier freiwillig angeklickt habe.",
+"Das wirkt wie ein Clip, den man jemandem zeigt, wenn man testen will, wie lange er höflich bleibt. Bei mir waren es elf Sekunden.",
+"Ich verstehe den Punkt nicht. Vielleicht gibt es keinen. Vielleicht ist genau das der Punkt. Dann ist der Punkt aber schlecht.",
+"Das ist einfach nur merkwürdig, aber nicht auf die gute Weise. Eher so, dass man danach den Browserverlauf aus Prinzip schließen möchte.",
+"Wer auch immer das hochgeladen hat: Warum? Diese Frage ist nicht rhetorisch. Ich brauche wirklich eine Erklärung.",
+"Ich habe schon schlechtere Sachen gesehen, aber selten so entschlossen sinnlose. Das hier marschiert direkt ins Nichts und nimmt sich dabei ernst.",
+  "Was soll der Mist? Ist das witzig?",
+  "Ich hab wirklich versucht das irgendwie zu verstehen. Am Anfang dachte ich noch, okay vieleicht kommt da gleich noch was. Aber nein, es wurde nur immer seltsamer und am Ende sitz ich hier und frage mich, warum ich nicht einfach früher ausgemacht habe.",
+"Was soll der Käse eigentlich? Man klickt drauf, wartet auf irgendwas und bekommt dann einfach nur dieses komische Durcheinander. Ich weiss nicht ob das lustig gemeint ist, aber falls ja, ist es ziemlich weit daran vorbei geflogen.",
+"Habt ihr sie noch alle? Ehrlich jetzt. Das wirkt wie etwas, das jemand nachts um halb zwei hochgeladen hat, weil er sich selbst nicht mehr sicher war, ob es Müll ist oder Kunst. Ich tippe mal ganz vorsichtig auf Müll.",
+"Ich will ja nicht direkt gemein sein, aber das hier macht es einem echt schwer. Da ist keine Idee, kein Timing, kein Punkt. Einfach nur irgendwas auf den Bildschirm geworfen und gehofft, dass Leute so tun als wäre es interessant.",
+"Wer gibt mir meine verlorene Lebenszeit wieder? Ich meine das nicht mal dramatisch. Ich hab wirklich das Gefühl, dass ich diese Minuten besser damit verbracht hätte, eine Wand anzustarren. Die hätte wenigstens nicht so getan als wäre sie Inhalt.",
+"Ich verstehe ja, dass Geschmäcker verschieden sind. Aber dafür braucht man erstmal irgendwas, worüber man Geschmack haben kann. Hier ist einfach nur so ein seltsames Nichts, das sich viel zu lange wichtig macht.",
+"Das ist so ein Ding, bei dem man nach 20 Sekunden denkt, okay das kann nur schlechter werden. Und dann wird es schlechter. Und dann nochmal. Irgendwann bewundert man fast die Konsequenz, aber gut ist es dadurch halt trotzdem nicht.",
+"Ich habe selten so lange auf den Moment gewartet, an dem irgendwas Sinn ergibt. Der Moment kam nicht. Stattdessen kam dieses flaue Gefühl, dass ich gerade einem Fehler beim Wachsen zugesehen habe.",
+"Sorry, aber was genau war hier der Plan? Es sieht aus wie eine Idee, die man in der Mittagspause hatte und dann leider niemand mehr gelöscht hat. Manchmal ist nicht veröffentlichen auch eine Form von Qualitätssicherung.",
+"Das hier ist nicht geheimnisvoll, das ist einfach nur unklar. Manche verwechseln ja gerne verwirrend mit tiefsinnig. Aber nur weil man nicht versteht was passiert, heißt das noch lange nicht, dass da was dahinter steckt.",
+"Ich hab echt nichts gegen komische Sachen. Komische Sachen können super sein. Aber das hier ist nicht komisch auf gute Art, sondern eher so auf die Art, wo man im Raum steht und keiner weiss, warum das Licht flackert.",
+"Warum tut man sowas online? Also wirklich. Es muss doch irgendwann einen Moment gegeben haben, wo jemand auf die Datei geschaut und gedacht hat, ja, genau das sollen fremde Menschen jetzt sehen. Dieser Moment war falsch.",
+"Das wirkt als hätte jemand sehr viel Vertrauen in eine sehr dünne Idee gehabt. Leider trägt die Idee nicht mal bis zur Hälfte. Danach hängt alles nur noch irgendwie herum und wartet darauf, dass es vorbei ist.",
+"Ich dachte erst, mein Browser spinnt, weil so wenig passiert. Dann wurde mir klar, nein, das gehört wohl so. Das ist irgendwie noch schlimmer. Ein technisches Problem hätte man wenigstens neu laden können.",
+"Manchmal ist schlechter Content wenigstens unterhaltsam schlecht. Das hier ist eher anstrengend schlecht. Nicht laut genug um lustig zu sein, nicht klug genug um interessant zu sein und nicht kurz genug um egal zu sein.",
+"Ich möchte kurz festhalten, dass ich wirklich freiwillig draufgeklickt habe. Das macht es leider nicht besser. Eigentlich macht es es schlimmer, weil ich jetzt mit meiner eigenen Entscheidung leben muss.",
+"Was für ein Quatsch. Und nicht mal der gute Quatsch, den man Freunden zeigt und sagt guck mal was ich gefunden hab. Eher der Quatsch, den man versehentlich sieht und danach so tut als wäre nichts passiert.",
+"Ich weiss nicht, ob das ironisch gemeint ist oder ob ich einfach zu wenig Kaffee hatte. Aber es fühlt sich an wie ein Clip, der selbst nicht so richtig weiss, warum er existiert. Und ganz ehrlich, ich weiss es auch nicht.",
+"Das ist die Art Video, nach der man kurz still wird. Nicht weil es einen berührt hat, sondern weil man innerlich prüft, ob man gerade zu hart urteilt. Nach kurzer Prüfung: nein, passt schon.",
+"Ich bin wirklich kein Hater, aber irgendwo muss man auch mal ehrlich sein. Das hier ist einfach schwach. Nicht charmant schwach, nicht nostalgisch schwach, sondern eher so: Warum hat das keiner vorher gestoppt?",
+"Ich habe mich die ganze Zeit gefragt, ob da noch ein Witz kommt. Dann dachte ich, vielleicht war der Witz schon da und ich hab ihn verpasst. Dann dachte ich, nein, da war einfach keiner. Auch eine Antwort.",
+"Das ist schon bemerkenswert. Es schafft, gleichzeitig hektisch und langweilig zu sein. Das muss man erstmal hinbekommen. Leider ist das keine Empfehlung, sondern eher eine Warnung.",
+"Wenn das Absicht war, ist es merkwürdig. Wenn es keine Absicht war, ist es peinlich. Und falls es irgendwas dazwischen sein soll, dann hat diese Zwischenlösung leider komplett versagt.",
+"Ich kann mir richtig vorstellen, wie jemand dachte, das sei total speziell. Ist es auch, aber speziell ist halt nicht automatisch gut. Manche Sachen sind auch speziell, weil sie keiner nochmal sehen will.",
+"Das hätte locker halb so lang sein können und wäre immer noch zu lang gewesen. Es zieht sich wie Kaugummi, nur ohne Geschmack. Am Ende bleibt einfach nur dieses Gefühl von ja gut, schade halt.",
+"Ich hab keine Ahnung, was hier passieren sollte. Und normalerweise finde ich sowas ja manchmal sogar interessant. Aber hier ist es nicht rätselhaft, sondern einfach nur schlecht erklärt und irgendwie lieblos.",
+"Das sieht aus wie etwas, das man aus Versehen in einem alten Ordner findet und dann schnell wieder schliesst. Aber nein, hier wurde es hochgeladen. Das war der eigentliche Fehler in der Kette.",
+"Ich will wirklich wissen, wer dafür die Zielgruppe sein soll. Leute mit zu viel Freizeit? Menschen, die sich selbst testen wollen? Oder einfach alle, die aus Versehen falsch geklickt haben?",
+"Der Anfang war schon schwierig, aber ich dachte mir, komm, bleib fair. Dann wurde es nicht besser. Dann wurde es sogar noch komischer. Irgendwann war Fairness einfach nicht mehr zuständig.",
+"Das fühlt sich an wie ein Insider, bei dem nicht mal die Insider lachen. Man steht daneben, schaut kurz rüber und merkt dann, dass man besser gegangen wäre bevor es unangenehm wird.",
+"Also nee. Manche Sachen darf man ja ruhig ausprobieren. Aber ausprobieren heißt nicht automatisch veröffentlichen. Da fehlt noch mindestens ein Schritt namens nochmal drüber nachdenken.",
+"Ich habe ungefähr drei mal gedacht, jetzt kommt gleich der Punkt. Der Punkt kam nie. Stattdessen kam immer nur noch mehr von diesem Zeug. Irgendwann nimmt man das fast persönlich.",
+"Das ist nicht roh, das ist unfertig. Das ist ein Unterschied. Roh kann spannend sein, unfertig ist meistens einfach nur mühsam. Und hier merkt man leider ziemlich genau, auf welcher Seite es gelandet ist.",
+"Man kann über vieles streiten, aber hier bin ich ziemlich sicher: Das hätte niemand gebraucht. Nicht mal im Hintergrund laufen lassen. Selbst als Hintergrund wäre es noch zu anstrengend.",
+"Ich frage mich, ob jemand das komplett angeschaut hat, bevor es online ging. Falls ja, Respekt für die Ausdauer. Falls nein, erklärt das immerhin einiges und macht die Sache fast verständlicher.",
+"Das Video hat die Energie von jemandem, der eine Geschichte anfängt und dann vergisst, worum es ging. Nur dass man trotzdem weiter zuhören muss, weil der Stopp Knopf offenbar moralisch zu weit weg war.",
+"Ich wollte eigentlich nur kurz reinschauen. Jetzt sitze ich hier mit diesem leeren Blick und frage mich, warum mein Algorithmus mir sowas zutraut. Das hat zwischen uns jetzt Vertrauen gekostet.",
+"Es gibt schlechte Videos, die wenigstens eine klare Meinung auslösen. Hier ist es eher so eine matschige Enttäuschung. Nicht mal ordentlich ärgern kann man sich, weil alles so diffus daneben liegt.",
+"Das hier wirkt wie ein Entwurf von einem Entwurf. Als hätte jemand die falsche Version exportiert und dann gedacht, ach egal, merkt schon keiner. Doch, man merkt es. Man merkt es sehr.",
+"Bitte beim nächsten Mal einfach vorher jemanden fragen, der ehrlich antwortet. Nicht jemanden, der sagt ja cool, mach mal. Sondern jemanden, der sagt, du, vielleicht lieber nicht. Solche Menschen sind wichtig.",
+  "lol was soll das",
+"cringe des tages",
+"bruder nein einfach nein",
+"das is ja mal gar nix",
+"wer hat das erlaubt",
+"peak quatsch hier",
+"aua meine augen",
+"ich bin raus",
+"komplett lost das ding",
+"digga was war das",
+"maximal unnötig",
+"absoluter fiebertraum",
+"bitte löschen danke",
+"wild aber nicht gut",
+"ne sorry das wars",
+"hat null gecatcht",
+"einfach nur warum",
+"bro das tut weh",
+"content aus der hölle",
+"okay genug internet heute",
+"bruh was is das denn",
+"hab direkt wieder zugemacht",
+"größter müll heute",
+"komplett random alter",
+"nein danke next",
+"das war nix chef",
+"mega lost einfach",
+"wer schaut sowas freiwillig",
+"ich bereue den klick",
+"was für ein quatsch",
+"diggi bitte hör auf",
+"das ist so unnötig",
+"null vibe hier",
+"boah ist das schlecht",
+"cringe overload ehrlich",
+"warum wird mir das gezeigt",
+"ich kann das alles nicht mehr",
+"absoluter internetunfall",
+"das muss satire sein",
+"bro geh schlafen",
+"nächster bitte",
+"was fürn käse ey",
+"mein wlan leidet mit",
+"hab besseres erwartet lol",
+"komplett daneben",
+"richtiger reinfall",
+"das is hart peinlich",
+"wer hat danach gefragt",
+"ne digga einfach nein",
+"ich will mein scrollen zurück"
+];
+
+const userNames = [
+  "tracking_otto",
+  "bandlauf87",
+  "vhs_klaus",
+  "spurlage_sven",
+  "dropout_doris",
+  "kopfsignal",
+  "stadtfuchs",
+"nachtschichtler",
+"kaffeekante",
+"regenfenster",
+"sonntagsfahrer",
+"pixelpeter",
+"waldmeisterin",
+"mauersegler",
+"blaubeerhut",
+"nebenraum",
+"teppichkante",
+"halbwach",
+"grauerpullover",
+"taschenfund",
+"lampenlicht",
+"sternhagel",
+"fensterplatz",
+"weichzeichner",
+"kurzvoracht",
+"buerokaktus",
+"flurgespraech",
+"winterjacke",
+"kartoffelmond",
+"schreibtischkind",
+"wolkenzähler",
+"milchkaffee77",
+"abendbrot",
+"randnotiz",
+"treppenhaus",
+"falscherbus",
+"kleinstadtwolf",
+"honigglas",
+"nordlichtchen",
+"matratzenhorst",
+"zimmertanne",
+"bratpfannenchef",
+"orangensofa",
+"wolkenschieber",
+"mittelspur",
+"hausnummer13",
+"regenjacke",
+"sockenpilot",
+"tischkante",
+"pfandbon",
+"sommermensch",
+"apfelrest",
+"haltestelle9",
+"blumenbank",
+"schattenparker",
+"untertasse",
+"morgengrau",
+"fensterkipp",
+"backsteinhund",
+"pappkarton",
+"zimmerpflanze",
+"brotkruste",
+"wasserkocher",
+"glueckskeks",
+"stadtlaterne",
+"briefkasten",
+"flauschjacke",
+"holztisch",
+"mondkalb",
+"nebelbank",
+"grossstadtkind",
+"einkaufswagen",
+"lauterleise",
+"mistwetter",
+"schlafanzug",
+"restkaffee",
+  "longplay_lars",
+  "zeitcodefehler",
+  "mono_tonspur",
+  "kellerfund42",
+  "bildrauschen",
+  "stillframe_ingo",
+  "magnetband_mira",
+  "pausezeichen",
+  "restlaufzeit",
+  "bruhmoment3000",
+"yeetmaschine",
+"lostimscroll",
+"npc_mit_wlan",
+"chad_von_nebenan",
+"cringe_kartoffel",
+"based_brezel",
+"digga_deluxe",
+"lolbert69",
+"meme_manfred",
+"skibidi_sachbearbeiter",
+"rant_ronny",
+"giga_horst",
+"snackosaurus",
+"doomscroll_dieter",
+"lowkey_lurch",
+"highkey_hans",
+"susanne_sus",
+"brokkoli_bro",
+"der_echte_kevin",
+"wlan_wizard",
+"pixel_paule",
+"random_rüdiger",
+"nope_norbert",
+"big_oof_otto",
+"salty_sabine",
+"trashpanda_tim",
+"sideeye_sven",
+"murksmax",
+"glitch_günther",
+"kaffee_klaus",
+"toast_titan",
+"lord_lauch",
+"herr_keks",
+"frau_fomo",
+"midlife_meme",
+"ok_boombert",
+"hashtag_holger",
+"flop_fabian",
+"ragequit_rita",
+"snacc_attack",
+"der_mit_dem_lol",
+"trollbert",
+"moin_meme",
+"zuvielinternet",
+"keinerfragte",
+"scrollknecht",
+"bratwurst_brudi",
+"hyper_hilde",
+"achkomm_alter"
+];
+
+    const videoGrid = document.getElementById("videoGrid");
+    const footerErrorDialog = document.getElementById("footerErrorDialog");
+    const closeFooterErrorDialog = document.getElementById("closeFooterErrorDialog");
+    const footerErrorOkButton = document.getElementById("footerErrorOkButton");
+    const footerErrorText = document.getElementById("footerErrorText");
+    const brokenFooterLinks = document.querySelectorAll(".broken-footer-link");
+    const searchForm = document.getElementById("searchForm");
+    const searchDialog = document.getElementById("searchDialog");
+    const closeSearchDialog = document.getElementById("closeSearchDialog");
+    const searchOkButton = document.getElementById("searchOkButton");
+    const searchDialogText = document.getElementById("searchDialogText");
+    const loginDialog = document.getElementById("loginDialog");
+    const registerDialog = document.getElementById("registerDialog");
+    const closeDialog = document.getElementById("closeDialog");
+    const closeRegisterDialog = document.getElementById("closeRegisterDialog");
+    const registerOkButton = document.getElementById("registerOkButton");
+    const loginForm = document.getElementById("loginForm");
+    const registerLink = document.getElementById("registerLink");
+    const headerLoginButton = document.getElementById("headerLoginButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const sortOptions = document.querySelectorAll(".sort-option");
+    const sortMenu = document.querySelector(".sort-menu");
+    const sortButton = document.querySelector(".sort-button");
+    const uploadButton = document.getElementById("uploadButton");
+    const uploadDialog = document.getElementById("uploadDialog");
+    const closeUploadDialog = document.getElementById("closeUploadDialog");
+    const uploadStepLegal = document.getElementById("uploadStepLegal");
+    const uploadStepFormat = document.getElementById("uploadStepFormat");
+    const uploadLegalNextButton = document.getElementById("uploadLegalNextButton");
+    const uploadFormatNextButton = document.getElementById("uploadFormatNextButton");
+    const uploadLegalError = document.getElementById("uploadLegalError");
+    const uploadFormatError = document.getElementById("uploadFormatError");
+    const confirmJatvMaterial = document.getElementById("confirmJatvMaterial");
+    const confirmLegalRecording = document.getElementById("confirmLegalRecording");
+    const confirmNoManipulation = document.getElementById("confirmNoManipulation");
+    const loadMoreButton = document.getElementById("loadMoreButton");
+    const archiveView = document.getElementById("archiveView");
+const playerView = document.getElementById("playerView");
+const backToGridButton = document.getElementById("backToGridButton");
+const playerImage = document.getElementById("playerImage");
+const playerTitle = document.getElementById("playerTitle");
+const playerMeta = document.getElementById("playerMeta");
+const playerLikes = document.getElementById("playerLikes");
+const playerDislikes = document.getElementById("playerDislikes");
+const playerComments = document.getElementById("playerComments");
+const fakePlayButton = document.getElementById("fakePlayButton");
+const commentsList = document.getElementById("commentsList");
+const loadMoreCommentsButton = document.getElementById("loadMoreCommentsButton");
+const relatedList = document.getElementById("relatedList");
+const loginRequiredActions = document.querySelectorAll(".login-required-action");
+const brandHomeButton = document.getElementById("brandHomeButton");
+
+    function padImageNumber(number) {
+      return String(number).padStart(6, "0");
+    }
+
+    function randomInteger(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function shuffleArray(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function formatNumber(number) {
+      return new Intl.NumberFormat("de-DE").format(number);
+    }
+
+    function formatViews(number) {
+      return formatNumber(number) + " Aufrufe";
+    }
+
+    function createArchiveNumber() {
+      const blockA = randomInteger(100, 999);
+      const blockB = randomInteger(1000, 9999);
+      const blockC = randomInteger(10, 99);
+      return `JA-${blockA}-${blockB}-${blockC}`;
+    }
+
+    function createDuration() {
+      const minutes = randomInteger(1, 47);
+      const seconds = String(randomInteger(0, 59)).padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
+
+    function createTitle() {
+      return `${randomItem(titlePrefixes)} ${createArchiveNumber()}: ${randomItem(titleSuffixes)}`;
+    }
+
+    function createEngagement(viewCount) {
+      const maxTotalReactions = Math.max(12, Math.floor(viewCount * randomInteger(3, 18) / 100));
+      let likes = Math.max(1, Math.round(maxTotalReactions / 12));
+      let dislikes = likes * randomInteger(11, 13);
+
+      if (likes + dislikes >= viewCount) {
+        const safeTotal = Math.max(2, viewCount - 1);
+        likes = Math.max(1, Math.floor(safeTotal / 12));
+        dislikes = Math.max(1, safeTotal - likes);
+      }
+
+      return {
+        likes,
+        dislikes
+      };
+    }
+
+    function createImagePool() {
+      const pool = [];
+      for (let i = FIRST_IMAGE; i <= LAST_IMAGE; i++) {
+        pool.push(i);
+      }
+      return pool;
+    }
+
+    function openLoginDialog() {
+      errorMessage.textContent = "";
+      loginForm.reset();
+      loginDialog.showModal();
+    }
+    
+    function createVideoData(imageNumber) {
+  const paddedNumber = padImageNumber(imageNumber);
+  const imagePath = `${IMAGE_FOLDER}${paddedNumber}${IMAGE_EXTENSION}`;
+  const viewCount = randomInteger(257, 98000);
+  const engagement = createEngagement(viewCount);
+  const commentCount = randomInteger(1, 99);
+
+  return {
+    imageNumber,
+    paddedNumber,
+    imagePath,
+    title: createTitle(),
+    viewCount,
+    engagement,
+    commentCount,
+    duration: createDuration(),
+    age: randomInteger(2, 19)
+  };
+}
+
+function createRatingHtml(video) {
+  return `
+    <div class="rating-meta" aria-label="Bewertungen und Kommentare">
+      <span class="rating-item">
+        <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
+        </svg>
+        ${formatNumber(video.engagement.likes)}
+      </span>
+
+      <span class="rating-item">
+        <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
+        </svg>
+        ${formatNumber(video.engagement.dislikes)}
+      </span>
+
+      <span class="rating-item">
+        <svg class="rating-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H9.4L4 22v-4H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm0 2v10h2v2l2.7-2H20V6H4Z"></path>
+        </svg>
+        ${formatNumber(video.commentCount)}
+      </span>
+    </div>
+  `;
+}
+
+function renderComments() {
+  const selectedComments = shuffleArray(negativeComments).slice(0, 5);
+  commentsList.innerHTML = "";
+
+  selectedComments.forEach((comment) => {
+    const userName = randomItem(userNames);
+    const commentItem = document.createElement("article");
+    commentItem.className = "comment-item";
+
+    commentItem.innerHTML = `
+      <div class="comment-avatar">${userName.slice(0, 2).toUpperCase()}</div>
+      <div>
+        <div class="comment-user">@${userName} · vor ${randomInteger(2, 11)} Jahren</div>
+        <div class="comment-text">${comment}</div>
+      </div>
+    `;
+
+    commentsList.appendChild(commentItem);
+  });
+}
+
+function renderRelatedVideos(currentVideo) {
+  const relatedVideos = shuffleArray(createImagePool())
+    .filter((imageNumber) => imageNumber !== currentVideo.imageNumber)
+    .slice(0, 11)
+    .map(createVideoData);
+
+  relatedList.innerHTML = "";
+
+  relatedVideos.forEach((video) => {
+    const relatedCard = document.createElement("article");
+    relatedCard.className = "related-card";
+    relatedCard.tabIndex = 0;
+    relatedCard.setAttribute("role", "button");
+    relatedCard.setAttribute("aria-label", "Ähnliches Video öffnen");
+
+    relatedCard.innerHTML = `
+      <div class="related-thumb">
+        <img src="${video.imagePath}" alt="jaTV Archivbild ${video.paddedNumber}" loading="lazy">
+        <span class="related-duration">${video.duration}</span>
+      </div>
+      <div>
+        <h4 class="related-title">${video.title}</h4>
+        <div class="related-meta">${formatViews(video.viewCount)}<br>vor ${video.age} Jahren archiviert</div>
+      </div>
+    `;
+
+    relatedCard.addEventListener("click", () => openPlayer(video));
+
+    relatedCard.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPlayer(video);
+      }
+    });
+
+    relatedList.appendChild(relatedCard);
+  });
+}
+
+function openPlayer(video) {
+  archiveView.classList.add("view-hidden");
+  playerView.classList.remove("view-hidden");
+
+  playerImage.src = video.imagePath;
+  playerImage.alt = `jaTV Archivbild ${video.paddedNumber}`;
+  playerTitle.textContent = video.title;
+  playerMeta.textContent = `${formatViews(video.viewCount)} · vor ${video.age} Jahren archiviert`;
+  playerLikes.textContent = formatNumber(video.engagement.likes);
+  playerDislikes.textContent = formatNumber(video.engagement.dislikes);
+  playerComments.textContent = formatNumber(video.commentCount);
+
+  renderComments();
+  renderRelatedVideos(video);
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function closePlayer() {
+  playerView.classList.add("view-hidden");
+  archiveView.classList.remove("view-hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+   function renderCards() {
+  const selectedImages = shuffleArray(createImagePool()).slice(0, NUMBER_OF_CARDS);
+  videoGrid.innerHTML = "";
+
+  selectedImages.forEach((imageNumber) => {
+    const video = createVideoData(imageNumber);
+
+    const card = document.createElement("article");
+    card.className = "video-card";
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", "Archivvideo öffnen");
+
+    card.innerHTML = `
+      <div class="thumb-wrap">
+        <img src="${video.imagePath}" alt="jaTV Archivbild ${video.paddedNumber}" loading="lazy" />
+        <span class="lock-badge">Locked</span>
+        <span class="duration">${video.duration}</span>
+      </div>
+      <div class="video-info">
+        <div class="avatar">
+          <img src="logo.png" alt="jaTV Logo" />
+        </div>
+        <div>
+          <h3 class="video-title">${video.title}</h3>
+          <div class="meta">
+            ${formatViews(video.viewCount)} · vor ${video.age} Jahren archiviert
+            ${createRatingHtml(video)}
+          </div>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener("click", () => openPlayer(video));
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPlayer(video);
+      }
+    });
+
+    videoGrid.appendChild(card);
+  });
+}    
+    loadMoreButton.addEventListener("click", () => {
+  openLoginDialog();
+});
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      errorMessage.textContent = "Benutzername oder Passwort falsch. Der Zugriff wurde verweigert.";
+    });
+
+    registerLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      loginDialog.close();
+      registerDialog.showModal();
+    });
+
+    searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      searchDialogText.textContent = randomItem(searchMessages);
+      searchDialog.showModal();
+    });
+    
+    sortButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const isOpen = sortMenu.classList.toggle("is-open");
+  sortButton.setAttribute("aria-expanded", String(isOpen));
+});
+
+uploadButton.addEventListener("click", () => {
+  uploadLegalError.textContent = "";
+  uploadFormatError.textContent = "";
+
+  confirmJatvMaterial.checked = false;
+  confirmLegalRecording.checked = false;
+  confirmNoManipulation.checked = false;
+
+  document.querySelectorAll('input[name="uploadFormat"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  uploadStepLegal.classList.add("is-active");
+  uploadStepFormat.classList.remove("is-active");
+
+  uploadDialog.showModal();
+});
+
+closeUploadDialog.addEventListener("click", () => {
+  uploadDialog.close();
+});
+
+brandHomeButton.addEventListener("click", () => {
+  if (typeof closePlayer === "function") {
+    closePlayer();
+  } else {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+});
+
+uploadLegalNextButton.addEventListener("click", () => {
+  const allConfirmed =
+    confirmJatvMaterial.checked &&
+    confirmLegalRecording.checked &&
+    confirmNoManipulation.checked;
+
+  if (!allConfirmed) {
+    uploadLegalError.textContent = "Bitte bestätige alle Herkunfts- und Rechtsangaben, bevor der Upload vorbereitet werden kann.";
+    return;
+  }
+
+  uploadLegalError.textContent = "";
+  uploadStepLegal.classList.remove("is-active");
+  uploadStepFormat.classList.add("is-active");
+});
+
+uploadFormatNextButton.addEventListener("click", () => {
+  const selectedFormat = document.querySelector('input[name="uploadFormat"]:checked');
+
+  if (!selectedFormat) {
+    uploadFormatError.textContent = "Bitte wähle das Ausgangsformat des Mitschnitts aus.";
+    return;
+  }
+
+  uploadFormatError.textContent = "";
+  uploadDialog.close();
+  openLoginDialog();
+});
+
+document.addEventListener("click", (event) => {
+  if (!sortMenu.contains(event.target)) {
+    sortMenu.classList.remove("is-open");
+    sortButton.setAttribute("aria-expanded", "false");
+  }
+});
+
+    closeDialog.addEventListener("click", () => loginDialog.close());
+    closeSearchDialog.addEventListener("click", () => searchDialog.close());
+    searchOkButton.addEventListener("click", () => searchDialog.close());
+    closeRegisterDialog.addEventListener("click", () => registerDialog.close());
+    registerOkButton.addEventListener("click", () => registerDialog.close());
+    headerLoginButton.addEventListener("click", openLoginDialog);
+    closeFooterErrorDialog.addEventListener("click", () => footerErrorDialog.close());
+    footerErrorOkButton.addEventListener("click", () => footerErrorDialog.close());
+
+    brokenFooterLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        footerErrorText.textContent = randomItem(footerErrorMessages);
+        footerErrorDialog.showModal();
+      });
+    });
+sortOptions.forEach((option) => {
+  option.addEventListener("click", (event) => {
+    event.preventDefault();
+    sortMenu.classList.remove("is-open");
+    sortButton.setAttribute("aria-expanded", "false");
+    openLoginDialog();
+  });
+});
+
+backToGridButton.addEventListener("click", closePlayer);
+
+fakePlayButton.addEventListener("click", openLoginDialog);
+loadMoreCommentsButton.addEventListener("click", openLoginDialog);
+
+loginRequiredActions.forEach((button) => {
+  button.addEventListener("click", openLoginDialog);
+});
+
+    renderCards();
+  </script>
+</body>
+</html>

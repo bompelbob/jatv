@@ -975,6 +975,40 @@
     padding: 9px 8px;
   }
 }
+
+@media (max-width: 980px) {
+  .watch-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .related-column {
+    width: 100%;
+  }
+
+  .related-list {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .watch-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .watch-action-button {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    padding: 9px 6px;
+  }
+
+  .related-card {
+    grid-template-columns: 120px 1fr;
+  }
+}
   </style>
 </head>
 <body>

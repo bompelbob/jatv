@@ -492,6 +492,105 @@
   text-decoration: underline;
 }
 
+.register-flow-step {
+  display: none;
+}
+
+.register-flow-step.is-active {
+  display: block;
+}
+
+.register-flow-progress {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.register-options {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.register-options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.register-options input {
+  margin-top: 2px;
+}
+
+.register-flow-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.register-flow-actions .primary-button {
+  flex: 1;
+}
+
+.secondary-button {
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0 18px;
+}
+
+.secondary-button:hover {
+  background: var(--surface-light);
+}
+
+.register-check-list {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.register-check-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.register-check-row strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.register-signature-input {
+  width: 100%;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--text);
+  padding: 0 12px;
+  font-size: 15px;
+  outline: none;
+}
+
+.register-signature-input:focus {
+  border-color: var(--accent);
+}
+
 .profile-dialog {
   width: min(520px, calc(100vw - 32px));
 }
@@ -1840,6 +1939,110 @@
     </div>
   </dialog>
 
+<dialog id="registerFlowDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2 id="registerFlowTitle">Zugang beantragen</h2>
+      <button class="close-button" id="closeRegisterFlowDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="register-flow-step is-active" id="registerStepAccess">
+      <p class="register-flow-progress">Schritt 1 von 8</p>
+      <p class="login-note">Wählen Sie die beantragte Zugangskategorie.</p>
+
+      <div class="register-options">
+        <label><input type="radio" name="accessCategory" value="Privater Sichtungszugang"> Privater Sichtungszugang</label>
+        <label><input type="radio" name="accessCategory" value="Redaktioneller Zugang"> Redaktioneller Zugang</label>
+        <label><input type="radio" name="accessCategory" value="Technischer Prüfzugang"> Technischer Prüfzugang</label>
+        <label><input type="radio" name="accessCategory" value="Rechteprüfung / Freigabe"> Rechteprüfung / Freigabe</label>
+        <label><input type="radio" name="accessCategory" value="Ehemalige Mitwirkung an jaTV"> Ehemalige Mitwirkung an jaTV</label>
+        <label><input type="radio" name="accessCategory" value="Unklare Zuständigkeit"> Unklare Zuständigkeit</label>
+      </div>
+
+      <p class="error-message" id="registerAccessError"></p>
+      <div class="register-flow-actions">
+        <button class="primary-button" id="registerStepAccessNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="register-flow-step" id="registerStepPurpose">
+      <p class="register-flow-progress">Schritt 2 von 8</p>
+      <p class="login-note">Bitte geben Sie den Zweck des Zugriffs an.</p>
+
+      <div class="register-options">
+        <label><input type="radio" name="accessPurpose" value="Material sichten"> Ich möchte bestehendes Material sichten.</label>
+        <label><input type="radio" name="accessPurpose" value="Material hochladen"> Ich möchte Material hochladen.</label>
+        <label><input type="radio" name="accessPurpose" value="Mitschnitt melden"> Ich möchte einen alten Mitschnitt melden.</label>
+        <label><input type="radio" name="accessPurpose" value="Metadaten korrigieren"> Ich möchte Metadaten korrigieren.</label>
+        <label><input type="radio" name="accessPurpose" value="Erinnerung prüfen"> Ich möchte prüfen, ob ich mich an etwas davon erinnere.</label>
+        <label><input type="radio" name="accessPurpose" value="Eventuell gezeigt"> Ich wurde in einem Beitrag eventuell gezeigt, bin mir aber nicht sicher.</label>
+      </div>
+
+      <p class="error-message" id="registerPurposeError"></p>
+      <div class="register-flow-actions">
+        <button class="secondary-button" id="registerStepPurposeBack" type="button">Zurück</button>
+        <button class="primary-button" id="registerStepPurposeNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="register-flow-step" id="registerStepCheck">
+      <p class="register-flow-progress">Schritt 3 von 8</p>
+      <p class="login-note">Die technische Vorprüfung wurde gestartet. Einzelne Prüfpunkte konnten nur teilweise bestätigt werden.</p>
+
+      <div class="register-check-list">
+        <div class="register-check-row"><span>Browserkompatibilität</span><strong>ausreichend</strong></div>
+        <div class="register-check-row"><span>Archivzugriff</span><strong>ausstehend</strong></div>
+        <div class="register-check-row"><span>Sichtungsknoten</span><strong>nicht eindeutig</strong></div>
+        <div class="register-check-row"><span>Rechteumgebung</span><strong>widersprüchlich</strong></div>
+        <div class="register-check-row"><span>Registrierungsfenster</span><strong>eingeschränkt</strong></div>
+      </div>
+
+      <div class="register-flow-actions">
+        <button class="secondary-button" id="registerStepCheckBack" type="button">Zurück</button>
+        <button class="primary-button" id="registerStepCheckNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="register-flow-step" id="registerStepSignature">
+      <p class="register-flow-progress">Schritt 4 von 8</p>
+      <p class="login-note">Bitte geben Sie eine Zugangssignatur, Altkennung oder Sichtungsnummer ein.</p>
+
+      <input class="register-signature-input" id="accessSignatureInput" type="text" placeholder="Zugangssignatur / Altkennung / Sichtungsnummer">
+
+      <div class="register-options">
+        <label>
+          <input type="checkbox" id="noAccessSignature">
+          Ich habe keine Zugangssignatur.
+        </label>
+      </div>
+
+      <p class="error-message" id="registerSignatureError"></p>
+      <div class="register-flow-actions">
+        <button class="secondary-button" id="registerStepSignatureBack" type="button">Zurück</button>
+        <button class="primary-button" id="registerStepSignatureNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="register-flow-step" id="registerStepConfirmations">
+      <p class="register-flow-progress">Schritt 5 von 8</p>
+      <p class="login-note">Zur vorläufigen Bestandsnähe sind folgende Angaben erforderlich.</p>
+
+      <div class="register-options">
+        <label><input type="checkbox" class="register-confirmation"> Ich habe jaTV-Material vor 2010 gesehen.</label>
+        <label><input type="checkbox" class="register-confirmation"> Ich kann mindestens ein Sendefragment grob einordnen.</label>
+        <label><input type="checkbox" class="register-confirmation"> Ich akzeptiere, dass Erinnerungen keine Rechtekette ersetzen.</label>
+        <label><input type="checkbox" class="register-confirmation"> Ich verstehe, dass subjektive Wiedererkennung nicht als Freigabe gilt.</label>
+      </div>
+
+      <p class="error-message" id="registerConfirmationError"></p>
+      <div class="register-flow-actions">
+        <button class="secondary-button" id="registerStepConfirmationsBack" type="button">Zurück</button>
+        <button class="primary-button" id="registerStepConfirmationsNext" type="button">Weiter</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
   <dialog id="registerDialog">
     <div class="dialog-inner">
       <div class="dialog-header">
@@ -2738,6 +2941,35 @@ const shareDialog = document.getElementById("shareDialog");
 const closeShareDialog = document.getElementById("closeShareDialog");
 const shareOkButton = document.getElementById("shareOkButton");
 const shareDialogText = document.getElementById("shareDialogText");
+const registerFlowDialog = document.getElementById("registerFlowDialog");
+const closeRegisterFlowDialog = document.getElementById("closeRegisterFlowDialog");
+
+const registerSteps = [
+  document.getElementById("registerStepAccess"),
+  document.getElementById("registerStepPurpose"),
+  document.getElementById("registerStepCheck"),
+  document.getElementById("registerStepSignature"),
+  document.getElementById("registerStepConfirmations")
+];
+
+const registerStepAccessNext = document.getElementById("registerStepAccessNext");
+const registerStepPurposeBack = document.getElementById("registerStepPurposeBack");
+const registerStepPurposeNext = document.getElementById("registerStepPurposeNext");
+const registerStepCheckBack = document.getElementById("registerStepCheckBack");
+const registerStepCheckNext = document.getElementById("registerStepCheckNext");
+const registerStepSignatureBack = document.getElementById("registerStepSignatureBack");
+const registerStepSignatureNext = document.getElementById("registerStepSignatureNext");
+const registerStepConfirmationsBack = document.getElementById("registerStepConfirmationsBack");
+const registerStepConfirmationsNext = document.getElementById("registerStepConfirmationsNext");
+
+const registerAccessError = document.getElementById("registerAccessError");
+const registerPurposeError = document.getElementById("registerPurposeError");
+const registerSignatureError = document.getElementById("registerSignatureError");
+const registerConfirmationError = document.getElementById("registerConfirmationError");
+
+const accessSignatureInput = document.getElementById("accessSignatureInput");
+const noAccessSignature = document.getElementById("noAccessSignature");
+const registerConfirmations = document.querySelectorAll(".register-confirmation");
 
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
@@ -2804,6 +3036,47 @@ function openProfileDialog(userName) {
   profileConfidence.textContent = `${randomInteger(0, 100)} von 100`;
 
   profileDialog.showModal();
+}
+
+let currentRegisterStep = 0;
+
+function showRegisterStep(stepIndex) {
+  currentRegisterStep = stepIndex;
+
+  registerSteps.forEach((step, index) => {
+    step.classList.toggle("is-active", index === stepIndex);
+  });
+}
+
+function resetRegisterFlow() {
+  currentRegisterStep = 0;
+
+  document.querySelectorAll('input[name="accessCategory"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  document.querySelectorAll('input[name="accessPurpose"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  accessSignatureInput.value = "";
+  noAccessSignature.checked = false;
+
+  registerConfirmations.forEach((input) => {
+    input.checked = false;
+  });
+
+  registerAccessError.textContent = "";
+  registerPurposeError.textContent = "";
+  registerSignatureError.textContent = "";
+  registerConfirmationError.textContent = "";
+
+  showRegisterStep(0);
+}
+
+function openRegisterFlowDialog() {
+  resetRegisterFlow();
+  registerFlowDialog.showModal();
 }
 
     function createEngagement(viewCount) {
@@ -3108,11 +3381,11 @@ function renderCards() {
       errorMessage.textContent = "Benutzername oder Passwort falsch. Der Zugriff wurde verweigert.";
     });
 
-    registerLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      loginDialog.close();
-      registerDialog.showModal();
-    });
+registerLink.addEventListener("click", (event) => {
+  event.preventDefault();
+  loginDialog.close();
+  openRegisterFlowDialog();
+});
 
     searchForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -3303,6 +3576,79 @@ closeShareDialog.addEventListener("click", () => {
 
 shareOkButton.addEventListener("click", () => {
   shareDialog.close();
+});
+
+closeRegisterFlowDialog.addEventListener("click", () => {
+  registerFlowDialog.close();
+});
+
+registerStepAccessNext.addEventListener("click", () => {
+  const selectedCategory = document.querySelector('input[name="accessCategory"]:checked');
+
+  if (!selectedCategory) {
+    registerAccessError.textContent = "Bitte wählen Sie eine Zugangskategorie aus.";
+    return;
+  }
+
+  registerAccessError.textContent = "";
+  showRegisterStep(1);
+});
+
+registerStepPurposeBack.addEventListener("click", () => {
+  showRegisterStep(0);
+});
+
+registerStepPurposeNext.addEventListener("click", () => {
+  const selectedPurpose = document.querySelector('input[name="accessPurpose"]:checked');
+
+  if (!selectedPurpose) {
+    registerPurposeError.textContent = "Bitte wählen Sie den Zweck des Zugriffs aus.";
+    return;
+  }
+
+  registerPurposeError.textContent = "";
+  showRegisterStep(2);
+});
+
+registerStepCheckBack.addEventListener("click", () => {
+  showRegisterStep(1);
+});
+
+registerStepCheckNext.addEventListener("click", () => {
+  showRegisterStep(3);
+});
+
+registerStepSignatureBack.addEventListener("click", () => {
+  showRegisterStep(2);
+});
+
+registerStepSignatureNext.addEventListener("click", () => {
+  const hasSignature = accessSignatureInput.value.trim().length > 0;
+
+  if (!hasSignature && !noAccessSignature.checked) {
+    registerSignatureError.textContent = "Bitte geben Sie eine Zugangssignatur ein oder bestätigen Sie, dass keine Zugangssignatur vorliegt.";
+    return;
+  }
+
+  registerSignatureError.textContent = "";
+  showRegisterStep(4);
+});
+
+registerStepConfirmationsBack.addEventListener("click", () => {
+  showRegisterStep(3);
+});
+
+registerStepConfirmationsNext.addEventListener("click", () => {
+  const allConfirmed = Array.from(registerConfirmations).every((input) => input.checked);
+
+  if (!allConfirmed) {
+    registerConfirmationError.textContent = "Bitte bestätigen Sie alle Angaben zur vorläufigen Bestandsnähe.";
+    return;
+  }
+
+  registerConfirmationError.textContent = "";
+  registerFlowDialog.close();
+  registerDialog.showModal();
 });
 
 

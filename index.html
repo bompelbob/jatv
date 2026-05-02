@@ -116,6 +116,117 @@
   }
 }
 
+.viewer-badge {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 3px 7px;
+  background: rgba(255, 0, 51, 0.9);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 5px;
+  letter-spacing: 0.02em;
+}
+
+.comment-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 0 14px;
+}
+
+.comment-sort-menu {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.comment-sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 13px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.comment-sort-button::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--muted);
+  margin-top: 2px;
+}
+
+.comment-sort-options {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 250px;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #1b1b1b;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+  display: none;
+  z-index: 8;
+}
+
+.comment-sort-menu.is-open .comment-sort-options {
+  display: grid;
+  gap: 2px;
+}
+
+.comment-sort-option {
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  padding: 9px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.comment-sort-option:hover,
+.comment-sort-option:focus {
+  background: var(--surface-light);
+  color: var(--text);
+  outline: none;
+}
+
+@media (max-width: 560px) {
+  .comment-header-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .comment-sort-menu,
+  .comment-sort-button {
+    width: 100%;
+  }
+
+  .comment-sort-button {
+    justify-content: space-between;
+  }
+
+  .comment-sort-options {
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
+}
+
     .brand {
       display: flex;
       align-items: center;
@@ -1416,6 +1527,11 @@
       <span id="playerComments"></span>
 
     </button>
+    <button class="watch-action-button" type="button" id="shareButton" aria-label="Video teilen">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M18 16.1c-1.1 0-2.1.5-2.7 1.3L8.9 13.7c.1-.3.1-.5.1-.7s0-.4-.1-.7l6.3-3.7C15.9 9.4 16.9 10 18 10c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .4.1.7L8.8 11.4C8.1 10.6 7.1 10 6 10c-1.7 0-3 1.3-3 3s1.3 3 3 3c1.1 0 2.1-.6 2.8-1.4l6.3 3.7c-.1.2-.1.4-.1.7 0 1.7 1.3 3 3 3s3-1.3 3-3-1.3-2.9-3-2.9Z"></path>
+  </svg>
+</button>
 
   </div>
 
@@ -1678,6 +1794,21 @@
     </div>
 
     <button class="primary-button" id="profileOkButton" type="button">Schließen</button>
+  </div>
+</dialog>
+
+<dialog id="shareDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Geteilt</h2>
+      <button class="close-button" id="closeShareDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <p class="login-note" id="shareDialogText">
+      Geteilt. Voraussichtliche Reaktionen: 0 bis 8.
+    </p>
+
+    <button class="primary-button" id="shareOkButton" type="button">Verstanden</button>
   </div>
 </dialog>
 
@@ -2602,6 +2733,11 @@ const profileLastActive = document.getElementById("profileLastActive");
 const profileReputation = document.getElementById("profileReputation");
 const profileConfidence = document.getElementById("profileConfidence");
 const profileLoginLinks = document.querySelectorAll(".profile-login-link");
+const shareButton = document.getElementById("shareButton");
+const shareDialog = document.getElementById("shareDialog");
+const closeShareDialog = document.getElementById("closeShareDialog");
+const shareOkButton = document.getElementById("shareOkButton");
+const shareDialogText = document.getElementById("shareDialogText");
 
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
@@ -2913,11 +3049,16 @@ function closePlayer() {
   });
 }
 
-   function renderCards() {
+function renderCards() {
   const selectedImages = shuffleArray(createImagePool()).slice(0, NUMBER_OF_CARDS);
+  const activeBadgeCount = randomInteger(3, 8);
+  const activeBadgeIndexes = new Set(
+    shuffleArray([...Array(NUMBER_OF_CARDS).keys()]).slice(0, activeBadgeCount)
+  );
+
   videoGrid.innerHTML = "";
 
-  selectedImages.forEach((imageNumber) => {
+  selectedImages.forEach((imageNumber, index) => {
     const video = createVideoData(imageNumber);
 
     const card = document.createElement("article");
@@ -2927,11 +3068,11 @@ function closePlayer() {
     card.setAttribute("aria-label", "Archivvideo öffnen");
 
     card.innerHTML = `
-      <div class="thumb-wrap">
-        <img src="${video.imagePath}" alt="jaTV Archivbild ${video.paddedNumber}" loading="lazy" />
-        
-        <span class="duration">${video.duration}</span>
-      </div>
+<div class="thumb-wrap">
+  <img src="${video.imagePath}" alt="jaTV Archivbild ${video.paddedNumber}" loading="lazy" />
+  ${activeBadgeIndexes.has(index) ? `<span class="viewer-badge">${randomInteger(1, 16)} Zuschauer aktiv</span>` : ""}
+  <span class="duration">${video.duration}</span>
+</div>
       <div class="video-info">
         <div class="avatar">
           <img src="logo.png" alt="jaTV Logo" />
@@ -3149,6 +3290,19 @@ profileLoginLinks.forEach((link) => {
     profileDialog.close();
     openLoginDialog();
   });
+});
+
+shareButton.addEventListener("click", () => {
+  shareDialogText.textContent = `Geteilt. Voraussichtliche Reaktionen: 0 bis ${randomInteger(4, 16)}.`;
+  shareDialog.showModal();
+});
+
+closeShareDialog.addEventListener("click", () => {
+  shareDialog.close();
+});
+
+shareOkButton.addEventListener("click", () => {
+  shareDialog.close();
 });
 
 

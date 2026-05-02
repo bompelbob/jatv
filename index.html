@@ -1948,7 +1948,7 @@
 
     <div class="register-flow-step is-active" id="registerStepAccess">
       <p class="register-flow-progress">Schritt 1 von 8</p>
-      <p class="login-note">Wählen Sie die beantragte Zugangskategorie.</p>
+      <p class="login-note">Wähle die beantragte Zugangskategorie.</p>
 
       <div class="register-options">
         <label><input type="radio" name="accessCategory" value="Privater Sichtungszugang"> Privater Sichtungszugang</label>
@@ -1967,7 +1967,7 @@
 
     <div class="register-flow-step" id="registerStepPurpose">
       <p class="register-flow-progress">Schritt 2 von 8</p>
-      <p class="login-note">Bitte geben Sie den Zweck des Zugriffs an.</p>
+      <p class="login-note">Bitte gib den Zweck des Zugriffs an.</p>
 
       <div class="register-options">
         <label><input type="radio" name="accessPurpose" value="Material sichten"> Ich möchte bestehendes Material sichten.</label>
@@ -2005,7 +2005,7 @@
 
     <div class="register-flow-step" id="registerStepSignature">
       <p class="register-flow-progress">Schritt 4 von 8</p>
-      <p class="login-note">Bitte geben Sie eine Zugangssignatur, Altkennung oder Sichtungsnummer ein.</p>
+      <p class="login-note">Bitte gib eine Zugangssignatur, Altkennung oder Sichtungsnummer ein.</p>
 
       <input class="register-signature-input" id="accessSignatureInput" type="text" placeholder="Zugangssignatur / Altkennung / Sichtungsnummer">
 
@@ -3586,7 +3586,7 @@ registerStepAccessNext.addEventListener("click", () => {
   const selectedCategory = document.querySelector('input[name="accessCategory"]:checked');
 
   if (!selectedCategory) {
-    registerAccessError.textContent = "Bitte wählen Sie eine Zugangskategorie aus.";
+    registerAccessError.textContent = "Bitte wähle eine Zugangskategorie aus.";
     return;
   }
 
@@ -3602,7 +3602,7 @@ registerStepPurposeNext.addEventListener("click", () => {
   const selectedPurpose = document.querySelector('input[name="accessPurpose"]:checked');
 
   if (!selectedPurpose) {
-    registerPurposeError.textContent = "Bitte wählen Sie den Zweck des Zugriffs aus.";
+    registerPurposeError.textContent = "Bitte wähle den Zweck des Zugriffs aus.";
     return;
   }
 
@@ -3626,7 +3626,7 @@ registerStepSignatureNext.addEventListener("click", () => {
   const hasSignature = accessSignatureInput.value.trim().length > 0;
 
   if (!hasSignature && !noAccessSignature.checked) {
-    registerSignatureError.textContent = "Bitte geben Sie eine Zugangssignatur ein oder bestätigen Sie, dass keine Zugangssignatur vorliegt.";
+    registerSignatureError.textContent = "Bitte gib eine Zugangssignatur ein oder bestätige, dass keine Zugangssignatur vorliegt.";
     return;
   }
 
@@ -3642,7 +3642,7 @@ registerStepConfirmationsNext.addEventListener("click", () => {
   const allConfirmed = Array.from(registerConfirmations).every((input) => input.checked);
 
   if (!allConfirmed) {
-    registerConfirmationError.textContent = "Bitte bestätigen Sie alle Angaben zur vorläufigen Bestandsnähe.";
+    registerConfirmationError.textContent = "Bitte bestätige alle Angaben zur vorläufigen Bestandsnähe.";
     return;
   }
 

@@ -1505,6 +1505,166 @@
     grid-template-columns: 120px 1fr;
   }
 }
+
+.contact-flow-step {
+  display: none;
+}
+
+.contact-flow-step.is-active {
+  display: block;
+}
+
+.contact-flow-progress {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.contact-options {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.contact-options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.contact-options input {
+  margin-top: 2px;
+}
+
+.contact-flow-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.contact-flow-actions .primary-button,
+.contact-flow-actions .secondary-button {
+  flex: 1;
+}
+
+.contact-check-list {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.contact-check-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.contact-check-row strong {
+  color: var(--text);
+  font-weight: 700;
+  text-align: right;
+}
+
+@media (max-width: 520px) {
+  .contact-flow-actions {
+    display: grid;
+  }
+}
+
+.help-flow-step {
+  display: none;
+}
+
+.help-flow-step.is-active {
+  display: block;
+}
+
+.help-flow-progress {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.help-options {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.help-options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.help-options input {
+  margin-top: 2px;
+}
+
+.help-flow-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.help-flow-actions .primary-button,
+.help-flow-actions .secondary-button {
+  flex: 1;
+}
+
+.help-check-list {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.help-check-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.help-check-row strong {
+  color: var(--text);
+  font-weight: 700;
+  text-align: right;
+}
+
+.help-result-box {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+  .help-flow-actions {
+    display: grid;
+  }
+}
   </style>
 </head>
 <body>
@@ -1694,13 +1854,180 @@
 
   <footer class="site-footer">
     <nav class="footer-links" aria-label="Footer Navigation">
-      <a href="#" class="broken-footer-link">Kontakt</a>
-      <a href="#" class="broken-footer-link">Karriere</a>
-      <a href="#" class="broken-footer-link">Nutzungsbedingungen</a>
+      <a href="#" class="broken-footer-link" id="contactFooterLink">Kontakt</a>
       <a href="impdaten.html">Impressum</a>
-      <a href="#" class="broken-footer-link">Hilfe</a>
+      <a href="#" class="broken-footer-link" id="helpFooterLink">Hilfe</a>
     </nav>
   </footer>
+
+<dialog id="contactFlowDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Kontaktaufnahme vorbereiten</h2>
+      <button class="close-button" id="closeContactFlowDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="contact-flow-step is-active" id="contactStepReason">
+      <p class="contact-flow-progress">Schritt 1 von 8</p>
+      <p class="login-note">Bitte wähle den Grund der Kontaktaufnahme.</p>
+
+      <div class="contact-options">
+        <label><input type="radio" name="contactReason"> Ich habe eine technische Störung festgestellt.</label>
+        <label><input type="radio" name="contactReason"> Ich möchte Material melden oder ergänzen.</label>
+        <label><input type="radio" name="contactReason"> Ich habe eine Frage zu einem bestimmten Beitrag.</label>
+        <label><input type="radio" name="contactReason"> Ich möchte eine Korrektur zu Metadaten einreichen.</label>
+        <label><input type="radio" name="contactReason"> Ich erkenne mich oder eine andere Person in Material wieder.</label>
+        <label><input type="radio" name="contactReason"> Ich möchte eine allgemeine Nachricht übermitteln.</label>
+        <label><input type="radio" name="contactReason"> Ich weiß nicht genau, warum ich hier bin.</label>
+      </div>
+
+      <p class="error-message" id="contactReasonError"></p>
+      <div class="contact-flow-actions">
+        <button class="primary-button" id="contactStepReasonNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="contact-flow-step" id="contactStepArea">
+      <p class="contact-flow-progress">Schritt 2 von 8</p>
+      <p class="login-note">Bitte grenze den vermuteten Zuständigkeitsbereich ein.</p>
+
+      <div class="contact-options">
+        <label><input type="radio" name="contactArea"> Sichtung und Inhalt</label>
+        <label><input type="radio" name="contactArea"> Technische Wiedergabe</label>
+        <label><input type="radio" name="contactArea"> Rechte und Freigabe</label>
+        <label><input type="radio" name="contactArea"> Altmaterial und Trägerformate</label>
+        <label><input type="radio" name="contactArea"> Benutzerzugang</label>
+        <label><input type="radio" name="contactArea"> Kommentarbereich</label>
+        <label><input type="radio" name="contactArea"> Unklare Archivlage</label>
+      </div>
+
+      <p class="error-message" id="contactAreaError"></p>
+      <div class="contact-flow-actions">
+        <button class="secondary-button" id="contactStepAreaBack" type="button">Zurück</button>
+        <button class="primary-button" id="contactStepAreaNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="contact-flow-step" id="contactStepUrgency">
+      <p class="contact-flow-progress">Schritt 3 von 8</p>
+      <p class="login-note">Bitte bewerte die Dringlichkeit der Anfrage.</p>
+
+      <div class="contact-options">
+        <label><input type="radio" name="contactUrgency"> Niedrig: kann irgendwann geprüft werden.</label>
+        <label><input type="radio" name="contactUrgency"> Normal: sollte bei Gelegenheit geprüft werden.</label>
+        <label><input type="radio" name="contactUrgency"> Hoch: betrifft sichtbares Material.</label>
+        <label><input type="radio" name="contactUrgency"> Unklar: Dringlichkeit kann ohne weitere Sichtung nicht bestimmt werden.</label>
+        <label><input type="radio" name="contactUrgency"> Rückwirkend dringend.</label>
+      </div>
+
+      <p class="error-message" id="contactUrgencyError"></p>
+      <div class="contact-flow-actions">
+        <button class="secondary-button" id="contactStepUrgencyBack" type="button">Zurück</button>
+        <button class="primary-button" id="contactStepUrgencyNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="contact-flow-step" id="contactStepCheck">
+      <p class="contact-flow-progress">Schritt 4 von 8</p>
+      <p class="login-note">Die Kontaktvorprüfung wurde durchgeführt. Einzelne Prüfpunkte konnten nicht abschließend stabilisiert werden.</p>
+
+      <div class="contact-check-list">
+        <div class="contact-check-row"><span>Anfrageformat</span><strong>lesbar</strong></div>
+        <div class="contact-check-row"><span>Zuständigkeitsbereich</span><strong>teilweise bestimmbar</strong></div>
+        <div class="contact-check-row"><span>Kontaktkanal</span><strong>nicht stabil</strong></div>
+        <div class="contact-check-row"><span>Antwortfähigkeit</span><strong>eingeschränkt</strong></div>
+        <div class="contact-check-row"><span>Bearbeitungsfenster</span><strong>nicht geöffnet</strong></div>
+      </div>
+
+      <div class="contact-flow-actions">
+        <button class="secondary-button" id="contactStepCheckBack" type="button">Zurück</button>
+        <button class="primary-button" id="contactStepCheckNext" type="button">Kontaktanfrage fortsetzen</button>
+      </div>
+    </div>
+
+    <div class="contact-flow-step" id="contactStepConfirmations">
+      <p class="contact-flow-progress">Schritt 5 von 8</p>
+      <p class="login-note">Bitte bestätige die Hinweise zur weiteren Behandlung der Anfrage.</p>
+
+      <div class="contact-options">
+        <label><input type="checkbox" class="contact-confirmation"> Ich akzeptiere, dass eine Antwort nicht garantiert werden kann.</label>
+        <label><input type="checkbox" class="contact-confirmation"> Ich verstehe, dass unklare Anfragen in unklare Zuständigkeiten übergehen können.</label>
+        <label><input type="checkbox" class="contact-confirmation"> Ich bestätige, dass meine Kontaktaufnahme nicht automatisch eine Sichtung auslöst.</label>
+        <label><input type="checkbox" class="contact-confirmation"> Ich nehme zur Kenntnis, dass Rückmeldungen derzeit nur theoretisch vorgesehen sind.</label>
+      </div>
+
+      <p class="error-message" id="contactConfirmationError"></p>
+      <div class="contact-flow-actions">
+        <button class="secondary-button" id="contactStepConfirmationsBack" type="button">Zurück</button>
+        <button class="primary-button" id="contactStepConfirmationsNext" type="button">Weiter</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="helpFlowDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Hilfe-Center</h2>
+      <button class="close-button" id="closeHelpFlowDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="help-flow-step is-active" id="helpStepTopic">
+      <p class="help-flow-progress">Schritt 1 von 7</p>
+      <p class="login-note">Wobei brauchst du Hilfe?</p>
+
+      <div class="help-options">
+        <label><input type="radio" name="helpTopic"> Ich kann ein Video nicht abspielen.</label>
+        <label><input type="radio" name="helpTopic"> Ich kann mich nicht anmelden.</label>
+        <label><input type="radio" name="helpTopic"> Ich möchte ein Video melden.</label>
+        <label><input type="radio" name="helpTopic"> Ich möchte wissen, warum mir dieses Video empfohlen wurde.</label>
+        <label><input type="radio" name="helpTopic"> Ich möchte meine Kommentare verwalten.</label>
+        <label><input type="radio" name="helpTopic"> Ich möchte die Qualität verbessern.</label>
+        <label><input type="radio" name="helpTopic"> Ich verstehe den Inhalt nicht.</label>
+        <label><input type="radio" name="helpTopic"> Ich brauche Hilfe bei einer nicht näher bestimmbaren Archivlage.</label>
+      </div>
+
+      <p class="error-message" id="helpTopicError"></p>
+
+      <div class="help-flow-actions">
+        <button class="primary-button" id="helpStepTopicNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="help-flow-step" id="helpStepDiagnosis">
+      <p class="help-flow-progress">Schritt 2 von 7</p>
+      <p class="login-note">Die automatische Hilfediagnose wurde gestartet. Das Problem wurde teilweise erkannt.</p>
+
+      <div class="help-check-list">
+        <div class="help-check-row"><span>Problemklassifikation</span><strong>teilweise erkannt</strong></div>
+        <div class="help-check-row"><span>Nutzerkontext</span><strong>nicht verfügbar</strong></div>
+        <div class="help-check-row"><span>Archivstatus</span><strong>widersprüchlich</strong></div>
+        <div class="help-check-row"><span>Empfohlene Maßnahme</span><strong>Anmeldung erforderlich</strong></div>
+        <div class="help-check-row"><span>Hilfewahrscheinlichkeit</span><strong>12 %</strong></div>
+      </div>
+
+      <div class="help-flow-actions">
+        <button class="secondary-button" id="helpStepDiagnosisBack" type="button">Zurück</button>
+        <button class="primary-button" id="helpStepDiagnosisNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="help-flow-step" id="helpStepSolution">
+      <p class="help-flow-progress">Schritt 3 von 7</p>
+      <p class="login-note">Folgende Lösung wurde automatisch vorgeschlagen.</p>
+
+      <div class="help-result-box">
+        Bitte prüfe zunächst, ob das Problem weiterhin besteht.
+        Falls das Problem weiterhin besteht, versuche es mit dem nächsten Schritt.
+      </div>
+
+      <div class="help-flow-actions">
+        <button class="secondary-button" id="helpStepSolutionBack" type="button">Zurück</button>
+        <button class="primary-button" id="helpStepSolutionNext" type="button">Weiter</button>
+      </div>
+    </div>
+  </div>
+</dialog>
 
   <dialog id="footerErrorDialog">
     <div class="dialog-inner">
@@ -2971,6 +3298,51 @@ const accessSignatureInput = document.getElementById("accessSignatureInput");
 const noAccessSignature = document.getElementById("noAccessSignature");
 const registerConfirmations = document.querySelectorAll(".register-confirmation");
 
+const contactFooterLink = document.getElementById("contactFooterLink");
+const contactFlowDialog = document.getElementById("contactFlowDialog");
+const closeContactFlowDialog = document.getElementById("closeContactFlowDialog");
+
+const contactSteps = [
+  document.getElementById("contactStepReason"),
+  document.getElementById("contactStepArea"),
+  document.getElementById("contactStepUrgency"),
+  document.getElementById("contactStepCheck"),
+  document.getElementById("contactStepConfirmations")
+];
+
+const contactStepReasonNext = document.getElementById("contactStepReasonNext");
+const contactStepAreaBack = document.getElementById("contactStepAreaBack");
+const contactStepAreaNext = document.getElementById("contactStepAreaNext");
+const contactStepUrgencyBack = document.getElementById("contactStepUrgencyBack");
+const contactStepUrgencyNext = document.getElementById("contactStepUrgencyNext");
+const contactStepCheckBack = document.getElementById("contactStepCheckBack");
+const contactStepCheckNext = document.getElementById("contactStepCheckNext");
+const contactStepConfirmationsBack = document.getElementById("contactStepConfirmationsBack");
+const contactStepConfirmationsNext = document.getElementById("contactStepConfirmationsNext");
+
+const contactReasonError = document.getElementById("contactReasonError");
+const contactAreaError = document.getElementById("contactAreaError");
+const contactUrgencyError = document.getElementById("contactUrgencyError");
+const contactConfirmationError = document.getElementById("contactConfirmationError");
+const contactConfirmations = document.querySelectorAll(".contact-confirmation");
+
+const helpFooterLink = document.getElementById("helpFooterLink");
+const helpFlowDialog = document.getElementById("helpFlowDialog");
+const closeHelpFlowDialog = document.getElementById("closeHelpFlowDialog");
+
+const helpSteps = [
+  document.getElementById("helpStepTopic"),
+  document.getElementById("helpStepDiagnosis"),
+  document.getElementById("helpStepSolution")
+];
+
+const helpStepTopicNext = document.getElementById("helpStepTopicNext");
+const helpStepDiagnosisBack = document.getElementById("helpStepDiagnosisBack");
+const helpStepDiagnosisNext = document.getElementById("helpStepDiagnosisNext");
+const helpStepSolutionBack = document.getElementById("helpStepSolutionBack");
+const helpStepSolutionNext = document.getElementById("helpStepSolutionNext");
+const helpTopicError = document.getElementById("helpTopicError");
+
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
     }
@@ -3036,6 +3408,33 @@ function openProfileDialog(userName) {
   profileConfidence.textContent = `${randomInteger(0, 100)} von 100`;
 
   profileDialog.showModal();
+}
+
+let currentHelpStep = 0;
+
+function showHelpStep(stepIndex) {
+  currentHelpStep = stepIndex;
+
+  helpSteps.forEach((step, index) => {
+    step.classList.toggle("is-active", index === stepIndex);
+  });
+}
+
+function resetHelpFlow() {
+  currentHelpStep = 0;
+
+  document.querySelectorAll('input[name="helpTopic"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  helpTopicError.textContent = "";
+
+  showHelpStep(0);
+}
+
+function openHelpFlowDialog() {
+  resetHelpFlow();
+  helpFlowDialog.showModal();
 }
 
 let currentRegisterStep = 0;
@@ -3109,6 +3508,48 @@ function openRegisterFlowDialog() {
       loginForm.reset();
       loginDialog.showModal();
     }
+    
+    let currentContactStep = 0;
+
+function showContactStep(stepIndex) {
+  currentContactStep = stepIndex;
+
+  contactSteps.forEach((step, index) => {
+    step.classList.toggle("is-active", index === stepIndex);
+  });
+}
+
+function resetContactFlow() {
+  currentContactStep = 0;
+
+  document.querySelectorAll('input[name="contactReason"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  document.querySelectorAll('input[name="contactArea"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  document.querySelectorAll('input[name="contactUrgency"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  contactConfirmations.forEach((input) => {
+    input.checked = false;
+  });
+
+  contactReasonError.textContent = "";
+  contactAreaError.textContent = "";
+  contactUrgencyError.textContent = "";
+  contactConfirmationError.textContent = "";
+
+  showContactStep(0);
+}
+
+function openContactFlowDialog() {
+  resetContactFlow();
+  contactFlowDialog.showModal();
+}
     
     function openNetiquetteDialog() {
   netiquetteDialog.showModal();
@@ -3495,13 +3936,25 @@ document.addEventListener("click", (event) => {
     closeFooterErrorDialog.addEventListener("click", () => footerErrorDialog.close());
     footerErrorOkButton.addEventListener("click", () => footerErrorDialog.close());
 
-    brokenFooterLinks.forEach((link) => {
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        footerErrorText.textContent = randomItem(footerErrorMessages);
-        footerErrorDialog.showModal();
-      });
-    });
+brokenFooterLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    if (link === contactFooterLink) {
+      openContactFlowDialog();
+      return;
+    }
+
+    if (link === helpFooterLink) {
+      openHelpFlowDialog();
+      return;
+    }
+
+    footerErrorText.textContent = randomItem(footerErrorMessages);
+    footerErrorDialog.showModal();
+  });
+});
+
 sortOptions.forEach((option) => {
   option.addEventListener("click", (event) => {
     event.preventDefault();
@@ -3519,6 +3972,114 @@ window.addEventListener("popstate", () => {
     top: 0,
     behavior: "smooth"
   });
+});
+
+closeContactFlowDialog.addEventListener("click", () => {
+  contactFlowDialog.close();
+});
+
+contactStepReasonNext.addEventListener("click", () => {
+  const selectedReason = document.querySelector('input[name="contactReason"]:checked');
+
+  if (!selectedReason) {
+    contactReasonError.textContent = "Bitte wähle einen Grund der Kontaktaufnahme aus.";
+    return;
+  }
+
+  contactReasonError.textContent = "";
+  showContactStep(1);
+});
+
+contactStepAreaBack.addEventListener("click", () => {
+  showContactStep(0);
+});
+
+closeHelpFlowDialog.addEventListener("click", () => {
+  helpFlowDialog.close();
+});
+
+helpStepTopicNext.addEventListener("click", () => {
+  const selectedTopic = document.querySelector('input[name="helpTopic"]:checked');
+
+  if (!selectedTopic) {
+    helpTopicError.textContent = "Bitte wähle aus, wobei du Hilfe brauchst.";
+    return;
+  }
+
+  helpTopicError.textContent = "";
+  showHelpStep(1);
+});
+
+helpStepDiagnosisBack.addEventListener("click", () => {
+  showHelpStep(0);
+});
+
+helpStepDiagnosisNext.addEventListener("click", () => {
+  showHelpStep(2);
+});
+
+helpStepSolutionBack.addEventListener("click", () => {
+  showHelpStep(1);
+});
+
+helpStepSolutionNext.addEventListener("click", () => {
+  helpFlowDialog.close();
+  footerErrorText.textContent = randomItem(footerErrorMessages);
+  footerErrorDialog.showModal();
+});
+
+contactStepAreaNext.addEventListener("click", () => {
+  const selectedArea = document.querySelector('input[name="contactArea"]:checked');
+
+  if (!selectedArea) {
+    contactAreaError.textContent = "Bitte wähle einen Zuständigkeitsbereich aus.";
+    return;
+  }
+
+  contactAreaError.textContent = "";
+  showContactStep(2);
+});
+
+contactStepUrgencyBack.addEventListener("click", () => {
+  showContactStep(1);
+});
+
+contactStepUrgencyNext.addEventListener("click", () => {
+  const selectedUrgency = document.querySelector('input[name="contactUrgency"]:checked');
+
+  if (!selectedUrgency) {
+    contactUrgencyError.textContent = "Bitte wähle eine Dringlichkeit aus.";
+    return;
+  }
+
+  contactUrgencyError.textContent = "";
+  showContactStep(3);
+});
+
+contactStepCheckBack.addEventListener("click", () => {
+  showContactStep(2);
+});
+
+contactStepCheckNext.addEventListener("click", () => {
+  showContactStep(4);
+});
+
+contactStepConfirmationsBack.addEventListener("click", () => {
+  showContactStep(3);
+});
+
+contactStepConfirmationsNext.addEventListener("click", () => {
+  const allConfirmed = Array.from(contactConfirmations).every((input) => input.checked);
+
+  if (!allConfirmed) {
+    contactConfirmationError.textContent = "Bitte bestätige alle Hinweise zur Kontaktaufnahme.";
+    return;
+  }
+
+  contactConfirmationError.textContent = "";
+  contactFlowDialog.close();
+  footerErrorText.textContent = randomItem(footerErrorMessages);
+  footerErrorDialog.showModal();
 });
 
 playlistButton.addEventListener("click", (event) => {

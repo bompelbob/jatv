@@ -289,6 +289,206 @@
   margin: 0 0 18px;
 }
 
+
+.playlist-menu {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.playlist-button,
+.transcript-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 9px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.playlist-button:hover,
+.transcript-button:hover {
+  background: var(--surface-light);
+}
+
+.playlist-button::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--muted);
+  margin-top: 2px;
+}
+
+.playlist-options {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  min-width: 220px;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #1b1b1b;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.45);
+  display: none;
+  z-index: 6;
+}
+
+.playlist-menu.is-open .playlist-options {
+  display: grid;
+  gap: 2px;
+}
+
+.playlist-option {
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  padding: 9px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.playlist-option:hover,
+.playlist-option:focus {
+  background: var(--surface-light);
+  color: var(--text);
+  outline: none;
+}
+
+.comment-user-button {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+}
+
+.comment-user-button:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.profile-dialog {
+  width: min(520px, calc(100vw - 32px));
+}
+
+.profile-section {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+}
+
+.profile-section-title {
+  margin: 0 0 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.profile-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.profile-table th,
+.profile-table td {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  vertical-align: top;
+}
+
+.profile-table tr:last-child th,
+.profile-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.profile-table th {
+  width: 48%;
+  color: var(--muted);
+  font-weight: 500;
+  text-align: left;
+}
+
+.profile-table td {
+  color: var(--text);
+  text-align: right;
+}
+
+.profile-login-link {
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.profile-warning {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+@media (max-width: 560px) {
+  .watch-actions-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .watch-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .watch-extra-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+
+  .watch-action-button,
+  .playlist-menu,
+  .playlist-button,
+  .transcript-button {
+    width: 100%;
+  }
+
+  .watch-action-button,
+  .playlist-button,
+  .transcript-button {
+    justify-content: center;
+  }
+
+  .playlist-options {
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
+}
+
 .sort-menu {
   position: relative;
   display: inline-block;
@@ -842,11 +1042,25 @@
   line-height: 1.45;
 }
 
-.watch-actions {
+.watch-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 18px 0 22px;
+}
+
+.watch-actions,
+.watch-extra-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
-  margin: 18px 0 22px;
+  margin: 0;
+}
+
+.watch-extra-actions {
+  justify-content: flex-end;
 }
 
 .watch-action-button {
@@ -922,23 +1136,24 @@
 }
 
 .comment-item {
-  display: grid;
-  grid-template-columns: 38px 1fr;
-  gap: 11px;
+  display: block;
   margin-bottom: 18px;
 }
 
-.comment-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #555, #1d1d1d);
-  border: 1px solid var(--border);
-  display: grid;
-  place-items: center;
-  color: var(--accent);
+.comment-reply {
+  margin-top: 12px;
+  margin-left: 22px;
+  padding-left: 14px;
+  border-left: 2px solid var(--border);
+  opacity: 0.92;
+}
+
+.comment-reply .comment-user {
   font-size: 12px;
-  font-weight: 900;
+}
+
+.comment-reply .comment-text {
+  font-size: 13px;
 }
 
 .comment-user {
@@ -1162,28 +1377,81 @@
         <h1 class="watch-title" id="playerTitle"></h1>
         <div class="watch-meta" id="playerMeta"></div>
 
-        <div class="watch-actions">
-          <button class="watch-action-button login-required-action" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
-            </svg>
-            <span id="playerLikes"></span>
-          </button>
+      <div class="watch-actions-row">
 
-          <button class="watch-action-button login-required-action" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
-            </svg>
-            <span id="playerDislikes"></span>
-          </button>
+  <div class="watch-actions">
 
-          <button class="watch-action-button login-required-action" type="button">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H9.4L4 22v-4H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm0 2v10h2v2l2.7-2H20V6H4Z"></path>
-            </svg>
-            <span id="playerComments"></span>
-          </button>
-        </div>
+    <button class="watch-action-button login-required-action" type="button">
+
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+
+        <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
+
+      </svg>
+
+      <span id="playerLikes"></span>
+
+    </button>
+
+    <button class="watch-action-button login-required-action" type="button">
+
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+
+        <path d="M2 3h4v11H2V3Zm6 0h10.4c1.1 0 2 .7 2.3 1.8l1.2 5.2c.4 1.8-.9 3.5-2.7 3.5H14v4.7c0 2.1-1.7 3.8-3.8 3.8H10l-2-7V3Z"></path>
+
+      </svg>
+
+      <span id="playerDislikes"></span>
+
+    </button>
+
+    <button class="watch-action-button login-required-action" type="button">
+
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+
+        <path d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H9.4L4 22v-4H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Zm0 2v10h2v2l2.7-2H20V6H4Z"></path>
+
+      </svg>
+
+      <span id="playerComments"></span>
+
+    </button>
+
+  </div>
+
+  <div class="watch-extra-actions">
+
+    <div class="playlist-menu" id="playlistMenu">
+
+      <button class="playlist-button" id="playlistButton" type="button" aria-haspopup="true" aria-expanded="false">
+
+        in Playlist speichern
+
+      </button>
+
+      <div class="playlist-options" role="menu" aria-label="Playlist auswählen">
+
+        <button class="playlist-option" type="button" role="menuitem">später ansehen</button>
+
+        <button class="playlist-option" type="button" role="menuitem">Favoriten</button>
+
+        <button class="playlist-option" type="button" role="menuitem">uninteressant</button>
+
+        <button class="playlist-option" type="button" role="menuitem">zu neuer Playlist hinzufügen</button>
+
+      </div>
+
+    </div>
+
+    <button class="transcript-button" id="transcriptButton" type="button">
+
+      Transkript anzeigen
+
+    </button>
+
+  </div>
+
+</div>
 
 <section class="comments-panel">
   <div class="comments-header">
@@ -1331,6 +1599,88 @@
   </div>
 
 </dialog>
+<dialog id="transcriptDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Transkript nicht verfügbar</h2>
+      <button class="close-button" id="closeTranscriptDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <p class="login-note">
+      Für dieses Material liegt ein automatisch erzeugtes Transkript vor, dessen sprachlicher Inhalt aufgrund widersprüchlicher Tonspuranteile nicht zuverlässig angezeigt werden kann.
+    </p>
+
+    <button class="primary-button" id="transcriptOkButton" type="button">Verstanden</button>
+  </div>
+</dialog>
+
+<dialog id="profileDialog" class="profile-dialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2 id="profileDialogTitle">Profil</h2>
+      <button class="close-button" id="closeProfileDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="profile-section">
+      <h3 class="profile-section-title">Aktivität</h3>
+      <table class="profile-table">
+        <tbody>
+          <tr>
+            <th>Mitglied seit</th>
+            <td><button class="profile-login-link" type="button">hier klicken</button></td>
+          </tr>
+          <tr>
+            <th>Kommentare insgesamt</th>
+            <td id="profileCommentTotal"></td>
+          </tr>
+          <tr>
+            <th>Davon hilfreich</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Davon vor dem Ansehen verfasst</th>
+            <td id="profileBeforeWatching"></td>
+          </tr>
+          <tr>
+            <th>Eingereichte Quellen</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Zuletzt aktiv</th>
+            <td id="profileLastActive"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="profile-section">
+      <h3 class="profile-section-title">Einschätzung</h3>
+      <p class="profile-warning">
+        Bitte prüfen Sie Aussagen dieses Profils nur in Verbindung mit ausreichend Abstand.
+      </p>
+
+      <table class="profile-table">
+        <tbody>
+          <tr>
+            <th>Reputationswert</th>
+            <td id="profileReputation"></td>
+          </tr>
+          <tr>
+            <th>Subjektive Sicherheit</th>
+            <td id="profileConfidence"></td>
+          </tr>
+          <tr>
+            <th>Social Media</th>
+            <td><button class="profile-login-link" type="button">hier klicken</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button class="primary-button" id="profileOkButton" type="button">Schließen</button>
+  </div>
+</dialog>
+
   <dialog id="loginDialog">
     <div class="dialog-inner">
       <div class="dialog-header">
@@ -1968,6 +2318,59 @@
 "Der Seitenbetreiber wirkt wie einer, der nen kaputten Videorekorder persönlich nimmt. Alles hier schreit: Ich habe zu lange allein an diesem Konzept gesessen. Bitte Fenster öffnen."
 ];
 
+const replyComments = [
+  "Isso, genau so seh ich das auch.",
+  "Ja man, komplett richtig.",
+  "Safe, besser kann mans nich sagen.",
+  "Genau das hab ich auch gedacht.",
+  "Bruder du sprichst Fakten.",
+  "100 pro, das ist einfach so.",
+  "Jup, mehr muss man dazu nich sagen.",
+  "Stimmt halt leider komplett.",
+  "Endlich sagt es mal einer.",
+  "Same, hab exakt das gleiche gedacht.",
+  "True, das is einfach nur peinlich.",
+  "Ja ehrlich, was soll man da noch sagen.",
+  "Komplett deiner Meinung, digga.",
+  "Genau so und nich anders.",
+  "Fühl ich, absolut korrekt.",
+  "Das trifft es leider sehr gut.",
+  "Ja man, richtiger Punkt.",
+  "Stimmt, das Ding is durch.",
+  "Seh ich auch so, kompletter Quatsch.",
+  "Du hast es leider perfekt getroffen.",
+  "Ja lol, genau mein Gedanke.",
+  "Bruder, du hast einfach recht.",
+  "Unironisch genau das.",
+  "Stimmt safe, keine Diskussion.",
+  "Ja, das ist echt bodenlos.",
+  "Komplett wahr, leider.",
+  "Genau, dieses ganze Ding nervt einfach.",
+  "Isso, mehr gibts da nich.",
+  "Stimme voll zu, wild alles.",
+  "Ja same, hab auch nur den Kopf geschüttelt.",
+  "Richtig gesagt, ohne Witz.",
+  "Ganz genau, voll der Müll.",
+  "Du sagst es, einfach lost.",
+  "Ja man, das is so unangenehm.",
+  "Stimmt halt, auch wenns weh tut.",
+  "Exakt, null Sinn das Ganze.",
+  "Bin bei dir, komplett.",
+  "Ja, endlich normale Meinung hier.",
+  "Genau mein Reden.",
+  "Das is leider zu wahr.",
+  "Voll, komplett daneben alles.",
+  "Stimmt, wirkt echt wie ein Unfall.",
+  "Ja safe, wer feiert sowas bitte.",
+  "Absolut, das is einfach nix.",
+  "Richtig, da gibts nix schönzureden.",
+  "Jep, kompletter Reinfall.",
+  "Genau, das fühlt sich einfach falsch an.",
+  "True, das hätte keiner gebraucht.",
+  "Ja mann, verschwendete Zeit.",
+  "Same, einfach nur aua."
+];
+
 const userNames = [
   "track1ng_otto",
   "b4ndlauf87",
@@ -2182,6 +2585,23 @@ const playerDuration = document.getElementById("playerDuration");
 const netiquetteDialog = document.getElementById("netiquetteDialog");
 const closeNetiquetteDialog = document.getElementById("closeNetiquetteDialog");
 const netiquetteOkButton = document.getElementById("netiquetteOkButton");
+const playlistMenu = document.getElementById("playlistMenu");
+const playlistButton = document.getElementById("playlistButton");
+const playlistOptions = document.querySelectorAll(".playlist-option");
+const transcriptButton = document.getElementById("transcriptButton");
+const transcriptDialog = document.getElementById("transcriptDialog");
+const closeTranscriptDialog = document.getElementById("closeTranscriptDialog");
+const transcriptOkButton = document.getElementById("transcriptOkButton");
+const profileDialog = document.getElementById("profileDialog");
+const closeProfileDialog = document.getElementById("closeProfileDialog");
+const profileOkButton = document.getElementById("profileOkButton");
+const profileDialogTitle = document.getElementById("profileDialogTitle");
+const profileCommentTotal = document.getElementById("profileCommentTotal");
+const profileBeforeWatching = document.getElementById("profileBeforeWatching");
+const profileLastActive = document.getElementById("profileLastActive");
+const profileReputation = document.getElementById("profileReputation");
+const profileConfidence = document.getElementById("profileConfidence");
+const profileLoginLinks = document.querySelectorAll(".profile-login-link");
 
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
@@ -2228,6 +2648,27 @@ const netiquetteOkButton = document.getElementById("netiquetteOkButton");
     function createTitle() {
       return `${randomItem(titlePrefixes)} ${createArchiveNumber()}: ${randomItem(titleSuffixes)}`;
     }
+    
+    function createRandomDate() {
+  const start = new Date(2022, 0, 1).getTime();
+  const end = new Date().getTime();
+  const randomTime = randomInteger(start, end);
+  return new Date(randomTime).toLocaleDateString("de-DE");
+}
+
+function openProfileDialog(userName) {
+  const commentTotal = randomInteger(1, 44);
+  const beforeWatching = commentTotal > 1 ? randomInteger(0, commentTotal - 1) : 0;
+
+  profileDialogTitle.textContent = `Profil von @${userName}`;
+  profileCommentTotal.textContent = formatNumber(commentTotal);
+  profileBeforeWatching.textContent = formatNumber(beforeWatching);
+  profileLastActive.textContent = createRandomDate();
+  profileReputation.textContent = `${randomInteger(0, 100)} von 100`;
+  profileConfidence.textContent = `${randomInteger(0, 100)} von 100`;
+
+  profileDialog.showModal();
+}
 
     function createEngagement(viewCount) {
       const maxTotalReactions = Math.max(12, Math.floor(viewCount * randomInteger(3, 18) / 100));
@@ -2321,21 +2762,43 @@ function renderComments() {
     const commentItem = document.createElement("article");
     commentItem.className = "comment-item";
 
-commentItem.innerHTML = `
-  <div class="comment-avatar">${userName.slice(0, 2).toUpperCase()}</div>
-  <div>
-    <div class="comment-user">@${userName} · vor ${randomInteger(2, 11)} Jahren</div>
-    <div class="comment-text">${comment}</div>
-<div class="comment-actions">
-  <button class="comment-upvote-button" type="button" aria-label="Kommentar positiv bewerten">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
-    </svg>
-    ${formatNumber(upvotes)}
-  </button>
+const hasReply = Math.random() < 0.2;
+const replyUserName = randomItem(userNames);
+const replyText = randomItem(replyComments);
 
-  <button class="comment-reply-button" type="button">Antworten</button>
+commentItem.innerHTML = `
+  <div>
+    <div class="comment-user">
+  <button class="comment-user-button" type="button" data-user-name="${userName}">@${userName}</button>
+  · vor ${randomInteger(2, 11)} Jahren
 </div>
+    <div class="comment-text">${comment}</div>
+
+    <div class="comment-actions">
+      <button class="comment-upvote-button" type="button" aria-label="Kommentar positiv bewerten">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
+        </svg>
+        ${formatNumber(upvotes)}
+      </button>
+
+      <button class="comment-reply-button" type="button">Antworten</button>
+    </div>
+
+    ${
+      hasReply
+        ? `
+          <div class="comment-reply">
+            <div class="comment-user">
+  <button class="comment-user-button" type="button" data-user-name="${replyUserName}">@${replyUserName}</button>
+  · vor ${randomInteger(1, 10)} Jahren
+</div>
+            <div class="comment-text">${replyText}</div>
+          </div>
+        `
+        : ""
+    }
+  </div>
 `;
 
     commentItem
@@ -2345,6 +2808,12 @@ commentItem.innerHTML = `
       commentItem
   .querySelector(".comment-reply-button")
   .addEventListener("click", openNetiquetteDialog);
+  
+  commentItem.querySelectorAll(".comment-user-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    openProfileDialog(button.dataset.userName);
+  });
+});
 
     commentsList.appendChild(commentItem);
   });
@@ -2389,9 +2858,30 @@ function renderRelatedVideos(currentVideo) {
   });
 }
 
+function showArchiveView() {
+  playerView.classList.add("view-hidden");
+  archiveView.classList.remove("view-hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function closePlayer() {
+  showArchiveView();
+  history.pushState({ view: "archive" }, "", window.location.pathname);
+}
+
+window.addEventListener("popstate", () => {
+  showArchiveView();
+});
+
 function openPlayer(video) {
   archiveView.classList.add("view-hidden");
   playerView.classList.remove("view-hidden");
+  
+  history.pushState({ view: "player" }, "", `#watch-${video.paddedNumber}`);
 
   playerImage.src = video.imagePath;
   playerImage.alt = `jaTV Archivbild ${video.paddedNumber}`;
@@ -2414,6 +2904,8 @@ function openPlayer(video) {
 function closePlayer() {
   playerView.classList.add("view-hidden");
   archiveView.classList.remove("view-hidden");
+
+  history.pushState({ view: "archive" }, "", window.location.pathname);
 
   window.scrollTo({
     top: 0,
@@ -2569,9 +3061,14 @@ uploadFormatNextButton.addEventListener("click", () => {
 });
 
 document.addEventListener("click", (event) => {
-  if (!sortMenu.contains(event.target)) {
+  if (sortMenu && !sortMenu.contains(event.target)) {
     sortMenu.classList.remove("is-open");
     sortButton.setAttribute("aria-expanded", "false");
+  }
+
+  if (playlistMenu && !playlistMenu.contains(event.target)) {
+    playlistMenu.classList.remove("is-open");
+    playlistButton.setAttribute("aria-expanded", "false");
   }
 });
 
@@ -2599,6 +3096,61 @@ sortOptions.forEach((option) => {
     openLoginDialog();
   });
 });
+
+window.addEventListener("popstate", () => {
+  playerView.classList.add("view-hidden");
+  archiveView.classList.remove("view-hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+
+playlistButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const isOpen = playlistMenu.classList.toggle("is-open");
+  playlistButton.setAttribute("aria-expanded", String(isOpen));
+});
+
+playlistOptions.forEach((option) => {
+  option.addEventListener("click", (event) => {
+    event.preventDefault();
+    playlistMenu.classList.remove("is-open");
+    playlistButton.setAttribute("aria-expanded", "false");
+    openLoginDialog();
+  });
+});
+
+transcriptButton.addEventListener("click", () => {
+  transcriptDialog.showModal();
+});
+
+closeTranscriptDialog.addEventListener("click", () => {
+  transcriptDialog.close();
+});
+
+transcriptOkButton.addEventListener("click", () => {
+  transcriptDialog.close();
+});
+
+closeProfileDialog.addEventListener("click", () => {
+  profileDialog.close();
+});
+
+profileOkButton.addEventListener("click", () => {
+  profileDialog.close();
+});
+
+profileLoginLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    profileDialog.close();
+    openLoginDialog();
+  });
+});
+
 
 backToGridButton.addEventListener("click", closePlayer);
 

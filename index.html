@@ -1869,20 +1869,26 @@
 
 .participation-section {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   margin-top: 34px;
 }
 
 .participation-card {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   gap: 18px;
+  min-height: 230px;
   padding: 22px;
   border: 1px solid var(--border);
   border-radius: 20px;
   background: linear-gradient(135deg, #1c1c1c, #111 70%);
+}
+
+.participation-card > div {
+  width: 100%;
 }
 
 .participation-card h2 {
@@ -1900,11 +1906,11 @@
 }
 
 .participation-card .upload-button {
-  margin-top: 2px;
-  white-space: nowrap;
+  margin-top: auto;
+  white-space: normal;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1180px) {
   .participation-section {
     grid-template-columns: 1fr;
   }
@@ -1943,6 +1949,122 @@
 
 .ai-summary-hidden {
   display: none;
+}
+
+.tech-page {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.tech-hero {
+  margin-bottom: 28px;
+  padding: 28px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #202020, #111 60%, #210009);
+  border: 1px solid var(--border);
+}
+
+.tech-hero h1 {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 4vw, 48px);
+  letter-spacing: -0.06em;
+}
+
+.tech-hero p {
+  margin: 0;
+  max-width: 780px;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+.tech-image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  margin: 0 0 28px;
+}
+
+.tech-image-card {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+.tech-content {
+  width: 100%;
+}
+
+.tech-image-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.04) brightness(0.92);
+}
+
+.tech-image-card figcaption {
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.tech-content {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: rgba(255,255,255,0.03);
+}
+
+.tech-content h2 {
+  margin: 0 0 18px;
+  color: var(--text);
+  font-size: 26px;
+  letter-spacing: -0.04em;
+}
+
+.tech-content p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+.tech-content p:last-child {
+  margin-bottom: 0;
+}
+
+.tech-final-box {
+  margin-top: 24px;
+  padding: 22px;
+  border: 1px solid rgba(255,0,51,0.35);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255,0,51,0.12), rgba(255,255,255,0.03));
+}
+
+.tech-final-box p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+@media (max-width: 780px) {
+  .tech-image-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-hero,
+  .tech-content {
+    padding: 22px;
+    border-radius: 18px;
+  }
 }
   </style>
 </head>
@@ -1998,6 +2120,17 @@
 </div>
 
 <section class="participation-section" aria-label="Mitmachen im jaTV Archiv">
+
+  <div class="participation-card">
+    <div>
+      <h2>Technik im Dauerbetrieb</h2>
+      <p>
+        Während du hier Fragmente sichtest, laufen im Hintergrund Bandmaschinen, Monitore und Signalwege weiter. Erfahre, wie aus alten Kassetten, unsicheren Spuren und vorsichtig bedienbaren Geräten das weltweit größte jaTV-Archiv der Welt entsteht.
+      </p>
+    </div>
+    <button class="upload-button" id="openTechButton" type="button">Technik ansehen</button>
+  </div>
+  
   <div class="participation-card">
     <div>
       <h2>Sendemitschnitt einreichen</h2>
@@ -2019,7 +2152,74 @@
   </div>
 </section>
   </div>
+<section id="techView" class="view-hidden">
+  <button class="back-to-grid" id="backFromTechButton" type="button">Zurück zur Übersicht</button>
 
+  <div class="tech-page">
+    <section class="tech-hero">
+      <h1>Technik</h1>
+      <p>
+        Bandmaschinen, Sendeabwicklung und Signalwege im Dienst eines Archivs, das seine eigene Unvollständigkeit möglichst vollständig dokumentieren möchte.
+      </p>
+    </section>
+
+    <div class="tech-image-grid">
+      <figure class="tech-image-card">
+        <img src="images/technik-bedienfeld.jpg" alt="Nahaufnahme eines alten Schnitt- und Bedienfelds mit zahlreichen Tasten">
+        <figcaption>Bedienfeld einer linearen Produktionsumgebung. Einzelne Tasten konnten Vorgänge auslösen, beenden oder nur andeuten.</figcaption>
+      </figure>
+
+      <figure class="tech-image-card">
+        <img src="images/technik-sendeabwicklung.jpg" alt="Alte Sendeabwicklung mit Monitorwand, Lautsprechern und Videomaschinen">
+        <figcaption>Sendeabwicklung mit Monitoren, Wiedergabegeräten und Signalwegen, die auch dann weiterarbeiteten, wenn der Kontext nicht eindeutig war.</figcaption>
+      </figure>
+    </div>
+
+    <article class="tech-content">
+      <h2>Technik</h2>
+
+      <p>Das jaTV-Archiv entsteht nicht automatisch. Es entsteht Band für Band, Stunde für Stunde, Laufwerk für Laufwerk.</p>
+
+      <p>In der technischen Sendeabwicklung werden historische Aufzeichnungen fortlaufend gesichtet, überspielt, geprüft und digitalisiert. Mehrere Bandmaschinen laufen dafür nahezu rund um die Uhr. VHS, S-VHS, Video 8, Hi8, MiniDV, U-matic, Betacam SP und weitere Formate werden über erhaltene, teilrekonstruierte oder nur noch vorsichtig bedienbare Wiedergabestrecken eingelesen.</p>
+
+      <p>Ziel ist der Aufbau des weltweit größten jaTV-Archivs der Welt.</p>
+
+      <p>Ein Teil des Materials stammt aus privaten Mitschnitten, ein anderer aus alten Übergabebeständen, Rückläuferkassetten, unvollständig beschrifteten Archivkartons und technischen Restbeständen. Nicht jede Kassette ist eindeutig datiert. Nicht jede Tonspur stimmt mit dem Bild überein. Nicht jeder Titel beschreibt zuverlässig, was tatsächlich zu sehen ist. Trotzdem wird jedes Band behandelt, als könne es der fehlende Schlüssel zu einem bisher nicht ausreichend erklärten Sendemoment sein.</p>
+
+      <p>Der Digitalisierungsprozess beginnt mit der technischen Prüfung des Trägers. Dabei werden Bandlauf, Gehäusezustand, Spurlage, Tonstabilität und sichtbare Dropouts beurteilt. Anschließend wird das Material in Echtzeit überspielt. Echtzeit bedeutet: Eine Stunde Band benötigt mindestens eine Stunde Aufmerksamkeit, selbst dann, wenn in dieser Stunde scheinbar nichts passiert.</p>
+
+      <p>Gerade dieses scheinbare Nichts ist für jaTV von besonderer Bedeutung.</p>
+
+      <p>Denn das Archiv versteht sich nicht nur als Sammlung abgeschlossener Sendungen, sondern als Sicherung von Zwischenständen, Vorspännen, Restlaufzeiten, technischen Ansagen, abgebrochenen Beiträgen, unklaren Übergängen und Momenten, deren Bedeutung möglicherweise erst durch spätere Fehlinterpretation entsteht.</p>
+
+      <p>Während der Digitalisierung werden Vorschaudateien erzeugt, Zeitmarken gesetzt und erste Metadaten vergeben. Wo eindeutige Angaben fehlen, werden vorläufige Archivsignaturen angelegt. Wo mehrere Angaben einander widersprechen, bleibt der Widerspruch erhalten. Eine künstliche Bereinigung würde den Zustand des Materials verfälschen.</p>
+
+      <p>Die hier gezeigten Bilder dokumentieren eine technische Umgebung, in der lineare Medien noch körperlich vorhanden waren. Bänder mussten eingelegt, zurückgespult, kontrolliert und gelegentlich mit vorsichtiger Verzweiflung erneut gestartet werden. Jede Maschine war Teil eines größeren Ablaufs. Jede Anzeige, jede Kassette, jedes Signal konnte darüber entscheiden, ob ein Fragment lesbar wurde oder wieder in den Bereich des nur Vermuteten zurückfiel.</p>
+
+      <p>jaTV digitalisiert daher nicht nur Inhalte, sondern auch Unsicherheit.</p>
+
+      <p>Das Ziel ist eine möglichst vollständige Sicherung aller bekannten, vermuteten und noch nicht ausreichend ausgeschlossenen jaTV-Bestände. Dabei geht es nicht allein um Bildqualität. Es geht um Nachvollziehbarkeit, Materialnähe und die Bewahrung eines Sendekosmos, der über Jahre hinweg in Kartons, Regalen, Kellern, Schubladen und falsch beschrifteten Hüllen überdauert hat.</p>
+
+      <p>Die technische Infrastruktur arbeitet 24 Stunden am Tag, 7 Tage die Woche, sofern keine Wartung, keine Bandstörung, kein ungeklärter Signalverlust und keine administrative Unklarheit vorliegt. Mehrere Abspielketten laufen parallel. Während eine Maschine Material einliest, prüft eine zweite Tonabweichungen, eine dritte erzeugt Sicherungskopien, und eine vierte wartet auf eine Kassette, deren Herkunft noch nicht vollständig beruhigt werden konnte.</p>
+
+      <p>Am Ende jedes erfolgreichen Transfers steht kein endgültiges Urteil, sondern ein neuer Eintrag im Archiv.</p>
+
+      <p>Das Material wird indexiert, vorsortiert, mit Vorschaubildern versehen und für die spätere Sichtung vorbereitet. Erst danach kann es in den öffentlichen oder vorläufig öffentlichen Bereich überführt werden. Einige Einträge bleiben gesperrt. Andere erscheinen ohne vollständigen Kontext. Wieder andere werden nur deshalb sichtbar, weil ihr Fehlen auffälliger wäre als ihre Veröffentlichung.</p>
+
+      <p>So wächst das jaTV-Archiv weiter.</p>
+
+      <p>Nicht schnell. Nicht sauber. Nicht immer eindeutig. Aber kontinuierlich.</p>
+
+      <p>Band für Band.<br>Signal für Signal.<br>Fragment für Fragment.</p>
+
+      <div class="tech-final-box">
+        <p>
+          Was heute als flackerndes Bildsignal beginnt, kann morgen bereits ein vorläufig bestätigter Archivfund sein. Jede Kassette, die eingelesen wird, verringert die Menge des Ungesichteten. Jede Störung, die dokumentiert wird, macht das Archiv genauer. Und jedes Fragment, das nicht verloren geht, bringt jaTV dem Ziel näher, irgendwann vollständig genug zu sein, um seine eigene Unvollständigkeit sauber nachweisen zu können.
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
   <section id="playerView" class="view-hidden">
     <button class="back-to-grid" id="backToGridButton" type="button">Zurück zur Übersicht</button>
 
@@ -4308,6 +4508,10 @@ const closeAiSummaryDialog = document.getElementById("closeAiSummaryDialog");
 const aiSummaryOkButton = document.getElementById("aiSummaryOkButton");
 const aiSummaryText = document.getElementById("aiSummaryText");
 
+const techView = document.getElementById("techView");
+const openTechButton = document.getElementById("openTechButton");
+const backFromTechButton = document.getElementById("backFromTechButton");
+
 const aiSummaryLoading = document.getElementById("aiSummaryLoading");
 let aiSummaryTimer = null;
 
@@ -4837,8 +5041,37 @@ function renderRelatedVideos(currentVideo) {
   });
 }
 
+function showArchiveView() {
+  archiveView.classList.remove("view-hidden");
+  playerView.classList.add("view-hidden");
+  techView.classList.add("view-hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function openTechView() {
+  archiveView.classList.add("view-hidden");
+  playerView.classList.add("view-hidden");
+  techView.classList.remove("view-hidden");
+
+  history.pushState({ view: "tech" }, "", "#technik");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function closeTechView() {
+  showArchiveView();
+  history.pushState({ view: "archive" }, "", window.location.pathname);
+}
 
 function openPlayer(video) {
+  techView.classList.add("view-hidden");
   archiveView.classList.add("view-hidden");
   playerView.classList.remove("view-hidden");
   
@@ -4863,15 +5096,8 @@ function openPlayer(video) {
 }
 
 function closePlayer() {
-  playerView.classList.add("view-hidden");
-  archiveView.classList.remove("view-hidden");
-
+  showArchiveView();
   history.pushState({ view: "archive" }, "", window.location.pathname);
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
 }
 
 function renderCards() {
@@ -5001,14 +5227,8 @@ closeUploadDialog.addEventListener("click", () => {
 });
 
 brandHomeButton.addEventListener("click", () => {
-  if (typeof closePlayer === "function") {
-    closePlayer();
-  } else {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }
+  showArchiveView();
+  history.pushState({ view: "archive" }, "", window.location.pathname);
 });
 
 uploadLegalNextButton.addEventListener("click", () => {
@@ -5257,6 +5477,9 @@ document.addEventListener("click", (event) => {
   }
 });
 
+openTechButton.addEventListener("click", openTechView);
+backFromTechButton.addEventListener("click", closeTechView);
+
     closeDialog.addEventListener("click", () => loginDialog.close());
     closeSearchDialog.addEventListener("click", () => searchDialog.close());
     searchOkButton.addEventListener("click", () => searchDialog.close());
@@ -5313,8 +5536,15 @@ sortOptions.forEach((option) => {
 });
 
 window.addEventListener("popstate", () => {
-  playerView.classList.add("view-hidden");
-  archiveView.classList.remove("view-hidden");
+  const hash = window.location.hash;
+
+  if (hash === "#technik") {
+    archiveView.classList.add("view-hidden");
+    playerView.classList.add("view-hidden");
+    techView.classList.remove("view-hidden");
+  } else {
+    showArchiveView();
+  }
 
   window.scrollTo({
     top: 0,

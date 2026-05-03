@@ -1665,6 +1665,118 @@
     display: grid;
   }
 }
+.policy-flow-step,
+.transparency-flow-step,
+.archive-status-flow-step {
+  display: none;
+}
+
+.policy-flow-step.is-active,
+.transparency-flow-step.is-active,
+.archive-status-flow-step.is-active {
+  display: block;
+}
+
+.policy-flow-progress,
+.transparency-flow-progress,
+.archive-status-flow-progress {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.policy-options,
+.transparency-options,
+.archive-status-options {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.policy-options label,
+.transparency-options label,
+.archive-status-options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.policy-options input,
+.transparency-options input,
+.archive-status-options input {
+  margin-top: 2px;
+}
+
+.policy-flow-actions,
+.transparency-flow-actions,
+.archive-status-flow-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.policy-flow-actions .primary-button,
+.policy-flow-actions .secondary-button,
+.transparency-flow-actions .primary-button,
+.transparency-flow-actions .secondary-button,
+.archive-status-flow-actions .primary-button,
+.archive-status-flow-actions .secondary-button {
+  flex: 1;
+}
+
+.policy-check-list,
+.transparency-check-list,
+.archive-status-check-list {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.policy-check-row,
+.transparency-check-row,
+.archive-status-check-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.policy-check-row strong,
+.transparency-check-row strong,
+.archive-status-check-row strong {
+  color: var(--text);
+  font-weight: 700;
+  text-align: right;
+}
+
+.policy-result-box,
+.transparency-result-box,
+.archive-status-result-box {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+  .policy-flow-actions,
+  .transparency-flow-actions,
+  .archive-status-flow-actions {
+    display: grid;
+  }
+}
   </style>
 </head>
 <body>
@@ -1852,13 +1964,16 @@
   </section>
 </main>
 
-  <footer class="site-footer">
-    <nav class="footer-links" aria-label="Footer Navigation">
-      <a href="#" class="broken-footer-link" id="contactFooterLink">Kontakt</a>
-      <a href="impdaten.html">Impressum</a>
-      <a href="#" class="broken-footer-link" id="helpFooterLink">Hilfe</a>
-    </nav>
-  </footer>
+<footer class="site-footer">
+  <nav class="footer-links" aria-label="Footer Navigation">
+    <a href="#" class="broken-footer-link" id="contactFooterLink">Kontakt</a>
+    <a href="#" class="broken-footer-link" id="guidelinesFooterLink">Richtlinien</a>
+    <a href="#" class="broken-footer-link" id="transparencyFooterLink">Transparenz</a>
+    <a href="#" class="broken-footer-link" id="archiveStatusFooterLink">Archivstatus</a>
+    <a href="impdaten.html">Impressum</a>
+    <a href="#" class="broken-footer-link" id="helpFooterLink">Hilfe</a>
+  </nav>
+</footer>
 
 <dialog id="contactFlowDialog">
   <div class="dialog-inner">
@@ -2024,6 +2139,221 @@
       <div class="help-flow-actions">
         <button class="secondary-button" id="helpStepSolutionBack" type="button">Zurück</button>
         <button class="primary-button" id="helpStepSolutionNext" type="button">Weiter</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="guidelinesFlowDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Richtlinien</h2>
+      <button class="close-button" id="closeGuidelinesFlowDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="policy-flow-step is-active" id="guidelinesStepTopic">
+      <p class="policy-flow-progress">Schritt 1 von 4</p>
+      <p class="login-note">Welche Richtlinie möchtest du einsehen?</p>
+
+      <div class="policy-options">
+        <label><input type="radio" name="guidelinesTopic"> Sichtungsrichtlinien</label>
+        <label><input type="radio" name="guidelinesTopic"> Kommentarregeln</label>
+        <label><input type="radio" name="guidelinesTopic"> Materialfreigabe</label>
+        <label><input type="radio" name="guidelinesTopic"> Empfehlungslogik</label>
+        <label><input type="radio" name="guidelinesTopic"> Umgang mit unklarer Quellenlage</label>
+        <label><input type="radio" name="guidelinesTopic"> Richtlinien zu subjektiver Sicherheit</label>
+      </div>
+
+      <p class="error-message" id="guidelinesTopicError"></p>
+
+      <div class="policy-flow-actions">
+        <button class="primary-button" id="guidelinesStepTopicNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="policy-flow-step" id="guidelinesStepScope">
+      <p class="policy-flow-progress">Schritt 2 von 4</p>
+      <p class="login-note">Bitte grenze ein, für welchen Bereich die Richtlinie gelten soll.</p>
+
+      <div class="policy-options">
+        <label><input type="radio" name="guidelinesScope"> Öffentlicher Archivbereich</label>
+        <label><input type="radio" name="guidelinesScope"> Kommentarbereich</label>
+        <label><input type="radio" name="guidelinesScope"> Gesperrte Materialien</label>
+        <label><input type="radio" name="guidelinesScope"> Nutzereinreichungen</label>
+        <label><input type="radio" name="guidelinesScope"> Nicht eindeutig freigegebene Inhalte</label>
+      </div>
+
+      <p class="error-message" id="guidelinesScopeError"></p>
+
+      <div class="policy-flow-actions">
+        <button class="secondary-button" id="guidelinesStepScopeBack" type="button">Zurück</button>
+        <button class="primary-button" id="guidelinesStepScopeNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="policy-flow-step" id="guidelinesStepCheck">
+      <p class="policy-flow-progress">Schritt 3 von 4</p>
+      <p class="login-note">Die Richtlinienansicht wird vorbereitet.</p>
+
+      <div class="policy-check-list">
+        <div class="policy-check-row"><span>Richtlinienbestand</span><strong>teilweise geladen</strong></div>
+        <div class="policy-check-row"><span>Gültigkeitsbereich</span><strong>nicht abschließend</strong></div>
+        <div class="policy-check-row"><span>Freigabestatus</span><strong>widersprüchlich</strong></div>
+        <div class="policy-check-row"><span>Öffentliche Darstellung</span><strong>eingeschränkt</strong></div>
+      </div>
+
+      <div class="policy-flow-actions">
+        <button class="secondary-button" id="guidelinesStepCheckBack" type="button">Zurück</button>
+        <button class="primary-button" id="guidelinesStepCheckNext" type="button">Richtlinie anzeigen</button>
+      </div>
+    </div>
+
+    <div class="policy-flow-step" id="guidelinesStepResult">
+      <p class="policy-flow-progress">Schritt 4 von 4</p>
+      <p class="login-note">Die angeforderte Richtlinie konnte nicht vollständig dargestellt werden.</p>
+
+      <div class="policy-result-box">
+        Die Richtlinien befinden sich derzeit in einer laufenden Konsolidierung. Einzelne Abschnitte können nur im Zusammenhang mit ausreichend bestätigtem Archivmaterial angezeigt werden.
+      </div>
+
+      <div class="policy-flow-actions">
+        <button class="secondary-button" id="guidelinesStepResultBack" type="button">Zurück</button>
+        <button class="primary-button" id="guidelinesStepResultNext" type="button">Weitere Details laden</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="transparencyFlowDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Transparenz</h2>
+      <button class="close-button" id="closeTransparencyFlowDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="transparency-flow-step is-active" id="transparencyStepTopic">
+      <p class="transparency-flow-progress">Schritt 1 von 4</p>
+      <p class="login-note">Wozu möchtest du Transparenzinformationen sehen?</p>
+
+      <div class="transparency-options">
+        <label><input type="radio" name="transparencyTopic"> Warum sehe ich diesen Inhalt?</label>
+        <label><input type="radio" name="transparencyTopic"> Wie entstehen Empfehlungen?</label>
+        <label><input type="radio" name="transparencyTopic"> Wie werden Bewertungen gewichtet?</label>
+        <label><input type="radio" name="transparencyTopic"> Warum sind Kommentare sichtbar?</label>
+        <label><input type="radio" name="transparencyTopic"> Welche Signale werden ausgewertet?</label>
+        <label><input type="radio" name="transparencyTopic"> Warum ist manches nicht verfügbar?</label>
+      </div>
+
+      <p class="error-message" id="transparencyTopicError"></p>
+
+      <div class="transparency-flow-actions">
+        <button class="primary-button" id="transparencyStepTopicNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="transparency-flow-step" id="transparencyStepSignals">
+      <p class="transparency-flow-progress">Schritt 2 von 4</p>
+      <p class="login-note">Die verfügbaren Signale werden abgeglichen.</p>
+
+      <div class="transparency-check-list">
+        <div class="transparency-check-row"><span>Nutzersignal</span><strong>nicht angemeldet</strong></div>
+        <div class="transparency-check-row"><span>Archivsignal</span><strong>teilweise verfügbar</strong></div>
+        <div class="transparency-check-row"><span>Metadatensignal</span><strong>inkonsistent</strong></div>
+        <div class="transparency-check-row"><span>Kommentaraktivität</span><strong>nicht belastbar</strong></div>
+        <div class="transparency-check-row"><span>Empfehlungsgrund</span><strong>angenommen</strong></div>
+      </div>
+
+      <div class="transparency-flow-actions">
+        <button class="secondary-button" id="transparencyStepSignalsBack" type="button">Zurück</button>
+        <button class="primary-button" id="transparencyStepSignalsNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="transparency-flow-step" id="transparencyStepInterpretation">
+      <p class="transparency-flow-progress">Schritt 3 von 4</p>
+      <p class="login-note">Die Transparenzangabe wurde automatisch formuliert.</p>
+
+      <div class="transparency-result-box">
+        Die Empfehlung basiert auf teilweise verfügbaren Signalen, nicht bestätigten Metadaten und angenommener Relevanz. Eine eindeutige Begründung kann ohne Anmeldung nicht zuverlässig erzeugt werden.
+      </div>
+
+      <div class="transparency-flow-actions">
+        <button class="secondary-button" id="transparencyStepInterpretationBack" type="button">Zurück</button>
+        <button class="primary-button" id="transparencyStepInterpretationNext" type="button">Vollständige Begründung laden</button>
+      </div>
+    </div>
+
+    <div class="transparency-flow-step" id="transparencyStepFailure">
+      <p class="transparency-flow-progress">Schritt 4 von 4</p>
+      <p class="login-note">Die vollständige Begründung konnte nicht geladen werden.</p>
+
+      <div class="transparency-result-box">
+        Für diesen Vorgang ist ein transparenteres Transparenzmodul erforderlich. Dieses liegt derzeit nicht in einer ausgabefähigen Fassung vor.
+      </div>
+
+      <div class="transparency-flow-actions">
+        <button class="secondary-button" id="transparencyStepFailureBack" type="button">Zurück</button>
+        <button class="primary-button" id="transparencyStepFailureNext" type="button">Fehlerdetails anzeigen</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="archiveStatusFlowDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Archivstatus</h2>
+      <button class="close-button" id="closeArchiveStatusFlowDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="archive-status-flow-step is-active" id="archiveStatusStepOverview">
+      <p class="archive-status-flow-progress">Statusübersicht</p>
+      <p class="login-note">Aktueller Zustand ausgewählter jaTV Archivbereiche.</p>
+
+      <div class="archive-status-check-list">
+        <div class="archive-status-check-row"><span>Öffentlicher Index</span><strong>eingeschränkt</strong></div>
+        <div class="archive-status-check-row"><span>Suchsystem</span><strong>teilweise synchronisiert</strong></div>
+        <div class="archive-status-check-row"><span>Kommentarprüfung</span><strong>passiv</strong></div>
+        <div class="archive-status-check-row"><span>Sichtungsknoten</span><strong>widersprüchlich</strong></div>
+        <div class="archive-status-check-row"><span>Nutzerzugang</span><strong>stark nachgefragt</strong></div>
+      </div>
+
+      <div class="archive-status-flow-actions">
+        <button class="primary-button" id="archiveStatusStepOverviewNext" type="button">Details prüfen</button>
+      </div>
+    </div>
+
+    <div class="archive-status-flow-step" id="archiveStatusStepArea">
+      <p class="archive-status-flow-progress">Schritt 2 von 3</p>
+      <p class="login-note">Welchen Bereich möchtest du genauer prüfen?</p>
+
+      <div class="archive-status-options">
+        <label><input type="radio" name="archiveStatusArea"> Videowiedergabe</label>
+        <label><input type="radio" name="archiveStatusArea"> Suche und Index</label>
+        <label><input type="radio" name="archiveStatusArea"> Kommentare und Profile</label>
+        <label><input type="radio" name="archiveStatusArea"> Upload und Sichtung</label>
+        <label><input type="radio" name="archiveStatusArea"> Anmeldung und Zugang</label>
+      </div>
+
+      <p class="error-message" id="archiveStatusAreaError"></p>
+
+      <div class="archive-status-flow-actions">
+        <button class="secondary-button" id="archiveStatusStepAreaBack" type="button">Zurück</button>
+        <button class="primary-button" id="archiveStatusStepAreaNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="archive-status-flow-step" id="archiveStatusStepResult">
+      <p class="archive-status-flow-progress">Schritt 3 von 3</p>
+      <p class="login-note">Die Detailprüfung konnte nicht stabil abgeschlossen werden.</p>
+
+      <div class="archive-status-result-box">
+        Der ausgewählte Bereich meldet einen grundsätzlich aktiven, aber nicht eindeutig auslieferbaren Zustand. Bitte prüfe den Status zu einem späteren Zeitpunkt erneut oder interpretiere ihn mit Vorsicht.
+      </div>
+
+      <div class="archive-status-flow-actions">
+        <button class="secondary-button" id="archiveStatusStepResultBack" type="button">Zurück</button>
+        <button class="primary-button" id="archiveStatusStepResultNext" type="button">Technische Meldung anzeigen</button>
       </div>
     </div>
   </div>
@@ -3270,6 +3600,58 @@ const shareOkButton = document.getElementById("shareOkButton");
 const shareDialogText = document.getElementById("shareDialogText");
 const registerFlowDialog = document.getElementById("registerFlowDialog");
 const closeRegisterFlowDialog = document.getElementById("closeRegisterFlowDialog");
+const guidelinesFooterLink = document.getElementById("guidelinesFooterLink");
+const transparencyFooterLink = document.getElementById("transparencyFooterLink");
+const archiveStatusFooterLink = document.getElementById("archiveStatusFooterLink");
+
+const guidelinesFlowDialog = document.getElementById("guidelinesFlowDialog");
+const closeGuidelinesFlowDialog = document.getElementById("closeGuidelinesFlowDialog");
+const guidelinesSteps = [
+  document.getElementById("guidelinesStepTopic"),
+  document.getElementById("guidelinesStepScope"),
+  document.getElementById("guidelinesStepCheck"),
+  document.getElementById("guidelinesStepResult")
+];
+const guidelinesStepTopicNext = document.getElementById("guidelinesStepTopicNext");
+const guidelinesStepScopeBack = document.getElementById("guidelinesStepScopeBack");
+const guidelinesStepScopeNext = document.getElementById("guidelinesStepScopeNext");
+const guidelinesStepCheckBack = document.getElementById("guidelinesStepCheckBack");
+const guidelinesStepCheckNext = document.getElementById("guidelinesStepCheckNext");
+const guidelinesStepResultBack = document.getElementById("guidelinesStepResultBack");
+const guidelinesStepResultNext = document.getElementById("guidelinesStepResultNext");
+const guidelinesTopicError = document.getElementById("guidelinesTopicError");
+const guidelinesScopeError = document.getElementById("guidelinesScopeError");
+
+const transparencyFlowDialog = document.getElementById("transparencyFlowDialog");
+const closeTransparencyFlowDialog = document.getElementById("closeTransparencyFlowDialog");
+const transparencySteps = [
+  document.getElementById("transparencyStepTopic"),
+  document.getElementById("transparencyStepSignals"),
+  document.getElementById("transparencyStepInterpretation"),
+  document.getElementById("transparencyStepFailure")
+];
+const transparencyStepTopicNext = document.getElementById("transparencyStepTopicNext");
+const transparencyStepSignalsBack = document.getElementById("transparencyStepSignalsBack");
+const transparencyStepSignalsNext = document.getElementById("transparencyStepSignalsNext");
+const transparencyStepInterpretationBack = document.getElementById("transparencyStepInterpretationBack");
+const transparencyStepInterpretationNext = document.getElementById("transparencyStepInterpretationNext");
+const transparencyStepFailureBack = document.getElementById("transparencyStepFailureBack");
+const transparencyStepFailureNext = document.getElementById("transparencyStepFailureNext");
+const transparencyTopicError = document.getElementById("transparencyTopicError");
+
+const archiveStatusFlowDialog = document.getElementById("archiveStatusFlowDialog");
+const closeArchiveStatusFlowDialog = document.getElementById("closeArchiveStatusFlowDialog");
+const archiveStatusSteps = [
+  document.getElementById("archiveStatusStepOverview"),
+  document.getElementById("archiveStatusStepArea"),
+  document.getElementById("archiveStatusStepResult")
+];
+const archiveStatusStepOverviewNext = document.getElementById("archiveStatusStepOverviewNext");
+const archiveStatusStepAreaBack = document.getElementById("archiveStatusStepAreaBack");
+const archiveStatusStepAreaNext = document.getElementById("archiveStatusStepAreaNext");
+const archiveStatusStepResultBack = document.getElementById("archiveStatusStepResultBack");
+const archiveStatusStepResultNext = document.getElementById("archiveStatusStepResultNext");
+const archiveStatusAreaError = document.getElementById("archiveStatusAreaError");
 
 const registerSteps = [
   document.getElementById("registerStepAccess"),
@@ -3394,6 +3776,92 @@ const helpTopicError = document.getElementById("helpTopicError");
   const end = new Date().getTime();
   const randomTime = randomInteger(start, end);
   return new Date(randomTime).toLocaleDateString("de-DE");
+}
+
+let currentGuidelinesStep = 0;
+
+function showGuidelinesStep(stepIndex) {
+  currentGuidelinesStep = stepIndex;
+
+  guidelinesSteps.forEach((step, index) => {
+    step.classList.toggle("is-active", index === stepIndex);
+  });
+}
+
+function resetGuidelinesFlow() {
+  currentGuidelinesStep = 0;
+
+  document.querySelectorAll('input[name="guidelinesTopic"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  document.querySelectorAll('input[name="guidelinesScope"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  guidelinesTopicError.textContent = "";
+  guidelinesScopeError.textContent = "";
+
+  showGuidelinesStep(0);
+}
+
+function openGuidelinesFlowDialog() {
+  resetGuidelinesFlow();
+  guidelinesFlowDialog.showModal();
+}
+
+let currentTransparencyStep = 0;
+
+function showTransparencyStep(stepIndex) {
+  currentTransparencyStep = stepIndex;
+
+  transparencySteps.forEach((step, index) => {
+    step.classList.toggle("is-active", index === stepIndex);
+  });
+}
+
+function resetTransparencyFlow() {
+  currentTransparencyStep = 0;
+
+  document.querySelectorAll('input[name="transparencyTopic"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  transparencyTopicError.textContent = "";
+
+  showTransparencyStep(0);
+}
+
+function openTransparencyFlowDialog() {
+  resetTransparencyFlow();
+  transparencyFlowDialog.showModal();
+}
+
+let currentArchiveStatusStep = 0;
+
+function showArchiveStatusStep(stepIndex) {
+  currentArchiveStatusStep = stepIndex;
+
+  archiveStatusSteps.forEach((step, index) => {
+    step.classList.toggle("is-active", index === stepIndex);
+  });
+}
+
+function resetArchiveStatusFlow() {
+  currentArchiveStatusStep = 0;
+
+  document.querySelectorAll('input[name="archiveStatusArea"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  archiveStatusAreaError.textContent = "";
+
+  showArchiveStatusStep(0);
+}
+
+function openArchiveStatusFlowDialog() {
+  resetArchiveStatusFlow();
+  archiveStatusFlowDialog.showModal();
 }
 
 function openProfileDialog(userName) {
@@ -3708,24 +4176,6 @@ function renderRelatedVideos(currentVideo) {
   });
 }
 
-function showArchiveView() {
-  playerView.classList.add("view-hidden");
-  archiveView.classList.remove("view-hidden");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-function closePlayer() {
-  showArchiveView();
-  history.pushState({ view: "archive" }, "", window.location.pathname);
-}
-
-window.addEventListener("popstate", () => {
-  showArchiveView();
-});
 
 function openPlayer(video) {
   archiveView.classList.add("view-hidden");
@@ -3942,6 +4392,21 @@ brokenFooterLinks.forEach((link) => {
 
     if (link === contactFooterLink) {
       openContactFlowDialog();
+      return;
+    }
+
+    if (link === guidelinesFooterLink) {
+      openGuidelinesFlowDialog();
+      return;
+    }
+
+    if (link === transparencyFooterLink) {
+      openTransparencyFlowDialog();
+      return;
+    }
+
+    if (link === archiveStatusFooterLink) {
+      openArchiveStatusFlowDialog();
       return;
     }
 
@@ -4197,6 +4662,132 @@ registerStepSignatureNext.addEventListener("click", () => {
 
 registerStepConfirmationsBack.addEventListener("click", () => {
   showRegisterStep(3);
+});
+
+closeGuidelinesFlowDialog.addEventListener("click", () => {
+  guidelinesFlowDialog.close();
+});
+
+guidelinesStepTopicNext.addEventListener("click", () => {
+  const selectedTopic = document.querySelector('input[name="guidelinesTopic"]:checked');
+
+  if (!selectedTopic) {
+    guidelinesTopicError.textContent = "Bitte wähle eine Richtlinie aus.";
+    return;
+  }
+
+  guidelinesTopicError.textContent = "";
+  showGuidelinesStep(1);
+});
+
+guidelinesStepScopeBack.addEventListener("click", () => {
+  showGuidelinesStep(0);
+});
+
+guidelinesStepScopeNext.addEventListener("click", () => {
+  const selectedScope = document.querySelector('input[name="guidelinesScope"]:checked');
+
+  if (!selectedScope) {
+    guidelinesScopeError.textContent = "Bitte wähle einen Bereich aus.";
+    return;
+  }
+
+  guidelinesScopeError.textContent = "";
+  showGuidelinesStep(2);
+});
+
+guidelinesStepCheckBack.addEventListener("click", () => {
+  showGuidelinesStep(1);
+});
+
+guidelinesStepCheckNext.addEventListener("click", () => {
+  showGuidelinesStep(3);
+});
+
+guidelinesStepResultBack.addEventListener("click", () => {
+  showGuidelinesStep(2);
+});
+
+guidelinesStepResultNext.addEventListener("click", () => {
+  guidelinesFlowDialog.close();
+  footerErrorText.textContent = randomItem(footerErrorMessages);
+  footerErrorDialog.showModal();
+});
+
+closeTransparencyFlowDialog.addEventListener("click", () => {
+  transparencyFlowDialog.close();
+});
+
+transparencyStepTopicNext.addEventListener("click", () => {
+  const selectedTopic = document.querySelector('input[name="transparencyTopic"]:checked');
+
+  if (!selectedTopic) {
+    transparencyTopicError.textContent = "Bitte wähle aus, welche Transparenzinformation du sehen möchtest.";
+    return;
+  }
+
+  transparencyTopicError.textContent = "";
+  showTransparencyStep(1);
+});
+
+transparencyStepSignalsBack.addEventListener("click", () => {
+  showTransparencyStep(0);
+});
+
+transparencyStepSignalsNext.addEventListener("click", () => {
+  showTransparencyStep(2);
+});
+
+transparencyStepInterpretationBack.addEventListener("click", () => {
+  showTransparencyStep(1);
+});
+
+transparencyStepInterpretationNext.addEventListener("click", () => {
+  showTransparencyStep(3);
+});
+
+transparencyStepFailureBack.addEventListener("click", () => {
+  showTransparencyStep(2);
+});
+
+transparencyStepFailureNext.addEventListener("click", () => {
+  transparencyFlowDialog.close();
+  footerErrorText.textContent = randomItem(footerErrorMessages);
+  footerErrorDialog.showModal();
+});
+
+closeArchiveStatusFlowDialog.addEventListener("click", () => {
+  archiveStatusFlowDialog.close();
+});
+
+archiveStatusStepOverviewNext.addEventListener("click", () => {
+  showArchiveStatusStep(1);
+});
+
+archiveStatusStepAreaBack.addEventListener("click", () => {
+  showArchiveStatusStep(0);
+});
+
+archiveStatusStepAreaNext.addEventListener("click", () => {
+  const selectedArea = document.querySelector('input[name="archiveStatusArea"]:checked');
+
+  if (!selectedArea) {
+    archiveStatusAreaError.textContent = "Bitte wähle einen Archivbereich aus.";
+    return;
+  }
+
+  archiveStatusAreaError.textContent = "";
+  showArchiveStatusStep(2);
+});
+
+archiveStatusStepResultBack.addEventListener("click", () => {
+  showArchiveStatusStep(1);
+});
+
+archiveStatusStepResultNext.addEventListener("click", () => {
+  archiveStatusFlowDialog.close();
+  footerErrorText.textContent = randomItem(footerErrorMessages);
+  footerErrorDialog.showModal();
 });
 
 registerStepConfirmationsNext.addEventListener("click", () => {

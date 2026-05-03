@@ -2356,7 +2356,7 @@
 
 <footer class="site-footer">
 <nav class="footer-links" aria-label="Footer Navigation">
-  <a href="#" class="broken-footer-link" id="creatorStudioFooterLink">Creator Studio</a>
+  <a href="#" class="broken-footer-link" id="creatorStudioFooterLink">VHS-Studio</a>
   <a href="#" class="broken-footer-link" id="contactFooterLink">Kontakt</a>
     <a href="#" class="broken-footer-link" id="guidelinesFooterLink">Richtlinien</a>
     <a href="#" class="broken-footer-link" id="transparencyFooterLink">Transparenz</a>
@@ -3185,7 +3185,7 @@
 <dialog id="creatorStudioDialog">
   <div class="dialog-inner">
     <div class="dialog-header">
-      <h2>Creator Studio</h2>
+      <h2>VHS-Studio</h2>
       <button class="close-button" id="closeCreatorStudioDialog" aria-label="Dialog schließen">×</button>
     </div>
 
@@ -5311,14 +5311,14 @@ creatorStudioNextButton.addEventListener("click", () => {
   const selectedArea = document.querySelector('input[name="creatorStudioArea"]:checked');
 
   if (!selectedArea) {
-    creatorStudioError.textContent = "Bitte wähle einen Bereich im Creator Studio aus.";
+    creatorStudioError.textContent = "Bitte wähle einen Bereich im VHS-Studio aus.";
     return;
   }
 
   creatorStudioError.textContent = "";
   creatorStudioDialog.close();
 
-  footerErrorText.textContent = "Creator Studio kann nicht geöffnet werden, da du aktuell weder Creator noch Studio bist.";
+  footerErrorText.textContent = "VHS-Studio kann nicht geöffnet werden, da du aktuell weder VHS noch Studio bist.";
   footerErrorDialog.showModal();
 });
 

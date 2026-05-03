@@ -1919,6 +1919,31 @@
     width: 100%;
   }
 }
+.ai-summary-loading {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 8px 0 18px;
+}
+
+.ai-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(255,255,255,0.14);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: aiSpin 0.8s linear infinite;
+}
+
+@keyframes aiSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ai-summary-hidden {
+  display: none;
+}
   </style>
 </head>
 <body>
@@ -2020,8 +2045,8 @@
 
   <div class="watch-actions">
 
-    <button class="watch-action-button login-required-action" type="button">
-
+    <button class="watch-action-button" id="likeButton" type="button">
+    
       <svg viewBox="0 0 24 24" aria-hidden="true">
 
         <path d="M2 10h4v11H2V10Zm6 11h10.4c1.1 0 2-.7 2.3-1.8l1.2-5.2c.4-1.8-.9-3.5-2.7-3.5H14V5.8C14 3.7 12.3 2 10.2 2H10L8 9v12Z"></path>
@@ -2032,7 +2057,7 @@
 
     </button>
 
-    <button class="watch-action-button login-required-action" type="button">
+    <button class="watch-action-button" id="dislikeButton" type="button">
 
       <svg viewBox="0 0 24 24" aria-hidden="true">
 
@@ -2058,6 +2083,11 @@
     <button class="watch-action-button" type="button" id="shareButton" aria-label="Video teilen">
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M18 16.1c-1.1 0-2.1.5-2.7 1.3L8.9 13.7c.1-.3.1-.5.1-.7s0-.4-.1-.7l6.3-3.7C15.9 9.4 16.9 10 18 10c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .4.1.7L8.8 11.4C8.1 10.6 7.1 10 6 10c-1.7 0-3 1.3-3 3s1.3 3 3 3c1.1 0 2.1-.6 2.8-1.4l6.3 3.7c-.1.2-.1.4-.1.7 0 1.7 1.3 3 3 3s3-1.3 3-3-1.3-2.9-3-2.9Z"></path>
+  </svg>
+</button>
+<button class="watch-action-button" type="button" id="notificationButton" aria-label="Benachrichtigung aktivieren">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 22a2.4 2.4 0 0 0 2.3-1.7H9.7A2.4 2.4 0 0 0 12 22Zm7-6V11c0-3.1-1.6-5.6-4.5-6.3V4a2.5 2.5 0 0 0-5 0v.7C6.6 5.4 5 7.9 5 11v5l-2 2v1h18v-1l-2-2Z"></path>
   </svg>
 </button>
 
@@ -2089,9 +2119,12 @@
 
     <button class="transcript-button" id="transcriptButton" type="button">
 
-      Transkript anzeigen
+      Transkript
 
     </button>
+    <button class="transcript-button" id="aiSummaryButton" type="button">
+  KI-Zusammenfassung
+</button>
 
   </div>
 
@@ -2122,8 +2155,9 @@
 </main>
 
 <footer class="site-footer">
-  <nav class="footer-links" aria-label="Footer Navigation">
-    <a href="#" class="broken-footer-link" id="contactFooterLink">Kontakt</a>
+<nav class="footer-links" aria-label="Footer Navigation">
+  <a href="#" class="broken-footer-link" id="creatorStudioFooterLink">Creator Studio</a>
+  <a href="#" class="broken-footer-link" id="contactFooterLink">Kontakt</a>
     <a href="#" class="broken-footer-link" id="guidelinesFooterLink">Richtlinien</a>
     <a href="#" class="broken-footer-link" id="transparencyFooterLink">Transparenz</a>
     <a href="#" class="broken-footer-link" id="archiveStatusFooterLink">Archivstatus</a>
@@ -2905,6 +2939,91 @@
     </p>
 
     <button class="primary-button" id="shareOkButton" type="button">Verstanden</button>
+  </div>
+</dialog>
+
+<dialog id="feedbackDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2 id="feedbackDialogTitle">Feedback</h2>
+      <button class="close-button" id="closeFeedbackDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <p class="login-note" id="feedbackDialogText">
+      Bitte hilf uns, deine Reaktion besser einzuordnen.
+    </p>
+
+    <div class="upload-options">
+      <label><input type="radio" name="reactionFeedback"> Der Inhalt hat meine Erwartungen bestätigt.</label>
+      <label><input type="radio" name="reactionFeedback"> Der Inhalt hat meine Erwartungen enttäuscht.</label>
+      <label><input type="radio" name="reactionFeedback"> Ich habe vor dem Ansehen bereits eine Meinung gebildet.</label>
+      <label><input type="radio" name="reactionFeedback"> Ich wollte nur auf etwas klicken.</label>
+      <label><input type="radio" name="reactionFeedback"> Meine Reaktion ist stärker als mein Verständnis.</label>
+    </div>
+
+    <p class="error-message" id="feedbackError"></p>
+
+    <button class="primary-button" id="feedbackSubmitButton" type="button">Feedback absenden</button>
+  </div>
+</dialog>
+
+<dialog id="notificationDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Benachrichtigung aktiviert</h2>
+      <button class="close-button" id="closeNotificationDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <p class="login-note">
+      Du wirst benachrichtigt, sobald vergleichbar unklare Materialien erneut auftauchen.
+    </p>
+
+    <button class="primary-button" id="notificationOkButton" type="button">Verstanden</button>
+  </div>
+</dialog>
+
+<dialog id="creatorStudioDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Creator Studio</h2>
+      <button class="close-button" id="closeCreatorStudioDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <p class="login-note">
+      Wähle aus, welchen Bereich du verwalten möchtest.
+    </p>
+
+    <div class="upload-options">
+      <label><input type="radio" name="creatorStudioArea"> Reichweite</label>
+      <label><input type="radio" name="creatorStudioArea"> Kommentare</label>
+      <label><input type="radio" name="creatorStudioArea"> Sichtungspunkte</label>
+      <label><input type="radio" name="creatorStudioArea"> Monetarisierung</label>
+      <label><input type="radio" name="creatorStudioArea"> Rechtekonflikte</label>
+    </div>
+
+    <p class="error-message" id="creatorStudioError"></p>
+
+    <button class="primary-button" id="creatorStudioNextButton" type="button">Bereich öffnen</button>
+  </div>
+</dialog>
+
+<dialog id="aiSummaryDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>KI-Zusammenfassung</h2>
+      <button class="close-button" id="closeAiSummaryDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="ai-summary-loading" id="aiSummaryLoading">
+      <div class="ai-spinner" aria-hidden="true"></div>
+      <p class="login-note">Material wird vorläufig zusammengefasst...</p>
+    </div>
+
+    <p class="login-note ai-summary-hidden" id="aiSummaryText">
+      Dieses Material zeigt möglicherweise etwas.
+    </p>
+
+    <button class="primary-button ai-summary-hidden" id="aiSummaryOkButton" type="button">Verstanden</button>
   </div>
 </dialog>
 
@@ -3890,6 +4009,24 @@ const userNames = [
 "fr4gm3nt_666"
 ];
 
+const aiSummaryMessages = [
+  "Dieses Material zeigt möglicherweise einen Vorgang, dessen Anfang nicht eindeutig vom Ende getrennt werden kann.",
+  "Die KI erkennt eine Situation mit unklarer Absicht, mäßiger Bildstabilität und erhöhter Kommentarwahrscheinlichkeit.",
+  "Zusammenfassung: Eine oder mehrere Handlungen finden statt, ohne dass deren Relevanz zuverlässig bestimmt werden konnte.",
+  "Der sprachliche und visuelle Inhalt deutet auf ein Ereignis hin, das eventuell bereits vor Beginn der Aufzeichnung abgeschlossen war.",
+  "Dieses Material enthält Hinweise auf Bewegung, Ton und eine nicht abschließend bestätigte Bedeutung.",
+  "Die KI konnte keine belastbare Handlung erkennen, bewertet die subjektive Wirkung jedoch als potenziell diskutierbar.",
+  "Zusammenfassung vorläufig: Etwas wurde aufgenommen. Die Gründe dafür bleiben unklar.",
+  "Die Aufnahme scheint einen Moment zu dokumentieren, der aus archivischer Sicht vorhanden, aber aus inhaltlicher Sicht zurückhaltend ist.",
+  "Die KI erkennt eine erhöhte Dichte an Material, aber keine entsprechend erhöhte Dichte an Aussage.",
+  "Dieses Fragment enthält möglicherweise Kontext, der im Fragment selbst nicht enthalten ist.",
+  "Die Zusammenfassung wurde abgebrochen, weil Bildspur, Tonspur und vermutete Absicht nicht ausreichend miteinander kooperieren.",
+  "Der Inhalt lässt sich derzeit am besten als unbestätigte Abfolge sichtbarer Zustände beschreiben.",
+  "Die KI erkennt eine mittlere Wahrscheinlichkeit für Bedeutung, weist aber auf eine geringe Wahrscheinlichkeit für Erkenntnis hin.",
+  "Zusammenfassung: Ein Vorgang findet statt oder wurde von der Aufnahme nur knapp verfehlt.",
+  "Das Material wirkt, als könne es mit zusätzlichem Kontext erklärbar sein. Dieser Kontext liegt nicht vor."
+];
+
     const videoGrid = document.getElementById("videoGrid");
     const footerErrorDialog = document.getElementById("footerErrorDialog");
     const closeFooterErrorDialog = document.getElementById("closeFooterErrorDialog");
@@ -4144,6 +4281,36 @@ const viewerConfirmationError = document.getElementById("viewerConfirmationError
 
 const viewerConfirmations = document.querySelectorAll(".viewer-confirmation");
 
+const likeButton = document.getElementById("likeButton");
+const dislikeButton = document.getElementById("dislikeButton");
+
+const feedbackDialog = document.getElementById("feedbackDialog");
+const closeFeedbackDialog = document.getElementById("closeFeedbackDialog");
+const feedbackDialogTitle = document.getElementById("feedbackDialogTitle");
+const feedbackDialogText = document.getElementById("feedbackDialogText");
+const feedbackSubmitButton = document.getElementById("feedbackSubmitButton");
+const feedbackError = document.getElementById("feedbackError");
+
+const notificationButton = document.getElementById("notificationButton");
+const notificationDialog = document.getElementById("notificationDialog");
+const closeNotificationDialog = document.getElementById("closeNotificationDialog");
+const notificationOkButton = document.getElementById("notificationOkButton");
+
+const creatorStudioFooterLink = document.getElementById("creatorStudioFooterLink");
+const creatorStudioDialog = document.getElementById("creatorStudioDialog");
+const closeCreatorStudioDialog = document.getElementById("closeCreatorStudioDialog");
+const creatorStudioNextButton = document.getElementById("creatorStudioNextButton");
+const creatorStudioError = document.getElementById("creatorStudioError");
+
+const aiSummaryButton = document.getElementById("aiSummaryButton");
+const aiSummaryDialog = document.getElementById("aiSummaryDialog");
+const closeAiSummaryDialog = document.getElementById("closeAiSummaryDialog");
+const aiSummaryOkButton = document.getElementById("aiSummaryOkButton");
+const aiSummaryText = document.getElementById("aiSummaryText");
+
+const aiSummaryLoading = document.getElementById("aiSummaryLoading");
+let aiSummaryTimer = null;
+
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
     }
@@ -4264,6 +4431,34 @@ function showArchiveStatusStep(stepIndex) {
   archiveStatusSteps.forEach((step, index) => {
     step.classList.toggle("is-active", index === stepIndex);
   });
+}
+
+function openFeedbackDialog(type) {
+  feedbackError.textContent = "";
+
+  document.querySelectorAll('input[name="reactionFeedback"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  if (type === "like") {
+    feedbackDialogTitle.textContent = "Warum gefällt dir dieses Material?";
+    feedbackDialogText.textContent = "Bitte hilf uns, deine positive Reaktion vorläufig einzuordnen.";
+  } else {
+    feedbackDialogTitle.textContent = "Warum gefällt dir dieses Material nicht?";
+    feedbackDialogText.textContent = "Bitte hilf uns, deine negative Reaktion vorläufig einzuordnen.";
+  }
+
+  feedbackDialog.showModal();
+}
+
+function openCreatorStudioDialog() {
+  creatorStudioError.textContent = "";
+
+  document.querySelectorAll('input[name="creatorStudioArea"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  creatorStudioDialog.showModal();
 }
 
 function resetArchiveStatusFlow() {
@@ -4685,6 +4880,14 @@ function renderCards() {
   const activeBadgeIndexes = new Set(
     shuffleArray([...Array(NUMBER_OF_CARDS).keys()]).slice(0, activeBadgeCount)
   );
+  
+  const remainingBadgeIndexes = [...Array(NUMBER_OF_CARDS).keys()].filter((index) => {
+  return !activeBadgeIndexes.has(index);
+});
+
+const trendBadgeIndex = remainingBadgeIndexes.length
+  ? randomItem(remainingBadgeIndexes)
+  : null;
 
   videoGrid.innerHTML = "";
 
@@ -4700,7 +4903,13 @@ function renderCards() {
     card.innerHTML = `
 <div class="thumb-wrap">
   <img src="${video.imagePath}" alt="jaTV Archivbild ${video.paddedNumber}" loading="lazy" />
-  ${activeBadgeIndexes.has(index) ? `<span class="viewer-badge">${randomInteger(1, 16)} Zuschauer aktiv</span>` : ""}
+  ${
+  activeBadgeIndexes.has(index)
+    ? `<span class="viewer-badge">${randomInteger(1, 16)} Zuschauer aktiv</span>`
+    : index === trendBadgeIndex
+      ? `<span class="viewer-badge">Trend in deiner Nähe</span>`
+      : ""
+}
   <span class="duration">${video.duration}</span>
 </div>
       <div class="video-info">
@@ -4829,6 +5038,101 @@ uploadFormatNextButton.addEventListener("click", () => {
   uploadFormatError.textContent = "";
   uploadDialog.close();
   openLoginDialog();
+});
+
+likeButton.addEventListener("click", () => {
+  openFeedbackDialog("like");
+});
+
+dislikeButton.addEventListener("click", () => {
+  openFeedbackDialog("dislike");
+});
+
+closeFeedbackDialog.addEventListener("click", () => {
+  feedbackDialog.close();
+});
+
+feedbackSubmitButton.addEventListener("click", () => {
+  const selectedFeedback = document.querySelector('input[name="reactionFeedback"]:checked');
+
+  if (!selectedFeedback) {
+    feedbackError.textContent = "Bitte wähle eine Einordnung deiner Reaktion aus.";
+    return;
+  }
+
+  feedbackError.textContent = "";
+  feedbackDialog.close();
+  openLoginDialog();
+});
+
+notificationButton.addEventListener("click", () => {
+  notificationDialog.showModal();
+});
+
+closeNotificationDialog.addEventListener("click", () => {
+  notificationDialog.close();
+});
+
+notificationOkButton.addEventListener("click", () => {
+  notificationDialog.close();
+  openLoginDialog();
+});
+
+creatorStudioFooterLink.addEventListener("click", (event) => {
+  event.preventDefault();
+  openCreatorStudioDialog();
+});
+
+closeCreatorStudioDialog.addEventListener("click", () => {
+  creatorStudioDialog.close();
+});
+
+creatorStudioNextButton.addEventListener("click", () => {
+  const selectedArea = document.querySelector('input[name="creatorStudioArea"]:checked');
+
+  if (!selectedArea) {
+    creatorStudioError.textContent = "Bitte wähle einen Bereich im Creator Studio aus.";
+    return;
+  }
+
+  creatorStudioError.textContent = "";
+  creatorStudioDialog.close();
+
+  footerErrorText.textContent = "Creator Studio kann nicht geöffnet werden, da du aktuell weder Creator noch Studio bist.";
+  footerErrorDialog.showModal();
+});
+
+aiSummaryButton.addEventListener("click", () => {
+  if (aiSummaryTimer) {
+    clearTimeout(aiSummaryTimer);
+  }
+
+  aiSummaryLoading.classList.remove("ai-summary-hidden");
+  aiSummaryText.classList.add("ai-summary-hidden");
+  aiSummaryOkButton.classList.add("ai-summary-hidden");
+
+  aiSummaryText.textContent = randomItem(aiSummaryMessages);
+  aiSummaryDialog.showModal();
+
+  aiSummaryTimer = setTimeout(() => {
+    aiSummaryLoading.classList.add("ai-summary-hidden");
+    aiSummaryText.classList.remove("ai-summary-hidden");
+    aiSummaryOkButton.classList.remove("ai-summary-hidden");
+    aiSummaryTimer = null;
+  }, 2000);
+});
+
+closeAiSummaryDialog.addEventListener("click", () => {
+  if (aiSummaryTimer) {
+    clearTimeout(aiSummaryTimer);
+    aiSummaryTimer = null;
+  }
+
+  aiSummaryDialog.close();
+});
+
+aiSummaryOkButton.addEventListener("click", () => {
+  aiSummaryDialog.close();
 });
 
 viewerRecruitmentButton.addEventListener("click", openViewerRecruitmentDialog);
@@ -4965,7 +5269,10 @@ document.addEventListener("click", (event) => {
 brokenFooterLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     event.preventDefault();
-
+        if (link === creatorStudioFooterLink) {
+      openCreatorStudioDialog();
+      return;
+    }
     if (link === contactFooterLink) {
       openContactFlowDialog();
       return;

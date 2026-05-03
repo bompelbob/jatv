@@ -1777,6 +1777,148 @@
     display: grid;
   }
 }
+
+.viewer-recruitment-callout {
+  margin-top: 0;
+}
+
+.viewer-flow-step {
+  display: none;
+}
+
+.viewer-flow-step.is-active {
+  display: block;
+}
+
+.viewer-flow-progress {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.viewer-options {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.viewer-options label {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.viewer-options input {
+  margin-top: 2px;
+}
+
+.viewer-flow-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.viewer-flow-actions .primary-button,
+.viewer-flow-actions .secondary-button {
+  flex: 1;
+}
+
+.viewer-check-list {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.viewer-check-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.viewer-check-row strong {
+  color: var(--text);
+  font-weight: 700;
+  text-align: right;
+}
+
+.viewer-result-box {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+  .viewer-flow-actions {
+    display: grid;
+  }
+}
+
+.participation-section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.participation-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1c1c1c, #111 70%);
+}
+
+.participation-card h2 {
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: 20px;
+  letter-spacing: -0.03em;
+}
+
+.participation-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.participation-card .upload-button {
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .participation-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .participation-card {
+    flex-direction: column;
+  }
+
+  .participation-card .upload-button {
+    width: 100%;
+  }
+}
   </style>
 </head>
 <body>
@@ -1803,13 +1945,6 @@
     <section class="archive-hero">
       <h1>Archiv</h1>
       <p>Entdecke neue Videos, alte Aufnahmen und ausgewählte Clips aus dem jaTV-Bestand.</p>
-    
-      <div class="upload-callout">
-        <p>
-          Hilf mit, das jaTV-Archiv endlich zu vervollständigen. Wenn du private Sendemitschnitte, alte Kassetten oder bislang nicht erfasste Aufzeichnungen besitzt, kannst du diese zur Prüfung einreichen.
-        </p>
-        <button class="upload-button" id="uploadButton" type="button">Sendemitschnitt hochladen</button>
-      </div>
     </section>
 
     <div class="section-header">
@@ -1829,13 +1964,35 @@
       </div>
     </div>
 
-    <section class="video-grid" id="videoGrid" aria-live="polite"></section>
+<section class="video-grid" id="videoGrid" aria-live="polite"></section>
 
-    <div class="load-more-wrap">
-      <button class="load-more-button" id="loadMoreButton" type="button">
-        mehr anzeigen
-      </button>
+<div class="load-more-wrap">
+  <button class="load-more-button" id="loadMoreButton" type="button">
+    mehr anzeigen
+  </button>
+</div>
+
+<section class="participation-section" aria-label="Mitmachen im jaTV Archiv">
+  <div class="participation-card">
+    <div>
+      <h2>Sendemitschnitt einreichen</h2>
+      <p>
+        Hilf mit, das jaTV-Archiv endlich zu vervollständigen. Wenn du private Sendemitschnitte, alte Kassetten oder bislang nicht erfasste Aufzeichnungen besitzt, kannst du diese zur Prüfung einreichen.
+      </p>
     </div>
+    <button class="upload-button" id="uploadButton" type="button">Sendemitschnitt hochladen</button>
+  </div>
+
+  <div class="participation-card">
+    <div>
+      <h2>Sichter werden</h2>
+      <p>
+        Du möchtest beim Einordnen ungesichteter Archivfragmente helfen? Als Sichter prüfst du Material, markierst Auffälligkeiten und sammelst vorläufige Profilpunkte.
+      </p>
+    </div>
+    <button class="upload-button" id="viewerRecruitmentButton" type="button">Sichter werden</button>
+  </div>
+</section>
   </div>
 
   <section id="playerView" class="view-hidden">
@@ -1974,6 +2131,189 @@
     <a href="#" class="broken-footer-link" id="helpFooterLink">Hilfe</a>
   </nav>
 </footer>
+
+<dialog id="viewerRecruitmentDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2>Sichter werden</h2>
+      <button class="close-button" id="closeViewerRecruitmentDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="viewer-flow-step is-active" id="viewerStepIntro">
+      <p class="viewer-flow-progress">Schritt 1 von 9</p>
+      <p class="login-note">
+        Sichter helfen dabei, ungesichtetes jaTV-Material grob einzuordnen. Dabei wird nicht entschieden, ob etwas wahr, wichtig oder sehenswert ist. Es wird lediglich markiert, dass es von einer Person ungefähr angesehen wurde.
+      </p>
+
+      <div class="viewer-result-box">
+        Für jede begonnene Stunde Sichtung erhältst du 12 Sichtungspunkte, 3 Vorläufigkeitsmarker und 1,4 Einheiten Bestandsnähe. Diese Werte können deinem Profil gutgeschrieben werden.
+      </div>
+
+      <div class="viewer-flow-actions">
+        <button class="primary-button" id="viewerStepIntroNext" type="button">System verstanden</button>
+      </div>
+    </div>
+
+    <div class="viewer-flow-step" id="viewerStepMotivation">
+      <p class="viewer-flow-progress">Schritt 2 von 9</p>
+      <p class="login-note">Warum möchtest du Sichter werden?</p>
+
+      <div class="viewer-options">
+        <label><input type="radio" name="viewerMotivation"> Ich möchte helfen, unklare Archivbestände einzuordnen.</label>
+        <label><input type="radio" name="viewerMotivation"> Ich möchte mein Profil sichtbarer machen.</label>
+        <label><input type="radio" name="viewerMotivation"> Ich möchte Punkte sammeln, deren Nutzen noch nicht abschließend feststeht.</label>
+        <label><input type="radio" name="viewerMotivation"> Ich wurde durch das Wort „Bestandsnähe“ emotional angesprochen.</label>
+        <label><input type="radio" name="viewerMotivation"> Ich möchte Teil eines vorläufig wichtigen Prozesses sein.</label>
+      </div>
+
+      <p class="error-message" id="viewerMotivationError"></p>
+
+      <div class="viewer-flow-actions">
+        <button class="secondary-button" id="viewerStepMotivationBack" type="button">Zurück</button>
+        <button class="primary-button" id="viewerStepMotivationNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="viewer-flow-step" id="viewerStepArea">
+      <p class="viewer-flow-progress">Schritt 3 von 9</p>
+      <p class="login-note">Welches Material möchtest du bevorzugt sichten?</p>
+
+      <div class="viewer-options">
+        <label><input type="radio" name="viewerArea"> Unklare VHS-Fragmente</label>
+        <label><input type="radio" name="viewerArea"> Nicht datierte Sendebänder</label>
+        <label><input type="radio" name="viewerArea"> Material mit widersprüchlicher Tonspur</label>
+        <label><input type="radio" name="viewerArea"> Clips mit auffällig hoher subjektiver Sicherheit</label>
+        <label><input type="radio" name="viewerArea"> Archivbestand ohne erkennbaren Anlass</label>
+        <label><input type="radio" name="viewerArea"> Kommentarverdächtige Medienreste</label>
+      </div>
+
+      <p class="error-message" id="viewerAreaError"></p>
+
+      <div class="viewer-flow-actions">
+        <button class="secondary-button" id="viewerStepAreaBack" type="button">Zurück</button>
+        <button class="primary-button" id="viewerStepAreaNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="viewer-flow-step" id="viewerStepTime">
+      <p class="viewer-flow-progress">Schritt 4 von 9</p>
+      <p class="login-note">Wie viel Material möchtest du pro Woche ungefähr sichten?</p>
+
+      <div class="viewer-options">
+        <label><input type="radio" name="viewerTime"> Unter 1 Stunde, aber mit hoher gefühlter Beteiligung.</label>
+        <label><input type="radio" name="viewerTime"> 1 bis 3 Stunden mit gelegentlicher innerer Abwesenheit.</label>
+        <label><input type="radio" name="viewerTime"> 3 bis 6 Stunden, sofern die Tonspur nicht widerspricht.</label>
+        <label><input type="radio" name="viewerTime"> Mehr als 6 Stunden und damit wahrscheinlich zu viel.</label>
+        <label><input type="radio" name="viewerTime"> Ich möchte zunächst nur die Punkte verstehen.</label>
+      </div>
+
+      <p class="error-message" id="viewerTimeError"></p>
+
+      <div class="viewer-flow-actions">
+        <button class="secondary-button" id="viewerStepTimeBack" type="button">Zurück</button>
+        <button class="primary-button" id="viewerStepTimeNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="viewer-flow-step" id="viewerStepRewards">
+      <p class="viewer-flow-progress">Schritt 5 von 9</p>
+      <p class="login-note">Vorläufiges Belohnungsmodell</p>
+
+      <div class="viewer-check-list">
+        <div class="viewer-check-row"><span>Pro begonnener Sichtungsstunde</span><strong>12 Sichtungspunkte</strong></div>
+        <div class="viewer-check-row"><span>Zusätzliche Markierung</span><strong>3 Vorläufigkeitsmarker</strong></div>
+        <div class="viewer-check-row"><span>Profilwert</span><strong>1,4 Bestandsnähe</strong></div>
+        <div class="viewer-check-row"><span>Sichtungsrang</span><strong>wird ungefähr berechnet</strong></div>
+        <div class="viewer-check-row"><span>Geldwert</span><strong>0</strong></div>
+        <div class="viewer-check-row"><span>Rechtswirkung</span><strong>keine</strong></div>
+      </div>
+
+      <div class="viewer-result-box">
+        Sichtungspunkte können dein Profil aktiver erscheinen lassen. Eine tatsächliche Verbesserung deiner Einschätzung, Rechteposition oder gesellschaftlichen Bedeutung ist damit nicht verbunden.
+      </div>
+
+      <div class="viewer-flow-actions">
+        <button class="secondary-button" id="viewerStepRewardsBack" type="button">Zurück</button>
+        <button class="primary-button" id="viewerStepRewardsNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="viewer-flow-step" id="viewerStepRank">
+      <p class="viewer-flow-progress">Schritt 6 von 9</p>
+      <p class="login-note">Vorläufige Rangsimulation</p>
+
+      <div class="viewer-check-list">
+        <div class="viewer-check-row"><span>Startstatus</span><strong>Kassettenanwärter</strong></div>
+        <div class="viewer-check-row"><span>Nach 5 Stunden</span><strong>Bandbeisitzer</strong></div>
+        <div class="viewer-check-row"><span>Nach 20 Stunden</span><strong>Vorläufig bestätigter Sichtender</strong></div>
+        <div class="viewer-check-row"><span>Nach 50 Stunden</span><strong>Bestandsnaher Nutzer</strong></div>
+        <div class="viewer-check-row"><span>Nach 100 Stunden</span><strong>Metadatenhelfer ohne Freigaberecht</strong></div>
+      </div>
+
+      <div class="viewer-result-box">
+        Ränge dienen ausschließlich der Darstellung vermuteter Aktivität. Sie begründen keine Kompetenz, keinen Anspruch auf Zugang und keine zuverlässigere Meinung.
+      </div>
+
+      <div class="viewer-flow-actions">
+        <button class="secondary-button" id="viewerStepRankBack" type="button">Zurück</button>
+        <button class="primary-button" id="viewerStepRankNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="viewer-flow-step" id="viewerStepAvailability">
+      <p class="viewer-flow-progress">Schritt 7 von 9</p>
+      <p class="login-note">Bitte wähle deine bevorzugte Sichtungsbereitschaft.</p>
+
+      <div class="viewer-options">
+        <label><input type="radio" name="viewerAvailability"> gelegentlich verfügbar</label>
+        <label><input type="radio" name="viewerAvailability"> meistens theoretisch verfügbar</label>
+        <label><input type="radio" name="viewerAvailability"> nur bei Material mit ausreichender Unschärfe</label>
+        <label><input type="radio" name="viewerAvailability"> nachts, aber ohne Gewähr</label>
+        <label><input type="radio" name="viewerAvailability"> ich möchte nicht festgelegt werden</label>
+      </div>
+
+      <p class="error-message" id="viewerAvailabilityError"></p>
+
+      <div class="viewer-flow-actions">
+        <button class="secondary-button" id="viewerStepAvailabilityBack" type="button">Zurück</button>
+        <button class="primary-button" id="viewerStepAvailabilityNext" type="button">Weiter</button>
+      </div>
+    </div>
+
+    <div class="viewer-flow-step" id="viewerStepConfirmations">
+      <p class="viewer-flow-progress">Schritt 8 von 9</p>
+      <p class="login-note">Bitte bestätige die Hinweise zur Sichtung.</p>
+
+      <div class="viewer-options">
+        <label><input type="checkbox" class="viewer-confirmation"> Ich akzeptiere, dass gesichtetes Material weiterhin unklar bleiben kann.</label>
+        <label><input type="checkbox" class="viewer-confirmation"> Ich verstehe, dass Sichtungspunkte keine Vergütung darstellen.</label>
+        <label><input type="checkbox" class="viewer-confirmation"> Ich nehme zur Kenntnis, dass subjektive Sicherheit nach der Sichtung steigen kann, ohne dass tatsächliche Sicherheit steigt.</label>
+        <label><input type="checkbox" class="viewer-confirmation"> Ich akzeptiere, dass mein Profil dadurch wichtiger aussehen kann, als es ist.</label>
+        <label><input type="checkbox" class="viewer-confirmation"> Ich bestätige, dass mein Sichtungsurteil keine abschließende Bedeutung hat.</label>
+      </div>
+
+      <p class="error-message" id="viewerConfirmationError"></p>
+
+      <div class="viewer-flow-actions">
+        <button class="secondary-button" id="viewerStepConfirmationsBack" type="button">Zurück</button>
+        <button class="primary-button" id="viewerStepConfirmationsNext" type="button">Bewerbung vorbereiten</button>
+      </div>
+    </div>
+
+    <div class="viewer-flow-step" id="viewerStepFailure">
+      <p class="viewer-flow-progress">Schritt 9 von 9</p>
+      <p class="login-note">Deine Bewerbung als Sichter wurde vorbereitet.</p>
+
+      <div class="viewer-result-box">
+        Die Bewerbung konnte aufgrund der derzeit außergewöhnlich hohen Zahl an Anmeldungen nicht abgeschlossen werden. Neue Sichterzugänge werden erst wieder vergeben, sobald bestehende Sichtende ihre vorläufige Bestandsnähe ausreichend abgebaut haben.
+      </div>
+
+      <div class="viewer-flow-actions">
+        <button class="primary-button" id="viewerStepFailureNext" type="button">Verstanden</button>
+      </div>
+    </div>
+  </div>
+</dialog>
 
 <dialog id="contactFlowDialog">
   <div class="dialog-inner">
@@ -3725,6 +4065,55 @@ const helpStepSolutionBack = document.getElementById("helpStepSolutionBack");
 const helpStepSolutionNext = document.getElementById("helpStepSolutionNext");
 const helpTopicError = document.getElementById("helpTopicError");
 
+const viewerRecruitmentButton = document.getElementById("viewerRecruitmentButton");
+const viewerRecruitmentDialog = document.getElementById("viewerRecruitmentDialog");
+const closeViewerRecruitmentDialog = document.getElementById("closeViewerRecruitmentDialog");
+
+const viewerSteps = [
+  document.getElementById("viewerStepIntro"),
+  document.getElementById("viewerStepMotivation"),
+  document.getElementById("viewerStepArea"),
+  document.getElementById("viewerStepTime"),
+  document.getElementById("viewerStepRewards"),
+  document.getElementById("viewerStepRank"),
+  document.getElementById("viewerStepAvailability"),
+  document.getElementById("viewerStepConfirmations"),
+  document.getElementById("viewerStepFailure")
+];
+
+const viewerStepIntroNext = document.getElementById("viewerStepIntroNext");
+
+const viewerStepMotivationBack = document.getElementById("viewerStepMotivationBack");
+const viewerStepMotivationNext = document.getElementById("viewerStepMotivationNext");
+
+const viewerStepAreaBack = document.getElementById("viewerStepAreaBack");
+const viewerStepAreaNext = document.getElementById("viewerStepAreaNext");
+
+const viewerStepTimeBack = document.getElementById("viewerStepTimeBack");
+const viewerStepTimeNext = document.getElementById("viewerStepTimeNext");
+
+const viewerStepRewardsBack = document.getElementById("viewerStepRewardsBack");
+const viewerStepRewardsNext = document.getElementById("viewerStepRewardsNext");
+
+const viewerStepRankBack = document.getElementById("viewerStepRankBack");
+const viewerStepRankNext = document.getElementById("viewerStepRankNext");
+
+const viewerStepAvailabilityBack = document.getElementById("viewerStepAvailabilityBack");
+const viewerStepAvailabilityNext = document.getElementById("viewerStepAvailabilityNext");
+
+const viewerStepConfirmationsBack = document.getElementById("viewerStepConfirmationsBack");
+const viewerStepConfirmationsNext = document.getElementById("viewerStepConfirmationsNext");
+
+const viewerStepFailureNext = document.getElementById("viewerStepFailureNext");
+
+const viewerMotivationError = document.getElementById("viewerMotivationError");
+const viewerAreaError = document.getElementById("viewerAreaError");
+const viewerTimeError = document.getElementById("viewerTimeError");
+const viewerAvailabilityError = document.getElementById("viewerAvailabilityError");
+const viewerConfirmationError = document.getElementById("viewerConfirmationError");
+
+const viewerConfirmations = document.querySelectorAll(".viewer-confirmation");
+
     function padImageNumber(number) {
       return String(number).padStart(6, "0");
     }
@@ -3939,6 +4328,53 @@ function resetRegisterFlow() {
   registerConfirmationError.textContent = "";
 
   showRegisterStep(0);
+}
+
+let currentViewerStep = 0;
+
+function showViewerStep(stepIndex) {
+  currentViewerStep = stepIndex;
+
+  viewerSteps.forEach((step, index) => {
+    step.classList.toggle("is-active", index === stepIndex);
+  });
+}
+
+function resetViewerRecruitmentFlow() {
+  currentViewerStep = 0;
+
+  document.querySelectorAll('input[name="viewerMotivation"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  document.querySelectorAll('input[name="viewerArea"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  document.querySelectorAll('input[name="viewerTime"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  document.querySelectorAll('input[name="viewerAvailability"]').forEach((input) => {
+    input.checked = false;
+  });
+
+  viewerConfirmations.forEach((input) => {
+    input.checked = false;
+  });
+
+  viewerMotivationError.textContent = "";
+  viewerAreaError.textContent = "";
+  viewerTimeError.textContent = "";
+  viewerAvailabilityError.textContent = "";
+  viewerConfirmationError.textContent = "";
+
+  showViewerStep(0);
+}
+
+function openViewerRecruitmentDialog() {
+  resetViewerRecruitmentFlow();
+  viewerRecruitmentDialog.showModal();
 }
 
 function openRegisterFlowDialog() {
@@ -4363,6 +4799,116 @@ uploadFormatNextButton.addEventListener("click", () => {
   uploadFormatError.textContent = "";
   uploadDialog.close();
   openLoginDialog();
+});
+
+viewerRecruitmentButton.addEventListener("click", openViewerRecruitmentDialog);
+
+closeViewerRecruitmentDialog.addEventListener("click", () => {
+  viewerRecruitmentDialog.close();
+});
+
+viewerStepIntroNext.addEventListener("click", () => {
+  showViewerStep(1);
+});
+
+viewerStepMotivationBack.addEventListener("click", () => {
+  showViewerStep(0);
+});
+
+viewerStepMotivationNext.addEventListener("click", () => {
+  const selectedMotivation = document.querySelector('input[name="viewerMotivation"]:checked');
+
+  if (!selectedMotivation) {
+    viewerMotivationError.textContent = "Bitte wähle aus, warum du Sichter werden möchtest.";
+    return;
+  }
+
+  viewerMotivationError.textContent = "";
+  showViewerStep(2);
+});
+
+viewerStepAreaBack.addEventListener("click", () => {
+  showViewerStep(1);
+});
+
+viewerStepAreaNext.addEventListener("click", () => {
+  const selectedArea = document.querySelector('input[name="viewerArea"]:checked');
+
+  if (!selectedArea) {
+    viewerAreaError.textContent = "Bitte wähle aus, welches Material du bevorzugt sichten möchtest.";
+    return;
+  }
+
+  viewerAreaError.textContent = "";
+  showViewerStep(3);
+});
+
+viewerStepTimeBack.addEventListener("click", () => {
+  showViewerStep(2);
+});
+
+viewerStepTimeNext.addEventListener("click", () => {
+  const selectedTime = document.querySelector('input[name="viewerTime"]:checked');
+
+  if (!selectedTime) {
+    viewerTimeError.textContent = "Bitte wähle deinen ungefähren Sichtungsumfang aus.";
+    return;
+  }
+
+  viewerTimeError.textContent = "";
+  showViewerStep(4);
+});
+
+viewerStepRewardsBack.addEventListener("click", () => {
+  showViewerStep(3);
+});
+
+viewerStepRewardsNext.addEventListener("click", () => {
+  showViewerStep(5);
+});
+
+viewerStepRankBack.addEventListener("click", () => {
+  showViewerStep(4);
+});
+
+viewerStepRankNext.addEventListener("click", () => {
+  showViewerStep(6);
+});
+
+viewerStepAvailabilityBack.addEventListener("click", () => {
+  showViewerStep(5);
+});
+
+viewerStepAvailabilityNext.addEventListener("click", () => {
+  const selectedAvailability = document.querySelector('input[name="viewerAvailability"]:checked');
+
+  if (!selectedAvailability) {
+    viewerAvailabilityError.textContent = "Bitte wähle eine Sichtungsbereitschaft aus.";
+    return;
+  }
+
+  viewerAvailabilityError.textContent = "";
+  showViewerStep(7);
+});
+
+viewerStepConfirmationsBack.addEventListener("click", () => {
+  showViewerStep(6);
+});
+
+viewerStepConfirmationsNext.addEventListener("click", () => {
+  const allConfirmed = Array.from(viewerConfirmations).every((input) => input.checked);
+
+  if (!allConfirmed) {
+    viewerConfirmationError.textContent = "Bitte bestätige alle Hinweise zur Sichtung.";
+    return;
+  }
+
+  viewerConfirmationError.textContent = "";
+  showViewerStep(8);
+});
+
+viewerStepFailureNext.addEventListener("click", () => {
+  viewerRecruitmentDialog.close();
 });
 
 document.addEventListener("click", (event) => {

@@ -2089,46 +2089,66 @@
   }
 }
 
+
+
 .archive-status-bar {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 24px 18px;
+  margin-top: 56px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+}
+
+.archive-status-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.archive-status-label {
   color: var(--muted);
 }
 
-.archive-status-bar-inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 18px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 13px 16px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background:
-    linear-gradient(135deg, rgba(255,0,51,0.08), rgba(255,255,255,0.025)),
-    var(--surface);
-  font-size: 11px;
-  line-height: 1.4;
+.archive-status-value {
+  color: var(--text);
+  font-weight: 700;
 }
 
-.archive-status-bar strong {
-  color: var(--text);
-  font-weight: 800;
+#statusTimecode {
+  margin-right: 8px;
+  color: var(--accent);
 }
 
 @media (max-width: 680px) {
   .archive-status-bar {
-    padding: 0 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
   }
 
-  .archive-status-bar-inner {
+  .archive-status-item {
     display: grid;
-    gap: 8px;
-    align-items: start;
-    justify-content: stretch;
-    border-radius: 14px;
-    font-size: 10px;
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .archive-status-label {
+    display: block;
+  }
+
+  .archive-status-value {
+    display: block;
+  }
+
+  #statusTimecode {
+    display: inline-block;
+    margin-right: 6px;
   }
 }
 
@@ -2508,16 +2528,34 @@
   </section>
 </main>
 
-<section class="archive-status-bar" aria-label="Technischer Archivstatus">
-  <div class="archive-status-bar-inner">
-    <span>jaTV-Archiv Gesamtdigitalisierung: <strong>0,84 %</strong></span>
-    <span>Aktuelle Warteschlange: <strong id="statusQueueCount">000</strong> Einreichungen</span>
-    <span>Letzte MAZ-Fehlermeldung: <strong id="statusTimecode">00:00:00</strong> <strong id="statusMazError">Signalstatus unklar</strong></span>
-    <span>Aktiver Transferkanal: <strong id="statusTransferChannel">Deck B / Laufwerk 03 / Tracking manuell</strong></span>
-  </div>
-</section>
-
 <footer class="site-footer">
+
+<div class="archive-status-bar" aria-label="jaTV Archivstatus">
+  <div class="archive-status-item">
+    <span class="archive-status-label">jaTV-Archiv Gesamtdigitalisierung:</span>
+    <span class="archive-status-value">0,84%</span>
+  </div>
+
+  <div class="archive-status-item">
+    <span class="archive-status-label">Aktuelle Warteschlange:</span>
+    <span class="archive-status-value" id="statusQueueCount">438 Einreichungen</span>
+  </div>
+
+  <div class="archive-status-item">
+    <span class="archive-status-label">Aktiver Transferkanal:</span>
+    <span class="archive-status-value" id="statusTransferChannel">Kanal 3B</span>
+  </div>
+
+  <div class="archive-status-item">
+    <span class="archive-status-label">Letzte MAZ-Fehlermeldung:</span>
+    <span class="archive-status-value">
+      <span id="statusTimecode">01:24:17</span>
+      <span id="statusMazError">Halbbildreihenfolge gewechselt</span>
+    </span>
+  </div>
+</div>
+
+
 <nav class="footer-links" aria-label="Footer Navigation">
   <a href="#" class="broken-footer-link" id="creatorStudioFooterLink">Sichtungs-Studio</a>
   <a href="#" class="broken-footer-link" id="contactFooterLink">Kontakt</a>

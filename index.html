@@ -2066,6 +2066,71 @@
     border-radius: 18px;
   }
 }
+
+@media (max-width: 560px) {
+  #likeButton,
+  #dislikeButton {
+    font-size: 12px;
+    gap: 5px;
+  }
+
+  #likeButton svg,
+  #dislikeButton svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+  }
+
+  #playerLikes,
+  #playerDislikes {
+    font-size: 12px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+}
+
+.archive-status-bar {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px 18px;
+  color: var(--muted);
+}
+
+.archive-status-bar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(255,0,51,0.08), rgba(255,255,255,0.025)),
+    var(--surface);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.archive-status-bar strong {
+  color: var(--text);
+  font-weight: 800;
+}
+
+@media (max-width: 680px) {
+  .archive-status-bar {
+    padding: 0 14px 16px;
+  }
+
+  .archive-status-bar-inner {
+    display: grid;
+    gap: 8px;
+    align-items: start;
+    justify-content: stretch;
+    border-radius: 14px;
+    font-size: 10px;
+  }
+}
   </style>
 </head>
 <body>
@@ -2353,9 +2418,18 @@
   </section>
 </main>
 
+<section class="archive-status-bar" aria-label="Technischer Archivstatus">
+  <div class="archive-status-bar-inner">
+    <span>jaTV-Archiv Gesamtdigitalisierung: <strong>0,84%</strong></span>
+    <span>Aktuelle Warteschlange: <strong id="statusQueueCount">000</strong> Einreichungen</span>
+    <span>Letzte MAZ-Fehlermeldung: <strong id="statusTimecode">00:00:00</strong> <strong id="statusMazError">Signalstatus unklar</strong></span>
+    <span>Aktiver Transferkanal: <strong id="statusTransferChannel">Deck B / Laufwerk 03 / Tracking manuell</strong></span>
+  </div>
+</section>
+
 <footer class="site-footer">
 <nav class="footer-links" aria-label="Footer Navigation">
-  <a href="#" class="broken-footer-link" id="creatorStudioFooterLink">VHS-Studio</a>
+  <a href="#" class="broken-footer-link" id="creatorStudioFooterLink">Sichtungs-Studio</a>
   <a href="#" class="broken-footer-link" id="contactFooterLink">Kontakt</a>
     <a href="#" class="broken-footer-link" id="guidelinesFooterLink">Richtlinien</a>
     <a href="#" class="broken-footer-link" id="transparencyFooterLink">Transparenz</a>
@@ -3184,7 +3258,7 @@
 <dialog id="creatorStudioDialog">
   <div class="dialog-inner">
     <div class="dialog-header">
-      <h2>VHS-Studio</h2>
+      <h2>Sichtungs-Studio</h2>
       <button class="close-button" id="closeCreatorStudioDialog" aria-label="Dialog schließen">×</button>
     </div>
 
@@ -4226,6 +4300,77 @@ const aiSummaryMessages = [
   "Das Material wirkt, als könne es mit zusätzlichem Kontext erklärbar sein. Dieser Kontext liegt nicht vor."
 ];
 
+const mazErrorMessages = [
+  "Stereospur nur rechts vorhanden",
+  "Stereospur nur links vorhanden",
+  "Monospur unterscheidet sich von Stereospur",
+  "Halbbildreihenfolge gewechselt",
+  "Dropout im oberen Bilddrittel erkannt",
+  "Bandlauf instabil bei Szenenwechsel",
+  "Spurlage driftet nach 14 Minuten",
+  "Kopftrommelsignal zeitweise schwach",
+  "HiFi-Ton springt auf Längsspur zurück",
+  "Längsspurton übersteuert bei Weißbild",
+  "Farbsignal zeitweise ohne Burst",
+  "Chrominanzanteil verzögert",
+  "Luminanzspur mit periodischem Rauschen",
+  "Timecode nicht fortlaufend",
+  "Timecode springt rückwärts",
+  "Timecode enthält doppelte Frames",
+  "Schrägspur mit Lesefehlern",
+  "Kantenflimmern bei Standbild",
+  "Tracking automatisch ohne Abschluss",
+  "Tracking manuell nicht stabilisierbar",
+  "Bild läuft vertikal bei Bandanfang",
+  "Bildfang nur nach Vorlauf stabil",
+  "Kopiergeneration nicht eindeutig bestimmbar",
+  "Vorspann ohne Tonreferenz",
+  "Nachlauf enthält fremdes Tonsignal",
+  "Tonspur eilt Bildsignal voraus",
+  "Bildsignal eilt Tonspur voraus",
+  "Audiopegel links nicht kalibrierbar",
+  "Audiopegel rechts schwankt",
+  "Azimutabweichung im Längsspurton",
+  "Schaltknacken bei jedem Indeximpuls",
+  "Indexmarke ohne gültigen Bildinhalt",
+  "Bandkante beschädigt im Suchlauf",
+  "Bandzug meldet Grenzwert",
+  "Servo-Lock verliert Synchronität",
+  "Synchronimpulse teilweise gestört",
+  "Vertikalsynchronisation nicht zuverlässig",
+  "Kopfschaltsignal im Bild sichtbar",
+  "Störstreifen bei Umschaltung auf Wiedergabe",
+  "Schneerauschen stärker als Referenzwert",
+  "Farbphase nicht stabil",
+  "PAL-Decoder meldet instabile Zeile",
+  "SECAM-Restinformation vermutet",
+  "NTSC-Anteil im Vorsignal erkannt",
+  "Schwarzpegel unter Referenz",
+  "Weißpegel übersteuert",
+  "AGC regelt sichtbar nach",
+  "Bildinhalt nur während Pause lesbar",
+  "Standbild zeigt andere Tonlage",
+  "Bandende ohne Kontrollimpuls erreicht"
+];
+
+const activeTransferChannels = [
+  "Deck A / Laufwerk 01",
+  "Deck B / Laufwerk 03",
+  "Deck C / U-matic",
+  "Deck D / Hi8",
+  "Deck E / VHS-Longplay",
+  "Deck F / S-VHS",
+  "Deck G / MiniDV",
+  "Deck H / Betacam SP",
+  "Deck J / Video 8",
+  "Deck K / Sicherungskopie",
+  "Deck L / VHS-C-Adapter",
+  "Deck M / Longplay-Kopie",
+  "Deck N / Kontrollmonitor 2",
+  "Deck P / Sendeabwicklung alt",
+  "Deck R / Reservekette "
+];
+
     const videoGrid = document.getElementById("videoGrid");
     const footerErrorDialog = document.getElementById("footerErrorDialog");
     const closeFooterErrorDialog = document.getElementById("closeFooterErrorDialog");
@@ -4511,6 +4656,12 @@ const techView = document.getElementById("techView");
 const openTechButton = document.getElementById("openTechButton");
 const backFromTechButton = document.getElementById("backFromTechButton");
 
+const statusQueueCount = document.getElementById("statusQueueCount");
+const statusTimecode = document.getElementById("statusTimecode");
+const statusMazError = document.getElementById("statusMazError");
+
+const statusTransferChannel = document.getElementById("statusTransferChannel");
+
 const aiSummaryLoading = document.getElementById("aiSummaryLoading");
 let aiSummaryTimer = null;
 
@@ -4534,6 +4685,21 @@ let aiSummaryTimer = null;
       }
       return copy;
     }
+    
+    function createRandomTimecode() {
+  const hours = String(randomInteger(0, 23)).padStart(2, "0");
+  const minutes = String(randomInteger(0, 59)).padStart(2, "0");
+  const frames = String(randomInteger(0, 24)).padStart(2, "0");
+
+  return `${hours}:${minutes}:${frames}`;
+}
+
+function updateArchiveStatusBar() {
+  statusQueueCount.textContent = randomInteger(410, 490);
+  statusTimecode.textContent = createRandomTimecode();
+  statusMazError.textContent = randomItem(mazErrorMessages);
+  statusTransferChannel.textContent = randomItem(activeTransferChannels);
+}
 
     function formatNumber(number) {
       return new Intl.NumberFormat("de-DE").format(number);
@@ -5310,14 +5476,14 @@ creatorStudioNextButton.addEventListener("click", () => {
   const selectedArea = document.querySelector('input[name="creatorStudioArea"]:checked');
 
   if (!selectedArea) {
-    creatorStudioError.textContent = "Bitte wähle einen Bereich im VHS-Studio aus.";
+    creatorStudioError.textContent = "Bitte wähle einen Bereich im Sichtungs-Studio aus.";
     return;
   }
 
   creatorStudioError.textContent = "";
   creatorStudioDialog.close();
 
-  footerErrorText.textContent = "VHS-Studio kann nicht geöffnet werden, da du aktuell weder VHS noch Studio bist.";
+  footerErrorText.textContent = "Sichtungs-Studio kann nicht geöffnet werden, da du aktuell weder Sichter noch Studio bist.";
   footerErrorDialog.showModal();
 });
 
@@ -5926,6 +6092,7 @@ loginRequiredActions.forEach((button) => {
 });
 
     renderCards();
+updateArchiveStatusBar();
   </script>
 </body>
 </html>

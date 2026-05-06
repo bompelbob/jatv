@@ -2131,6 +2131,88 @@
     font-size: 10px;
   }
 }
+
+.tech-logbook {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015)),
+    #101010;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.025),
+    0 18px 50px rgba(0,0,0,0.35);
+}
+
+.tech-logbook-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+
+.tech-logbook-header h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.tech-logbook-header span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.tech-logbook-list {
+  display: grid;
+  gap: 4px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.tech-logbook-entry {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tech-logbook-time {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.tech-logbook-text {
+  color: #d6d6d6;
+}
+
+.tech-logbook-text::before {
+  content: "> ";
+  color: rgba(255,255,255,0.45);
+}
+
+@media (max-width: 560px) {
+  .tech-logbook {
+    padding: 15px;
+  }
+
+  .tech-logbook-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .tech-logbook-entry {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+}
   </style>
 </head>
 <body>
@@ -2282,6 +2364,14 @@
         </p>
       </div>
     </article>
+    <section class="tech-logbook" aria-label="Mini-Logbuch der Digitalisierung">
+  <div class="tech-logbook-header">
+    <h2>Mini-Logbuch der laufenden Digitalisierung</h2>
+    <span class="tech-logbook-status">Live aus der Sendeabwicklung</span>
+  </div>
+
+  <div class="tech-logbook-list" id="techLogbookList"></div>
+</section>
   </div>
 </section>
   <section id="playerView" class="view-hidden">
@@ -2420,7 +2510,7 @@
 
 <section class="archive-status-bar" aria-label="Technischer Archivstatus">
   <div class="archive-status-bar-inner">
-    <span>jaTV-Archiv Gesamtdigitalisierung: <strong>0,84%</strong></span>
+    <span>jaTV-Archiv Gesamtdigitalisierung: <strong>0,84 %</strong></span>
     <span>Aktuelle Warteschlange: <strong id="statusQueueCount">000</strong> Einreichungen</span>
     <span>Letzte MAZ-Fehlermeldung: <strong id="statusTimecode">00:00:00</strong> <strong id="statusMazError">Signalstatus unklar</strong></span>
     <span>Aktiver Transferkanal: <strong id="statusTransferChannel">Deck B / Laufwerk 03 / Tracking manuell</strong></span>
@@ -4371,6 +4461,69 @@ const activeTransferChannels = [
   "Deck R / Reservekette "
 ];
 
+const techLogbookMessages = [
+  "Deck B gestartet, Bandlauf stabilisiert sich langsam.",
+  "Tracking driftet, automatische Nachregelung vorsichtig aktiviert.",
+  "Tonspur rechts wiederhergestellt, linke Spur bleibt vorläufig skeptisch.",
+  "Vorschaubild erzeugt, Motiv wird als teilweise erklärbar markiert.",
+  "Transfer wegen Timecodebruch zur Nachsichtung vorgemerkt.",
+  "Band wurde zurückgespult, obwohl niemand sicher war, ob es nötig war.",
+  "Dropouts im oberen Bilddrittel erkannt und mit mäßigem Vertrauen protokolliert.",
+  "Stereospur nur rechts vorhanden, Monosumme widerspricht der Erwartung.",
+  "Halbbildreihenfolge gewechselt, Bewegungen wirken dadurch kurzzeitig übermotiviert.",
+  "Monospur unterscheidet sich von Stereospur, Ursache nicht ausreichend beruhigt.",
+  "Kassettenklappe erneut geschlossen, Laufwerk akzeptiert den Vorgang widerwillig.",
+  "Farbrauschen steigt, Inhalt bleibt davon weitgehend unbeeindruckt.",
+  "Bandanfang gefunden, Anfang der Sendung weiterhin nicht bestätigt.",
+  "Restlaufzeit weicht von Beschriftung ab, Karton bleibt verdächtig.",
+  "Timecode springt, Aufzeichnung tut so, als sei nichts gewesen.",
+  "VHS-Kopie zeigt Kontrollstreifen, Signal wird trotzdem übernommen.",
+  "Tonkopf gereinigt, subjektive Hoffnung kurzfristig erhöht.",
+  "Bild steht für 12 Sekunden, Bedeutung bewegt sich nicht mit.",
+  "Bandlauf beruhigt, Archivsignatur wurde vorläufig vergeben.",
+  "Kopiergeneration vermutlich höher als angegeben, Schärfe wirkt geerbt.",
+  "Einspielweg C meldet Pegelabweichung mit unklarem Selbstbewusstsein.",
+  "Sicherungskopie gestartet, Original wirkt erleichtert.",
+  "Signalverlust bei Minute 17, Kontextverlust vermutlich früher.",
+  "Dropout-Muster ähnelt bekanntem Bestand, aber nur unangenehm ungefähr.",
+  "Kassette wurde als beschriftet erkannt, Inhalt widerspricht freundlich.",
+  "Tonversatz gemessen, Moderator antwortet offenbar auf spätere Ereignisse.",
+  "Vorspannfragment erkannt, Abspann fehlt mit auffälliger Konsequenz.",
+  "Band wurde erneut eingelesen, Ergebnis ist anders, aber nicht besser.",
+  "Indexdatei erzeugt, Metadaten wirken noch nicht auskunftsbereit.",
+  "Deck A pausiert, Deck C übernimmt mit geringerem Selbstvertrauen.",
+  "Signalpegel schwankt, Sichtungswert bleibt vorläufig stabil.",
+  "Bandstelle markiert, weil niemand entscheiden wollte, ob dort etwas passiert.",
+  "Aufzeichnung enthält mehrere Sekunden überzeugendes Nichts.",
+  "Kassettengehäuse knarzt, Digitalisierung wird trotzdem fortgesetzt.",
+  "Bildkante wandert, Inhalt bleibt am selben Problem hängen.",
+  "Audiopegel links zu niedrig, rechts dafür beleidigend deutlich.",
+  "Vorschaudatei erstellt, öffentliche Auslieferung noch nicht empfohlen.",
+  "MAZ meldet Suchlauf abgeschlossen, Zielstelle wirkt nicht gefunden.",
+  "Bandmaterial erwärmt sich, Bedienpersonal ebenfalls.",
+  "Rücklauf abgeschlossen, Kassette behauptet weiterhin eine andere Laufzeit.",
+  "Timecode neu angesetzt, alte Unsicherheit bleibt erhalten.",
+  "Bildsignal kurz stabil, Team reagiert übertrieben hoffnungsvoll.",
+  "Tonspur enthält Brummen, das nicht eindeutig zum Beitrag gehört.",
+  "Sichtungsmarker gesetzt, weil der Moment später wichtig wirken könnte.",
+  "Archivnummer vergeben, obwohl der Vorgang innerlich noch nicht abgeschlossen ist.",
+  "Deck D wartet auf Band, dessen Herkunft noch nicht vollständig beruhigt werden konnte.",
+  "Farbträger instabil, Rotanteil entwickelt eigene Meinung.",
+  "Band wird in Echtzeit übertragen, Geduld wird parallel verbraucht.",
+  "Prüfsumme erstellt, Bauchgefühl bleibt abweichend.",
+  "Einzelbild exportiert, Motiv verweigert eine klare Aussage.",
+  "Sendeübergang erkannt, davor und danach bleibt alles bedenklich offen.",
+  "VHS-Tracking manuell nachgeführt, Bediener flüstert leise Drohungen.",
+  "Kassettenetikett gelesen, Inhalt stellt Gegenantrag.",
+  "Sicherungslauf beendet, Fehlerbericht fühlt sich umfangreicher an als das Material.",
+  "Tonspur normalisiert, Stimmung nicht.",
+  "Standbildphase archiviert, weil sie zu entschlossen wirkte.",
+  "Bandende erreicht, Schlussfolgerung nicht erreicht.",
+  "Wiedergabekette neu initialisiert, alter Zweifel erfolgreich übernommen.",
+  "Material wurde als teilweise sendefähig erkannt und sofort wieder relativiert.",
+  "Transferkanal 3 meldet stabile Instabilität."
+];
+
     const videoGrid = document.getElementById("videoGrid");
     const footerErrorDialog = document.getElementById("footerErrorDialog");
     const closeFooterErrorDialog = document.getElementById("closeFooterErrorDialog");
@@ -4662,6 +4815,8 @@ const statusMazError = document.getElementById("statusMazError");
 
 const statusTransferChannel = document.getElementById("statusTransferChannel");
 
+const techLogbookList = document.getElementById("techLogbookList");
+
 const aiSummaryLoading = document.getElementById("aiSummaryLoading");
 let aiSummaryTimer = null;
 
@@ -4676,6 +4831,39 @@ let aiSummaryTimer = null;
     function randomItem(items) {
       return items[Math.floor(Math.random() * items.length)];
     }
+    
+    function formatLogbookTime(date) {
+  return date.toLocaleTimeString("de-DE", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function renderTechLogbook() {
+  if (!techLogbookList) {
+    return;
+  }
+
+  const now = new Date();
+  const selectedMessages = shuffleArray(techLogbookMessages).slice(0, 5);
+  const minuteSteps = [16, 11, 7, 3, 0];
+
+  techLogbookList.innerHTML = "";
+
+  minuteSteps.forEach((minutesAgo, index) => {
+    const entryTime = new Date(now.getTime() - minutesAgo * 60 * 1000);
+
+    const entry = document.createElement("div");
+    entry.className = "tech-logbook-entry";
+
+    entry.innerHTML = `
+      <div class="tech-logbook-time">${formatLogbookTime(entryTime)}</div>
+      <div class="tech-logbook-text">${selectedMessages[index]}</div>
+    `;
+
+    techLogbookList.appendChild(entry);
+  });
+}
 
     function shuffleArray(array) {
       const copy = [...array];
@@ -5222,6 +5410,8 @@ function openTechView() {
   playerView.classList.add("view-hidden");
   techView.classList.remove("view-hidden");
 
+  renderTechLogbook();
+
   history.pushState({ view: "tech" }, "", "#technik");
 
   window.scrollTo({
@@ -5707,6 +5897,7 @@ window.addEventListener("popstate", () => {
     archiveView.classList.add("view-hidden");
     playerView.classList.add("view-hidden");
     techView.classList.remove("view-hidden");
+    renderTechLogbook();
   } else {
     showArchiveView();
   }

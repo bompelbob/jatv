@@ -3597,7 +3597,110 @@
     const LAST_IMAGE = 588;
     const NUMBER_OF_CARDS = 9;
 
-    const showTitles = [
+const archiveWords = [
+  "Virellon",
+  "Mazora",
+  "Tavikon",
+  "Beltrix",
+  "Sonivar",
+  "Luminex",
+  "Kavotra",
+  "Rendalo",
+  "Veltron",
+  "Mavida",
+  "Sorvex",
+  "Trimora",
+  "Bandivo",
+  "Cinevar",
+  "Vistalon",
+  "Kassetra",
+  "Dronika",
+  "Movalon",
+  "Telvion",
+  "Veskara",
+  "Ravikon",
+  "Mentora",
+  "Bildron",
+  "Tonaris",
+  "Velmora",
+  "Archivon",
+  "Videssa",
+  "Sendaro",
+  "Framilo",
+  "Cutrava",
+  "Novitra",
+  "Monavis",
+  "Spurvion",
+  "Retona",
+  "Mazorix",
+  "Viscora",
+  "Laufion",
+  "Tondaro",
+  "Vorlixa",
+  "Kadravo",
+  "Meduron",
+  "Sichtara",
+  "Fluxima",
+  "Cassilon",
+  "Vistara",
+  "Nexaro",
+  "Videron",
+  "Palvex",
+  "Koptrix",
+  "Remora",
+  "Halbix",
+  "Tavira",
+  "Sendravo",
+  "Viretta",
+  "Modulon",
+  "Auralis",
+  "Framex",
+  "Lucetra",
+  "Magnetra",
+  "Veridon",
+  "Sonavex",
+  "Mediara",
+  "Kanalix",
+  "Viduron",
+  "Signara",
+  "Tromivex",
+  "Vorlion",
+  "Rastera",
+  "Clipora",
+  "Feravon",
+  "Bildara",
+  "Tonvex",
+  "Casseton",
+  "Rohvian",
+  "Sichton",
+  "Lentora",
+  "Archivex",
+  "Vismara",
+  "Rendikon",
+  "Kadrion",
+  "Spulora",
+  "Matrikon",
+  "Velcora",
+  "Dublivex",
+  "Fundara",
+  "Mazorion",
+  "Videcora",
+  "Speralon",
+  "Signex",
+  "Kopivon",
+  "Laufara",
+  "Tonikon",
+  "Bilduron",
+  "Vidrava",
+  "Sendalon",
+  "Cinevox",
+  "Vorsora",
+  "Rastikon",
+  "Medivex",
+  "Tracora"
+];
+
+    const fragmentTitles = [
   "Einfach erklärt - Wissen für Kinder",
   "So wird's gemacht: Tipps für Freunde des Handwerks",
   "Von hier aus: Reisen zu den guten Orten",
@@ -3725,6 +3828,23 @@
   "Was dahinter steckt - Geschichtsmagazin",
   "Kurskorrektur: Auf den Weg gebracht",
   "Aktionslinse: Bewegungsspiele vor der Kamera"
+];
+
+const tapeSystems = [
+  "VHS",
+  "S-VHS",
+  "VHS-C",
+  "Video 8",
+  "Hi8",
+  "S-VHS-C",
+  "Fusionplex",
+  "U-matic",
+  "Betacam SP",
+  "Betamax",
+  "Video 2000",
+  "VCR Longplay",
+  "EIAJ",
+  "1-Zoll-C"
 ];
     
     const searchMessages = [
@@ -4848,12 +4968,8 @@ function updateArchiveStatusBar() {
       return `${minutes}:${seconds}`;
     }
 
-function createEpisodeNumber() {
-  return `(Folge ${String(randomInteger(1, 26)).padStart(2, "0")})`;
-}
-
 function createShowTitle() {
-  return `${randomItem(showTitles)} ${createEpisodeNumber()}`;
+  return `${randomItem(archiveWords)}: ${randomItem(fragmentTitles)} · ${randomItem(tapeSystems)}`;
 }
     
     function createRandomDate() {

@@ -148,17 +148,6 @@
   line-height: 1.55;
 }
 
-.related-description {
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.35;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
 .comment-header-row {
   display: flex;
   align-items: center;
@@ -5573,9 +5562,8 @@ function renderRelatedVideos(currentVideo) {
         <span class="related-duration">${video.duration}</span>
       </div>
       <div>
-        <h4 class="related-title">${video.title}</h4>
-        <div class="related-meta">${formatViews(video.viewCount)}<br>vor ${video.age} Jahren archiviert</div>
-        <div class="related-description">${video.description}</div>
+            <h4 class="related-title">${video.title}</h4>
+            <div class="related-meta">${formatViews(video.viewCount)}<br>vor ${video.age} Jahren archiviert</div>
       </div>
     `;
 

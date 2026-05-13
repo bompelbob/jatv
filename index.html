@@ -6504,6 +6504,13 @@ contactStepAreaBack.addEventListener("click", () => {
 });
 
 closeHelpFlowDialog.addEventListener("click", () => {
+  if (helpCheckRevealTimer) {
+    clearTimeout(helpCheckRevealTimer);
+    helpCheckRevealTimer = null;
+  }
+
+  helpFlowDialog.close();
+});
 
 helpStepTopicNext.addEventListener("click", () => {
   const selectedTopic = document.querySelector('input[name="helpTopic"]:checked');

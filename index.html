@@ -5658,7 +5658,7 @@ function openPlayer(video) {
   playerImage.alt = `jaTV Archivbild ${video.paddedNumber}`;
   playerTitle.textContent = video.title;
   playerMeta.textContent = `${formatViews(video.viewCount)} · vor ${video.age} Jahren archiviert`;
-  playerDescription.innerHTML = `<span class="watch-description-label">Beschreibung:</span> ${video.description}`;  
+  playerDescription.innerHTML = `<span class="watch-description-label">Beschreibung</span> ${video.description}`;  
   playerLikes.textContent = formatNumber(video.engagement.likes);
   playerDislikes.textContent = formatNumber(video.engagement.dislikes);
   playerComments.textContent = formatNumber(video.commentCount);

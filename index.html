@@ -1786,7 +1786,8 @@
 .register-check-row strong,
 .transparency-check-row strong,
 .policy-check-row strong,
-.contact-check-row strong {
+.contact-check-row strong,
+.help-check-row strong {
   min-width: 120px;
   min-height: 18px;
   display: inline-flex;
@@ -1799,9 +1800,11 @@
 }
 
 .policy-check-row strong.is-loading {
-
   color: transparent;
+}
 
+.help-check-row strong.is-loading {
+  color: transparent;
 }
 
 .transparency-check-row strong.is-loading {
@@ -5476,8 +5479,59 @@ function showHelpStep(stepIndex) {
   });
 }
 
+let helpCheckRevealTimer = null;
+
+function resetHelpCheckValues() {
+  if (helpCheckRevealTimer) {
+    clearTimeout(helpCheckRevealTimer);
+    helpCheckRevealTimer = null;
+  }
+
+  const valueFields = document.querySelectorAll("#helpStepDiagnosis .help-check-row strong");
+
+  valueFields.forEach((field) => {
+    field.dataset.finalValue = field.textContent.trim();
+    field.textContent = "";
+    field.classList.remove("is-loading");
+  });
+}
+
+function revealHelpCheckValues(index = 0) {
+  const valueFields = document.querySelectorAll("#helpStepDiagnosis .help-check-row strong");
+
+  if (index >= valueFields.length) {
+    helpCheckRevealTimer = null;
+    return;
+  }
+
+  const field = valueFields[index];
+  const finalValue = field.dataset.finalValue || "geprüft";
+
+  field.classList.add("is-loading");
+  field.innerHTML = `<span class="archive-status-mini-spinner" aria-label="Wird geladen"></span>`;
+
+  helpCheckRevealTimer = setTimeout(() => {
+    field.classList.remove("is-loading");
+    field.textContent = finalValue;
+
+    helpCheckRevealTimer = setTimeout(() => {
+      revealHelpCheckValues(index + 1);
+    }, 180);
+  }, 1000);
+}
+
+function startHelpCheckReveal() {
+  resetHelpCheckValues();
+  revealHelpCheckValues(0);
+}
+
 function resetHelpFlow() {
   currentHelpStep = 0;
+
+  if (helpCheckRevealTimer) {
+    clearTimeout(helpCheckRevealTimer);
+    helpCheckRevealTimer = null;
+  }
 
   document.querySelectorAll('input[name="helpTopic"]').forEach((input) => {
     input.checked = false;
@@ -6450,8 +6504,6 @@ contactStepAreaBack.addEventListener("click", () => {
 });
 
 closeHelpFlowDialog.addEventListener("click", () => {
-  helpFlowDialog.close();
-});
 
 helpStepTopicNext.addEventListener("click", () => {
   const selectedTopic = document.querySelector('input[name="helpTopic"]:checked');
@@ -6463,6 +6515,7 @@ helpStepTopicNext.addEventListener("click", () => {
 
   helpTopicError.textContent = "";
   showHelpStep(1);
+  startHelpCheckReveal();
 });
 
 helpStepDiagnosisBack.addEventListener("click", () => {

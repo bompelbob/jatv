@@ -129,6 +129,28 @@
   letter-spacing: 0.02em;
 }
 
+.video-description {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.38;
+}
+
+.watch-description {
+  margin: 10px 0 0;
+  max-width: 860px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.related-description {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
 .comment-header-row {
   display: flex;
   align-items: center;
@@ -2433,6 +2455,7 @@
 
         <h1 class="watch-title" id="playerTitle"></h1>
         <div class="watch-meta" id="playerMeta"></div>
+        <p class="watch-description" id="playerDescription"></p>
 
       <div class="watch-actions-row">
 
@@ -3846,6 +3869,109 @@ const tapeSystems = [
   "EIAJ",
   "1-Zoll-C"
 ];
+
+      const fragmentDescriptions = [
+  "Und wieder eine Herausforderung für Renate: fragen oder lieber nicht fragen?",
+  "Der Wettbewerb geht in die dritte Runde, was den Teilnehmern nach wie vor einiges abverlangt.",
+  "Gemeinsam geht es halt immer noch am besten. Das Problem um den Kürbiseintopf konnte einvernehmlich beiseite gelegt werden.",
+  "Interessant, was man in alten Akten noch so alles finden kann. Wie man damit umgeht, erfährst du hier.",
+  "Manfred ist diesmal nicht allein unterwegs. Ob das wirklich hilft, bleibt allerdings offen.",
+  "Ein kurzer Blick hinter die Kulissen zeigt: Nicht alles, was vorbereitet wurde, war später auch vorgesehen.",
+  "Die Sache mit dem Zettel nimmt eine unerwartete Wendung. Vor allem für diejenigen, die gar nicht gefragt wurden.",
+  "Was zunächst nach einem ganz normalen Nachmittag aussieht, entwickelt sich rasch zu einer Frage der Zuständigkeit.",
+  "Diesmal geht es um Vertrauen, Geduld und eine Mappe, die niemand mehr öffnen wollte.",
+  "Der zweite Versuch bringt nicht unbedingt mehr Klarheit. Aber er wird immerhin mit größerer Entschlossenheit unternommen.",
+  "Wenn alle mitreden, wird manches einfacher. Oder wenigstens ausführlicher.",
+  "Die Runde ist sich uneinig, ob der Vorgang bereits abgeschlossen ist. Für Hildegard beginnt damit erst die eigentliche Arbeit.",
+  "Ein Besuch, der so nicht geplant war. Besonders nicht von denen, die schon vorher da waren.",
+  "Heute wird sortiert, verglichen und vorsichtig behauptet. Das Ergebnis bleibt vorerst zwischen den Zeilen.",
+  "Ausgerechnet der kleine Hinweis am Rand bringt Bewegung in die Angelegenheit. Leider in mehrere Richtungen gleichzeitig.",
+  "Nicht jeder Fund ist gleich eine Entdeckung. Aber dieser hier möchte wenigstens so behandelt werden.",
+  "Während draußen weiter gearbeitet wird, versucht man drinnen, den Überblick nicht demonstrativ zu verlieren.",
+  "Ein Missverständnis steht im Raum. Niemand weiß genau, wer es hereingelassen hat.",
+  "Hier zeigt sich, dass Vorbereitung viel wert ist. Vor allem, wenn sie jemand anderes gemacht hat.",
+  "Die Beteiligten geben sich Mühe, ruhig zu bleiben. Der Tisch hingegen spricht eine andere Sprache.",
+  "Was hat die grüne Mappe mit dem Dienstag zu tun? Mehr, als zunächst angenommen wurde.",
+  "Ein Gespräch beginnt harmlos und endet bei der Frage, ob man das vorher hätte wissen müssen.",
+  "Der Vorgang ist noch nicht entschieden. Trotzdem hat schon jemand Kuchen mitgebracht.",
+  "Alles scheint bereit, doch dann fehlt ausgerechnet der wichtigste kleine Gegenstand.",
+  "Ein alter Hinweis taucht wieder auf. Diesmal will ihn niemand sofort wegheften.",
+  "Die Stimmung bleibt sachlich, solange niemand den Begriff Vorbesprechung benutzt.",
+  "Diesmal wird es praktisch. Zumindest für alle, die rechtzeitig verstanden haben, worum es geht.",
+  "Der Nachmittag bringt neue Erkenntnisse, aber nicht unbedingt die passenden Fragen dazu.",
+  "Eine Entscheidung steht an. Leider nicht die, auf die sich alle vorbereitet hatten.",
+  "Rita hat es geahnt, aber nicht gesagt. Das rächt sich schneller als erwartet.",
+  "Was im Flur begann, landet schließlich auf dem großen Tisch. Dort wird es nicht übersichtlicher.",
+  "Der kleine Unterschied fällt erst auf, als schon alle unterschrieben haben.",
+  "Noch ist unklar, ob der Hinweis hilfreich ist. Er wurde aber bereits sehr ordentlich markiert.",
+  "Eine einfache Frage führt zu mehreren Antworten. Keine davon passt ganz zum Formular.",
+  "Heute geht es um Nähe, Ordnung und eine Tasche, die besser geschlossen geblieben wäre.",
+  "Die Teilnehmer stehen vor einer Aufgabe, die auf dem Papier deutlich freundlicher aussah.",
+  "Unerwarteter Besuch bringt Schwung in den Ablauf. Ob das gewünscht war, wird nicht abschließend geklärt.",
+  "Manchmal reicht ein Blick auf die Liste. Manchmal macht genau dieser Blick alles schlimmer.",
+  "Der Plan war gut, bis jemand begann, ihn tatsächlich umzusetzen.",
+  "Ein kurzer Beitrag über lange Wege, kleine Abkürzungen und die Frage, wer den Schlüssel zuletzt hatte.",
+  "Die Lösung liegt näher als gedacht. Leider wurde sie dort nicht gesucht.",
+  "Der Termin beginnt pünktlich, was im weiteren Verlauf keine große Rolle mehr spielt.",
+  "Ein Fundstück wird vorgestellt und vorsichtig bewertet. Die Begeisterung bleibt aus Sicherheitsgründen gedämpft.",
+  "Heute wird gezeigt, wie man mit einfachen Mitteln beinahe weiterkommt.",
+  "Der Fall scheint klar. Dann meldet sich jemand, der die Rückseite gesehen hat.",
+  "Nicht alles, was beschriftet ist, erklärt sich dadurch besser. Dieses Beispiel macht es eindrucksvoll deutlich.",
+  "Die Gruppe nähert sich dem Kern der Sache. Allerdings von verschiedenen Seiten und mit unterschiedlicher Geschwindigkeit.",
+  "Ein freundlicher Hinweis eskaliert zur Grundsatzfrage. Danach ist die Pause dringend notwendig.",
+  "Walter bringt Ordnung in die Unterlagen. Ob diese Ordnung vorher gefehlt hat, bleibt umstritten.",
+  "Was lange unbeachtet blieb, steht plötzlich im Mittelpunkt. Der Mittelpunkt wirkt davon selbst überrascht.",
+  "Heute geht es um einen Vorgang, der kleiner beginnt, als er später behauptet wird.",
+  "Die Sache mit dem Umschlag beschäftigt inzwischen auch Personen, die gar nicht beteiligt sein wollten.",
+  "Ein Beitrag über Mut, Missverständnisse und eine Sitzordnung, die einiges erklärt.",
+  "Die Erklärung fällt kürzer aus als erwartet. Dafür entstehen neue Rückfragen in bemerkenswerter Zahl.",
+  "Eigentlich sollte nur kurz nachgesehen werden. Daraus wurde ein eigener Tagesordnungspunkt.",
+  "Ein bekanntes Problem erscheint in neuer Verpackung. Die Verpackung wird kritisch gewürdigt.",
+  "Die Aufteilung ist beschlossen, aber nicht verstanden. Dennoch geht es erstaunlich geordnet weiter.",
+  "Heute zeigt sich, warum man alte Notizen nicht sofort wegwerfen sollte. Oder gerade doch.",
+  "Ein scheinbar nebensächlicher Satz verändert die Lage. Zumindest für Günter.",
+  "Die Kiste wird geöffnet, der Inhalt betrachtet und die Verantwortung vorsichtig weitergereicht.",
+  "Was als einfache Demonstration geplant war, entwickelt sich zu einer stillen Prüfung der Geduld.",
+  "Diesmal steht die Frage im Raum, ob man etwas reparieren kann, das offiziell gar nicht kaputt ist.",
+  "Ein Zwischenstand wird präsentiert. Er enthält mehr Zwischen als Stand.",
+  "Die Beteiligten sind vorbereitet, aber nicht aufeinander.",
+  "Eine praktische Übung mit überraschendem Ausgang. Der Ausgang war allerdings vorher beschildert.",
+  "Der Beitrag beginnt mit einer Feststellung und endet mit einer vorsichtigen Bitte um Verständnis.",
+  "Heute wird geklärt, warum die Reihenfolge wichtig ist. Oder warum sie es gewesen wäre.",
+  "Ein seltener Einblick in einen Ablauf, der normalerweise nur dann auffällt, wenn er nicht funktioniert.",
+  "Der kleine Fehler vom Anfang begleitet die Gruppe bis zum Schluss. Dort fühlt er sich bereits heimisch.",
+  "Eine Mappe, drei Meinungen und ein sehr langer Blick aus dem Fenster.",
+  "Die Frage nach dem richtigen Zeitpunkt wird gestellt. Leider etwas zu spät.",
+  "Man trifft sich, bespricht die Lage und verlässt den Raum mit einem neuen alten Problem.",
+  "Ein Beitrag über Zuständigkeit, Sorgfalt und die erstaunliche Karriere eines Klemmbretts.",
+  "Die Stimmung kippt nicht, sie verlagert sich nur langsam in Richtung Kaffeemaschine.",
+  "Heute wird deutlich, dass auch einfache Dinge kompliziert werden können, wenn genug Menschen beteiligt sind.",
+  "Die Liste ist vollständig, nur der Zusammenhang fehlt. Daran wird gearbeitet.",
+  "Ein kurzer Moment der Einigkeit wird dokumentiert, bevor er wieder verloren geht.",
+  "Der Ablauf wurde mehrfach geprüft. Das Ergebnis wirkt trotzdem überrascht.",
+  "Was niemand sagen wollte, steht nun gut lesbar auf Seite zwei.",
+  "Diesmal geht es weniger um die Antwort als um die Frage, wer sie überhaupt gestellt hat.",
+  "Eine kleine Unstimmigkeit wird groß behandelt. Der Beitrag bleibt dabei erstaunlich höflich.",
+  "Der Raum ist vorbereitet, die Unterlagen liegen bereit und trotzdem fehlt das Gefühl von Anfang.",
+  "Heute wird ein Problem verschoben, ohne es aus den Augen zu verlieren.",
+  "Die Erklärung überzeugt fast alle. Besonders die, die nicht anwesend waren.",
+  "Ein Beitrag über geordnete Abläufe und das leise Scheitern an einem Etikett.",
+  "Die Entscheidung fällt einstimmig aus. Allerdings wurde vorher nicht genau gesagt, worüber.",
+  "Was im Ordner lag, wollte offenbar nicht gefunden werden. Gefunden wurde es trotzdem.",
+  "Die Teilnehmer erhalten neue Hinweise. Manche davon wirken älter als der Fall selbst.",
+  "Ein Gespräch über Möglichkeiten, Grenzen und den unbequemen Stuhl neben dem Kopierer.",
+  "Heute wird sichtbar, warum man Dinge besser nicht nur mündlich festhält.",
+  "Der Hinweis war klein, aber beharrlich. Am Ende hat er sich durchgesetzt.",
+  "Eine Einordnung wird versucht, unterbrochen und später mit anderen Worten erneut versucht.",
+  "Die Aufgabe ist klar beschrieben. Das macht die Durchführung leider nicht automatisch klarer.",
+  "Man nähert sich einer Lösung, aber niemand möchte sie als erster anfassen.",
+  "Ein Vorgang wird abgeschlossen, obwohl seine Vorgeschichte weiterhin verdächtig atmet.",
+  "Heute zeigt sich, dass eine kurze Rückfrage manchmal eine lange Sendung tragen kann.",
+  "Der Beitrag erklärt nicht alles. Aber er lässt zuverlässig erkennen, dass etwas erklärt werden sollte.",
+  "Eine alte Angelegenheit wird neu betrachtet. Neu ist dabei vor allem die Unsicherheit.",
+  "Zum Schluss bleibt die Frage, ob der Anfang wirklich notwendig war.",
+  "Der Fall wird ruhiger, aber nicht kleiner. Genau das macht ihn für alle Beteiligten unangenehm nützlich."
+];
     
     const searchMessages = [
       "Die Suche wurde abgebrochen, weil der öffentliche Index nicht mit dem internen Sichtungsverzeichnis synchronisiert ist.",
@@ -4631,6 +4757,7 @@ const backToGridButton = document.getElementById("backToGridButton");
 const playerImage = document.getElementById("playerImage");
 const playerTitle = document.getElementById("playerTitle");
 const playerMeta = document.getElementById("playerMeta");
+const playerDescription = document.getElementById("playerDescription");
 const playerLikes = document.getElementById("playerLikes");
 const playerDislikes = document.getElementById("playerDislikes");
 const playerComments = document.getElementById("playerComments");
@@ -5299,7 +5426,7 @@ function openContactFlowDialog() {
   netiquetteDialog.showModal();
 }
     
-    function createVideoData(imageNumber) {
+function createVideoData(imageNumber) {
   const paddedNumber = padImageNumber(imageNumber);
   const imagePath = `${IMAGE_FOLDER}${paddedNumber}${IMAGE_EXTENSION}`;
   const viewCount = randomInteger(257, 98000);
@@ -5311,6 +5438,7 @@ function openContactFlowDialog() {
     paddedNumber,
     imagePath,
     title: createShowTitle(),
+    description: randomItem(fragmentDescriptions),
     viewCount,
     engagement,
     commentCount,
@@ -5436,6 +5564,7 @@ function renderRelatedVideos(currentVideo) {
       <div>
         <h4 class="related-title">${video.title}</h4>
         <div class="related-meta">${formatViews(video.viewCount)}<br>vor ${video.age} Jahren archiviert</div>
+        <div class="related-description">${video.description}</div>
       </div>
     `;
 
@@ -5494,6 +5623,7 @@ function openPlayer(video) {
   playerImage.alt = `jaTV Archivbild ${video.paddedNumber}`;
   playerTitle.textContent = video.title;
   playerMeta.textContent = `${formatViews(video.viewCount)} · vor ${video.age} Jahren archiviert`;
+  playerDescription.textContent = video.description;  
   playerLikes.textContent = formatNumber(video.engagement.likes);
   playerDislikes.textContent = formatNumber(video.engagement.dislikes);
   playerComments.textContent = formatNumber(video.commentCount);
@@ -5557,7 +5687,8 @@ const trendBadgeIndex = remainingBadgeIndexes.length
         </div>
         <div>
           <h3 class="video-title">${video.title}</h3>
-          <div class="meta">
+            <p class="video-description">${video.description}</p>
+            <div class="meta">
             ${formatViews(video.viewCount)} · vor ${video.age} Jahren archiviert
             ${createRatingHtml(video)}
           </div>

@@ -1782,6 +1782,55 @@
   text-align: right;
 }
 
+.archive-status-check-row strong,
+.register-check-row strong,
+.transparency-check-row strong,
+.policy-check-row strong,
+.contact-check-row strong {
+  min-width: 120px;
+  min-height: 18px;
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.contact-check-row strong.is-loading {
+  color: transparent;
+}
+
+.policy-check-row strong.is-loading {
+
+  color: transparent;
+
+}
+
+.transparency-check-row strong.is-loading {
+  color: transparent;
+}
+
+.register-check-row strong.is-loading {
+  color: transparent;
+}
+
+.archive-status-check-row strong.is-loading {
+  color: transparent;
+}
+
+.archive-status-mini-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.16);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: archiveStatusSpin 0.75s linear infinite;
+}
+
+@keyframes archiveStatusSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .policy-result-box,
 .transparency-result-box,
 .archive-status-result-box {
@@ -5169,6 +5218,52 @@ function resetGuidelinesFlow() {
   showGuidelinesStep(0);
 }
 
+let guidelinesCheckRevealTimer = null;
+
+function resetGuidelinesCheckValues() {
+  if (guidelinesCheckRevealTimer) {
+    clearTimeout(guidelinesCheckRevealTimer);
+    guidelinesCheckRevealTimer = null;
+  }
+
+  const valueFields = document.querySelectorAll("#guidelinesStepCheck .policy-check-row strong");
+
+  valueFields.forEach((field) => {
+    field.dataset.finalValue = field.textContent.trim();
+    field.textContent = "";
+    field.classList.remove("is-loading");
+  });
+}
+
+function revealGuidelinesCheckValues(index = 0) {
+  const valueFields = document.querySelectorAll("#guidelinesStepCheck .policy-check-row strong");
+
+  if (index >= valueFields.length) {
+    guidelinesCheckRevealTimer = null;
+    return;
+  }
+
+  const field = valueFields[index];
+  const finalValue = field.dataset.finalValue || "geprüft";
+
+  field.classList.add("is-loading");
+  field.innerHTML = `<span class="archive-status-mini-spinner" aria-label="Wird geladen"></span>`;
+
+  guidelinesCheckRevealTimer = setTimeout(() => {
+    field.classList.remove("is-loading");
+    field.textContent = finalValue;
+
+    guidelinesCheckRevealTimer = setTimeout(() => {
+      revealGuidelinesCheckValues(index + 1);
+    }, 180);
+  }, 1000);
+}
+
+function startGuidelinesCheckReveal() {
+  resetGuidelinesCheckValues();
+  revealGuidelinesCheckValues(0);
+}
+
 function openGuidelinesFlowDialog() {
   resetGuidelinesFlow();
   guidelinesFlowDialog.showModal();
@@ -5194,6 +5289,52 @@ function resetTransparencyFlow() {
   transparencyTopicError.textContent = "";
 
   showTransparencyStep(0);
+}
+
+let transparencyCheckRevealTimer = null;
+
+function resetTransparencyCheckValues() {
+  if (transparencyCheckRevealTimer) {
+    clearTimeout(transparencyCheckRevealTimer);
+    transparencyCheckRevealTimer = null;
+  }
+
+  const valueFields = document.querySelectorAll("#transparencyStepSignals .transparency-check-row strong");
+
+  valueFields.forEach((field) => {
+    field.dataset.finalValue = field.textContent.trim();
+    field.textContent = "";
+    field.classList.remove("is-loading");
+  });
+}
+
+function revealTransparencyCheckValues(index = 0) {
+  const valueFields = document.querySelectorAll("#transparencyStepSignals .transparency-check-row strong");
+
+  if (index >= valueFields.length) {
+    transparencyCheckRevealTimer = null;
+    return;
+  }
+
+  const field = valueFields[index];
+  const finalValue = field.dataset.finalValue || "geprüft";
+
+  field.classList.add("is-loading");
+  field.innerHTML = `<span class="archive-status-mini-spinner" aria-label="Wird geladen"></span>`;
+
+  transparencyCheckRevealTimer = setTimeout(() => {
+    field.classList.remove("is-loading");
+    field.textContent = finalValue;
+
+    transparencyCheckRevealTimer = setTimeout(() => {
+      revealTransparencyCheckValues(index + 1);
+    }, 180);
+  }, 1000);
+}
+
+function startTransparencyCheckReveal() {
+  resetTransparencyCheckValues();
+  revealTransparencyCheckValues(0);
 }
 
 function openTransparencyFlowDialog() {
@@ -5254,6 +5395,61 @@ function resetArchiveStatusFlow() {
 function openArchiveStatusFlowDialog() {
   resetArchiveStatusFlow();
   archiveStatusFlowDialog.showModal();
+  startArchiveStatusOverviewReveal();
+}
+
+const archiveStatusValues = [
+  "eingeschränkt",
+  "teilweise synchronisiert",
+  "passiv",
+  "widersprüchlich",
+  "stark nachgefragt"
+];
+
+let archiveStatusRevealTimer = null;
+
+function resetArchiveStatusOverviewValues() {
+  if (archiveStatusRevealTimer) {
+    clearTimeout(archiveStatusRevealTimer);
+    archiveStatusRevealTimer = null;
+  }
+
+  const valueFields = document.querySelectorAll("#archiveStatusStepOverview .archive-status-check-row strong");
+
+  valueFields.forEach((field) => {
+    field.dataset.finalValue = field.textContent.trim();
+    field.textContent = "";
+    field.classList.remove("is-loading");
+  });
+}
+
+function revealArchiveStatusOverviewValues(index = 0) {
+  const valueFields = document.querySelectorAll("#archiveStatusStepOverview .archive-status-check-row strong");
+
+  if (index >= valueFields.length) {
+    archiveStatusRevealTimer = null;
+    return;
+  }
+
+  const field = valueFields[index];
+  const finalValue = field.dataset.finalValue || archiveStatusValues[index] || "geprüft";
+
+  field.classList.add("is-loading");
+  field.innerHTML = `<span class="archive-status-mini-spinner" aria-label="Wird geladen"></span>`;
+
+  archiveStatusRevealTimer = setTimeout(() => {
+    field.classList.remove("is-loading");
+    field.textContent = finalValue;
+
+    archiveStatusRevealTimer = setTimeout(() => {
+      revealArchiveStatusOverviewValues(index + 1);
+    }, 180);
+  }, 1000);
+}
+
+function startArchiveStatusOverviewReveal() {
+  resetArchiveStatusOverviewValues();
+  revealArchiveStatusOverviewValues(0);
 }
 
 function openProfileDialog(userName) {
@@ -5331,6 +5527,52 @@ function resetRegisterFlow() {
   registerConfirmationError.textContent = "";
 
   showRegisterStep(0);
+}
+
+let registerCheckRevealTimer = null;
+
+function resetRegisterCheckValues() {
+  if (registerCheckRevealTimer) {
+    clearTimeout(registerCheckRevealTimer);
+    registerCheckRevealTimer = null;
+  }
+
+  const valueFields = document.querySelectorAll("#registerStepCheck .register-check-row strong");
+
+  valueFields.forEach((field) => {
+    field.dataset.finalValue = field.textContent.trim();
+    field.textContent = "";
+    field.classList.remove("is-loading");
+  });
+}
+
+function revealRegisterCheckValues(index = 0) {
+  const valueFields = document.querySelectorAll("#registerStepCheck .register-check-row strong");
+
+  if (index >= valueFields.length) {
+    registerCheckRevealTimer = null;
+    return;
+  }
+
+  const field = valueFields[index];
+  const finalValue = field.dataset.finalValue || "geprüft";
+
+  field.classList.add("is-loading");
+  field.innerHTML = `<span class="archive-status-mini-spinner" aria-label="Wird geladen"></span>`;
+
+  registerCheckRevealTimer = setTimeout(() => {
+    field.classList.remove("is-loading");
+    field.textContent = finalValue;
+
+    registerCheckRevealTimer = setTimeout(() => {
+      revealRegisterCheckValues(index + 1);
+    }, 180);
+  }, 1000);
+}
+
+function startRegisterCheckReveal() {
+  resetRegisterCheckValues();
+  revealRegisterCheckValues(0);
 }
 
 let currentViewerStep = 0;
@@ -5429,6 +5671,11 @@ function showContactStep(stepIndex) {
 function resetContactFlow() {
   currentContactStep = 0;
 
+  if (contactCheckRevealTimer) {
+    clearTimeout(contactCheckRevealTimer);
+    contactCheckRevealTimer = null;
+  }
+
   document.querySelectorAll('input[name="contactReason"]').forEach((input) => {
     input.checked = false;
   });
@@ -5451,6 +5698,52 @@ function resetContactFlow() {
   contactConfirmationError.textContent = "";
 
   showContactStep(0);
+}
+
+let contactCheckRevealTimer = null;
+
+function resetContactCheckValues() {
+  if (contactCheckRevealTimer) {
+    clearTimeout(contactCheckRevealTimer);
+    contactCheckRevealTimer = null;
+  }
+
+  const valueFields = document.querySelectorAll("#contactStepCheck .contact-check-row strong");
+
+  valueFields.forEach((field) => {
+    field.dataset.finalValue = field.textContent.trim();
+    field.textContent = "";
+    field.classList.remove("is-loading");
+  });
+}
+
+function revealContactCheckValues(index = 0) {
+  const valueFields = document.querySelectorAll("#contactStepCheck .contact-check-row strong");
+
+  if (index >= valueFields.length) {
+    contactCheckRevealTimer = null;
+    return;
+  }
+
+  const field = valueFields[index];
+  const finalValue = field.dataset.finalValue || "geprüft";
+
+  field.classList.add("is-loading");
+  field.innerHTML = `<span class="archive-status-mini-spinner" aria-label="Wird geladen"></span>`;
+
+  contactCheckRevealTimer = setTimeout(() => {
+    field.classList.remove("is-loading");
+    field.textContent = finalValue;
+
+    contactCheckRevealTimer = setTimeout(() => {
+      revealContactCheckValues(index + 1);
+    }, 180);
+  }, 1000);
+}
+
+function startContactCheckReveal() {
+  resetContactCheckValues();
+  revealContactCheckValues(0);
 }
 
 function openContactFlowDialog() {
@@ -6132,6 +6425,11 @@ window.addEventListener("popstate", () => {
 });
 
 closeContactFlowDialog.addEventListener("click", () => {
+  if (contactCheckRevealTimer) {
+    clearTimeout(contactCheckRevealTimer);
+    contactCheckRevealTimer = null;
+  }
+
   contactFlowDialog.close();
 });
 
@@ -6211,6 +6509,7 @@ contactStepUrgencyNext.addEventListener("click", () => {
 
   contactUrgencyError.textContent = "";
   showContactStep(3);
+  startContactCheckReveal();
 });
 
 contactStepCheckBack.addEventListener("click", () => {
@@ -6297,6 +6596,11 @@ shareOkButton.addEventListener("click", () => {
 });
 
 closeRegisterFlowDialog.addEventListener("click", () => {
+  if (registerCheckRevealTimer) {
+    clearTimeout(registerCheckRevealTimer);
+    registerCheckRevealTimer = null;
+  }
+
   registerFlowDialog.close();
 });
 
@@ -6326,6 +6630,7 @@ registerStepPurposeNext.addEventListener("click", () => {
 
   registerPurposeError.textContent = "";
   showRegisterStep(2);
+  startRegisterCheckReveal();
 });
 
 registerStepCheckBack.addEventListener("click", () => {
@@ -6357,6 +6662,11 @@ registerStepConfirmationsBack.addEventListener("click", () => {
 });
 
 closeGuidelinesFlowDialog.addEventListener("click", () => {
+  if (guidelinesCheckRevealTimer) {
+    clearTimeout(guidelinesCheckRevealTimer);
+    guidelinesCheckRevealTimer = null;
+  }
+
   guidelinesFlowDialog.close();
 });
 
@@ -6386,6 +6696,7 @@ guidelinesStepScopeNext.addEventListener("click", () => {
 
   guidelinesScopeError.textContent = "";
   showGuidelinesStep(2);
+  startGuidelinesCheckReveal();
 });
 
 guidelinesStepCheckBack.addEventListener("click", () => {
@@ -6407,6 +6718,11 @@ guidelinesStepResultNext.addEventListener("click", () => {
 });
 
 closeTransparencyFlowDialog.addEventListener("click", () => {
+  if (transparencyCheckRevealTimer) {
+    clearTimeout(transparencyCheckRevealTimer);
+    transparencyCheckRevealTimer = null;
+  }
+
   transparencyFlowDialog.close();
 });
 
@@ -6420,6 +6736,7 @@ transparencyStepTopicNext.addEventListener("click", () => {
 
   transparencyTopicError.textContent = "";
   showTransparencyStep(1);
+  startTransparencyCheckReveal();
 });
 
 transparencyStepSignalsBack.addEventListener("click", () => {
@@ -6449,6 +6766,11 @@ transparencyStepFailureNext.addEventListener("click", () => {
 });
 
 closeArchiveStatusFlowDialog.addEventListener("click", () => {
+  if (archiveStatusRevealTimer) {
+    clearTimeout(archiveStatusRevealTimer);
+    archiveStatusRevealTimer = null;
+  }
+
   archiveStatusFlowDialog.close();
 });
 

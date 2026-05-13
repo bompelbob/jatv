@@ -1787,7 +1787,8 @@
 .transparency-check-row strong,
 .policy-check-row strong,
 .contact-check-row strong,
-.help-check-row strong {
+.help-check-row strong,
+.viewer-check-row strong {
   min-width: 120px;
   min-height: 18px;
   display: inline-flex;
@@ -1796,6 +1797,10 @@
 }
 
 .contact-check-row strong.is-loading {
+  color: transparent;
+}
+
+.viewer-check-row strong.is-loading {
   color: transparent;
 }
 
@@ -3321,6 +3326,24 @@
       <p class="error-message" id="uploadFormatError"></p>
       <button class="primary-button" id="uploadFormatNextButton" type="button">Weiter</button>
     </div>
+    <div class="upload-step" id="uploadStepCheck">
+  <p class="login-note">
+    Das Trägerformat wird gegen bekannte jaTV-Mitschnittprofile abgeglichen.
+  </p>
+
+  <div class="help-check-list">
+    <div class="help-check-row"><span>Formatkennung</span><strong>lesbar</strong></div>
+    <div class="help-check-row"><span>Bandgeneration</span><strong>nicht eindeutig</strong></div>
+    <div class="help-check-row"><span>jaTV-Bezug</span><strong>vermutet</strong></div>
+    <div class="help-check-row"><span>Uploadfenster</span><strong>geschlossen</strong></div>
+    <div class="help-check-row"><span>Einreichbarkeit</span><strong>nur nach Anmeldung</strong></div>
+  </div>
+
+  <div class="help-flow-actions">
+    <button class="secondary-button" id="uploadCheckBackButton" type="button">Zurück</button>
+    <button class="primary-button" id="uploadCheckNextButton" type="button">Upload vorbereiten</button>
+  </div>
+</div>
   </div>
 </dialog>
 <dialog id="netiquetteDialog">
@@ -5097,6 +5120,10 @@ const statusTransferChannel = document.getElementById("statusTransferChannel");
 
 const techLogbookList = document.getElementById("techLogbookList");
 
+const uploadStepCheck = document.getElementById("uploadStepCheck");
+const uploadCheckBackButton = document.getElementById("uploadCheckBackButton");
+const uploadCheckNextButton = document.getElementById("uploadCheckNextButton");
+
 const aiSummaryLoading = document.getElementById("aiSummaryLoading");
 let aiSummaryTimer = null;
 
@@ -5629,6 +5656,86 @@ function startRegisterCheckReveal() {
   revealRegisterCheckValues(0);
 }
 
+let viewerRewardsRevealTimer = null;
+let viewerRankRevealTimer = null;
+
+function resetViewerCheckValues(selector, timerName) {
+  if (timerName === "rewards" && viewerRewardsRevealTimer) {
+    clearTimeout(viewerRewardsRevealTimer);
+    viewerRewardsRevealTimer = null;
+  }
+
+  if (timerName === "rank" && viewerRankRevealTimer) {
+    clearTimeout(viewerRankRevealTimer);
+    viewerRankRevealTimer = null;
+  }
+
+  const valueFields = document.querySelectorAll(selector);
+
+  valueFields.forEach((field) => {
+    field.dataset.finalValue = field.textContent.trim();
+    field.textContent = "";
+    field.classList.remove("is-loading");
+  });
+}
+
+function revealViewerCheckValues(selector, timerName, index = 0) {
+  const valueFields = document.querySelectorAll(selector);
+
+  if (index >= valueFields.length) {
+    if (timerName === "rewards") {
+      viewerRewardsRevealTimer = null;
+    }
+
+    if (timerName === "rank") {
+      viewerRankRevealTimer = null;
+    }
+
+    return;
+  }
+
+  const field = valueFields[index];
+  const finalValue = field.dataset.finalValue || "geprüft";
+
+  field.classList.add("is-loading");
+  field.innerHTML = `<span class="archive-status-mini-spinner" aria-label="Wird geladen"></span>`;
+
+  const timer = setTimeout(() => {
+    field.classList.remove("is-loading");
+    field.textContent = finalValue;
+
+    const nextTimer = setTimeout(() => {
+      revealViewerCheckValues(selector, timerName, index + 1);
+    }, 180);
+
+    if (timerName === "rewards") {
+      viewerRewardsRevealTimer = nextTimer;
+    }
+
+    if (timerName === "rank") {
+      viewerRankRevealTimer = nextTimer;
+    }
+  }, 1000);
+
+  if (timerName === "rewards") {
+    viewerRewardsRevealTimer = timer;
+  }
+
+  if (timerName === "rank") {
+    viewerRankRevealTimer = timer;
+  }
+}
+
+function startViewerRewardsReveal() {
+  resetViewerCheckValues("#viewerStepRewards .viewer-check-row strong", "rewards");
+  revealViewerCheckValues("#viewerStepRewards .viewer-check-row strong", "rewards");
+}
+
+function startViewerRankReveal() {
+  resetViewerCheckValues("#viewerStepRank .viewer-check-row strong", "rank");
+  revealViewerCheckValues("#viewerStepRank .viewer-check-row strong", "rank");
+}
+
 let currentViewerStep = 0;
 
 function showViewerStep(stepIndex) {
@@ -5711,6 +5818,52 @@ function openRegisterFlowDialog() {
       loginForm.reset();
       loginDialog.showModal();
     }
+    
+    let uploadCheckRevealTimer = null;
+
+function resetUploadCheckValues() {
+  if (uploadCheckRevealTimer) {
+    clearTimeout(uploadCheckRevealTimer);
+    uploadCheckRevealTimer = null;
+  }
+
+  const valueFields = document.querySelectorAll("#uploadStepCheck .help-check-row strong");
+
+  valueFields.forEach((field) => {
+    field.dataset.finalValue = field.textContent.trim();
+    field.textContent = "";
+    field.classList.remove("is-loading");
+  });
+}
+
+function revealUploadCheckValues(index = 0) {
+  const valueFields = document.querySelectorAll("#uploadStepCheck .help-check-row strong");
+
+  if (index >= valueFields.length) {
+    uploadCheckRevealTimer = null;
+    return;
+  }
+
+  const field = valueFields[index];
+  const finalValue = field.dataset.finalValue || "geprüft";
+
+  field.classList.add("is-loading");
+  field.innerHTML = `<span class="archive-status-mini-spinner" aria-label="Wird geladen"></span>`;
+
+  uploadCheckRevealTimer = setTimeout(() => {
+    field.classList.remove("is-loading");
+    field.textContent = finalValue;
+
+    uploadCheckRevealTimer = setTimeout(() => {
+      revealUploadCheckValues(index + 1);
+    }, 180);
+  }, 1000);
+}
+
+function startUploadCheckReveal() {
+  resetUploadCheckValues();
+  revealUploadCheckValues(0);
+}
     
     let currentContactStep = 0;
 
@@ -6132,10 +6285,16 @@ uploadButton.addEventListener("click", () => {
     input.checked = false;
   });
 
-  uploadStepLegal.classList.add("is-active");
-  uploadStepFormat.classList.remove("is-active");
+if (uploadCheckRevealTimer) {
+  clearTimeout(uploadCheckRevealTimer);
+  uploadCheckRevealTimer = null;
+}
 
-  uploadDialog.showModal();
+uploadStepLegal.classList.add("is-active");
+uploadStepFormat.classList.remove("is-active");
+uploadStepCheck.classList.remove("is-active");
+
+uploadDialog.showModal();
 });
 
 closeNetiquetteDialog.addEventListener("click", () => {
@@ -6148,6 +6307,11 @@ netiquetteOkButton.addEventListener("click", () => {
 });
 
 closeUploadDialog.addEventListener("click", () => {
+  if (uploadCheckRevealTimer) {
+    clearTimeout(uploadCheckRevealTimer);
+    uploadCheckRevealTimer = null;
+  }
+
   uploadDialog.close();
 });
 
@@ -6181,6 +6345,27 @@ uploadFormatNextButton.addEventListener("click", () => {
   }
 
   uploadFormatError.textContent = "";
+  uploadStepFormat.classList.remove("is-active");
+  uploadStepCheck.classList.add("is-active");
+  startUploadCheckReveal();
+});
+
+uploadCheckBackButton.addEventListener("click", () => {
+  if (uploadCheckRevealTimer) {
+    clearTimeout(uploadCheckRevealTimer);
+    uploadCheckRevealTimer = null;
+  }
+
+  uploadStepCheck.classList.remove("is-active");
+  uploadStepFormat.classList.add("is-active");
+});
+
+uploadCheckNextButton.addEventListener("click", () => {
+  if (uploadCheckRevealTimer) {
+    clearTimeout(uploadCheckRevealTimer);
+    uploadCheckRevealTimer = null;
+  }
+
   uploadDialog.close();
   openLoginDialog();
 });
@@ -6283,6 +6468,16 @@ aiSummaryOkButton.addEventListener("click", () => {
 viewerRecruitmentButton.addEventListener("click", openViewerRecruitmentDialog);
 
 closeViewerRecruitmentDialog.addEventListener("click", () => {
+  if (viewerRewardsRevealTimer) {
+    clearTimeout(viewerRewardsRevealTimer);
+    viewerRewardsRevealTimer = null;
+  }
+
+  if (viewerRankRevealTimer) {
+    clearTimeout(viewerRankRevealTimer);
+    viewerRankRevealTimer = null;
+  }
+
   viewerRecruitmentDialog.close();
 });
 
@@ -6336,6 +6531,7 @@ viewerStepTimeNext.addEventListener("click", () => {
 
   viewerTimeError.textContent = "";
   showViewerStep(4);
+  startViewerRewardsReveal();
 });
 
 viewerStepRewardsBack.addEventListener("click", () => {
@@ -6344,6 +6540,7 @@ viewerStepRewardsBack.addEventListener("click", () => {
 
 viewerStepRewardsNext.addEventListener("click", () => {
   showViewerStep(5);
+  startViewerRankReveal();
 });
 
 viewerStepRankBack.addEventListener("click", () => {
@@ -6387,6 +6584,16 @@ viewerStepConfirmationsNext.addEventListener("click", () => {
 });
 
 viewerStepFailureNext.addEventListener("click", () => {
+  if (viewerRewardsRevealTimer) {
+    clearTimeout(viewerRewardsRevealTimer);
+    viewerRewardsRevealTimer = null;
+  }
+
+  if (viewerRankRevealTimer) {
+    clearTimeout(viewerRankRevealTimer);
+    viewerRankRevealTimer = null;
+  }
+
   viewerRecruitmentDialog.close();
 });
 

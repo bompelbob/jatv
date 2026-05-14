@@ -892,15 +892,6 @@
   padding: 8px 0 18px;
 }
 
-.search-spinner {
-  width: 34px;
-  height: 34px;
-  border: 3px solid rgba(255,255,255,0.14);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: searchSpin 0.8s linear infinite;
-}
-
 @keyframes searchSpin {
   to {
     transform: rotate(360deg);
@@ -978,10 +969,6 @@ dialog {
   color: var(--text);
   padding: 0;
   box-shadow: 0 24px 80px rgba(0,0,0,0.65);
-}
-
-dialog[open] {
-  display: block;
 }
 
 dialog[open] {
@@ -6611,11 +6598,6 @@ closeNotificationDialog.addEventListener("click", () => {
 notificationOkButton.addEventListener("click", () => {
   notificationDialog.close();
   openLoginDialog();
-});
-
-creatorStudioFooterLink.addEventListener("click", (event) => {
-  event.preventDefault();
-  openCreatorStudioDialog();
 });
 
 closeCreatorStudioDialog.addEventListener("click", () => {

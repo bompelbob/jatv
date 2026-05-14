@@ -858,6 +858,32 @@
       gap: 12px;
       margin-top: 12px;
     }
+    
+    .search-loading {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 8px 0 18px;
+}
+
+.search-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(255,255,255,0.14);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: searchSpin 0.8s linear infinite;
+}
+
+@keyframes searchSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-hidden {
+  display: none;
+}
 
 .avatar {
   width: 42px;
@@ -3250,16 +3276,25 @@
     </div>
   </dialog>
 
-  <dialog id="searchDialog">
-    <div class="dialog-inner">
-      <div class="dialog-header">
-        <h2>Suchindex nicht verfügbar</h2>
-        <button class="close-button" id="closeSearchDialog" aria-label="Dialog schließen">×</button>
-      </div>
-      <p class="login-note" id="searchDialogText">Die Abfrage konnte nicht ausgeführt werden.</p>
-      <button class="primary-button" id="searchOkButton">Verstanden</button>
+<dialog id="searchDialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2 id="searchDialogTitle">Suche läuft</h2>
+      <button class="close-button" id="closeSearchDialog" aria-label="Dialog schließen">×</button>
     </div>
-  </dialog>
+
+    <div class="search-loading" id="searchLoading">
+      <div class="search-spinner" aria-hidden="true"></div>
+      <p class="login-note" id="searchLoadingText">Suchbegriff wird gesucht...</p>
+    </div>
+
+    <p class="login-note search-hidden" id="searchDialogText">
+      Die Abfrage konnte nicht ausgeführt werden.
+    </p>
+
+    <button class="primary-button search-hidden" id="searchOkButton">Verstanden</button>
+  </div>
+</dialog>
   
   <dialog id="uploadDialog">
   <div class="dialog-inner">
@@ -4939,6 +4974,11 @@ const techLogbookMessages = [
     const closeSearchDialog = document.getElementById("closeSearchDialog");
     const searchOkButton = document.getElementById("searchOkButton");
     const searchDialogText = document.getElementById("searchDialogText");
+    const searchDialogTitle = document.getElementById("searchDialogTitle");
+const searchLoading = document.getElementById("searchLoading");
+const searchLoadingText = document.getElementById("searchLoadingText");
+
+let searchTimer = null;
     const loginDialog = document.getElementById("loginDialog");
     const registerDialog = document.getElementById("registerDialog");
     const closeDialog = document.getElementById("closeDialog");
@@ -6359,11 +6399,39 @@ registerLink.addEventListener("click", (event) => {
   openRegisterFlowDialog();
 });
 
-    searchForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      searchDialogText.textContent = randomItem(searchMessages);
-      searchDialog.showModal();
-    });
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  if (searchTimer) {
+    clearTimeout(searchTimer);
+    searchTimer = null;
+  }
+
+  const searchInput = searchForm.querySelector('input[type="search"]');
+  const searchTerm = searchInput.value.trim() || "Suchbegriff";
+
+  searchDialogTitle.textContent = "Suche läuft";
+  searchLoadingText.textContent = `"${searchTerm}" wird gesucht...`;
+
+  searchLoading.classList.remove("search-hidden");
+  searchDialogText.classList.add("search-hidden");
+  searchOkButton.classList.add("search-hidden");
+
+  searchDialog.showModal();
+
+  searchTimer = setTimeout(() => {
+    searchDialogTitle.textContent = "Suchindex nicht verfügbar";
+    searchDialogText.textContent = randomItem(searchMessages);
+
+    searchLoading.classList.add("search-hidden");
+    searchDialogText.classList.remove("search-hidden");
+    searchOkButton.classList.remove("search-hidden");
+
+    searchInput.value = "";
+
+    searchTimer = null;
+  }, 2000);
+});
     
     sortButton.addEventListener("click", (event) => {
   event.preventDefault();
@@ -6715,8 +6783,17 @@ openTechButton.addEventListener("click", openTechView);
 backFromTechButton.addEventListener("click", closeTechView);
 
     closeDialog.addEventListener("click", () => loginDialog.close());
-    closeSearchDialog.addEventListener("click", () => searchDialog.close());
-    searchOkButton.addEventListener("click", () => searchDialog.close());
+function closeSearchDialogSafely() {
+  if (searchTimer) {
+    clearTimeout(searchTimer);
+    searchTimer = null;
+  }
+
+  searchDialog.close();
+}
+
+closeSearchDialog.addEventListener("click", closeSearchDialogSafely);
+searchOkButton.addEventListener("click", closeSearchDialogSafely);
     closeRegisterDialog.addEventListener("click", () => registerDialog.close());
     registerOkButton.addEventListener("click", () => registerDialog.close());
     headerLoginButton.addEventListener("click", openLoginDialog);

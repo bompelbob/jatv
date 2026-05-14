@@ -303,7 +303,7 @@
       border: 1px solid var(--border);
       border-radius: 20px 0 0 20px;
       padding: 0 18px;
-      font-size: 16px;
+      font-size: 15px;
       outline: none;
     }
 
@@ -942,16 +942,29 @@
       opacity: 0.9;
       fill: currentColor;
     }
-
+    
     dialog {
-      width: min(420px, calc(100vw - 32px));
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: #1b1b1b;
-      color: var(--text);
-      padding: 0;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.65);
-    }
+  display: none;
+}
+
+dialog[open] {
+  display: block;
+}
+
+dialog {
+  display: none;
+  width: min(420px, calc(100vw - 32px));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: #1b1b1b;
+  color: var(--text);
+  padding: 0;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.65);
+}
+
+dialog[open] {
+  display: block;
+}
 
     dialog::backdrop {
       background: rgba(0, 0, 0, 0.72);

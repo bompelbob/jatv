@@ -260,6 +260,32 @@
       font-weight: 800;
       letter-spacing: -0.04em;
     }
+    
+    .search-loading {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 8px 0 18px;
+}
+
+.search-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(255,255,255,0.14);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: searchSpin 0.8s linear infinite;
+}
+
+@keyframes searchSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-hidden {
+  display: none;
+}
 
 .brand-logo {
   width: 42px;
@@ -303,7 +329,7 @@
       border: 1px solid var(--border);
       border-radius: 20px 0 0 20px;
       padding: 0 18px;
-      font-size: 15px;
+      font-size: 16px;
       outline: none;
     }
 
@@ -3308,6 +3334,14 @@ dialog[open] {
     <button class="primary-button search-hidden" id="searchOkButton">Verstanden</button>
   </div>
 </dialog>
+
+    <p class="login-note search-hidden" id="searchDialogText">
+      Die Abfrage konnte nicht ausgeführt werden.
+    </p>
+
+    <button class="primary-button search-hidden" id="searchOkButton">Verstanden</button>
+  </div>
+</dialog>
   
   <dialog id="uploadDialog">
   <div class="dialog-inner">
@@ -5017,6 +5051,11 @@ let searchTimer = null;
     const confirmLegalRecording = document.getElementById("confirmLegalRecording");
     const confirmNoManipulation = document.getElementById("confirmNoManipulation");
     const loadMoreButton = document.getElementById("loadMoreButton");
+    const searchDialogTitle = document.getElementById("searchDialogTitle");
+const searchLoading = document.getElementById("searchLoading");
+const searchLoadingText = document.getElementById("searchLoadingText");
+
+let searchTimer = null;
     const archiveView = document.getElementById("archiveView");
 const playerView = document.getElementById("playerView");
 const backToGridButton = document.getElementById("backToGridButton");
@@ -6424,7 +6463,7 @@ searchForm.addEventListener("submit", (event) => {
   const searchTerm = searchInput.value.trim() || "Suchbegriff";
 
   searchDialogTitle.textContent = "Suche läuft";
-  searchLoadingText.textContent = `"${searchTerm}" wird gesucht...`;
+  searchLoadingText.textContent = `${searchTerm} wird gesucht...`;
 
   searchLoading.classList.remove("search-hidden");
   searchDialogText.classList.add("search-hidden");

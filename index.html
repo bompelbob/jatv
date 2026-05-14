@@ -969,14 +969,6 @@
       fill: currentColor;
     }
     
-    dialog {
-  display: none;
-}
-
-dialog[open] {
-  display: block;
-}
-
 dialog {
   display: none;
   width: min(420px, calc(100vw - 32px));
@@ -986,6 +978,10 @@ dialog {
   color: var(--text);
   padding: 0;
   box-shadow: 0 24px 80px rgba(0,0,0,0.65);
+}
+
+dialog[open] {
+  display: block;
 }
 
 dialog[open] {
@@ -3334,14 +3330,6 @@ dialog[open] {
     <button class="primary-button search-hidden" id="searchOkButton">Verstanden</button>
   </div>
 </dialog>
-
-    <p class="login-note search-hidden" id="searchDialogText">
-      Die Abfrage konnte nicht ausgeführt werden.
-    </p>
-
-    <button class="primary-button search-hidden" id="searchOkButton">Verstanden</button>
-  </div>
-</dialog>
   
   <dialog id="uploadDialog">
   <div class="dialog-inner">
@@ -5021,11 +5009,6 @@ const techLogbookMessages = [
     const closeSearchDialog = document.getElementById("closeSearchDialog");
     const searchOkButton = document.getElementById("searchOkButton");
     const searchDialogText = document.getElementById("searchDialogText");
-    const searchDialogTitle = document.getElementById("searchDialogTitle");
-const searchLoading = document.getElementById("searchLoading");
-const searchLoadingText = document.getElementById("searchLoadingText");
-
-let searchTimer = null;
     const loginDialog = document.getElementById("loginDialog");
     const registerDialog = document.getElementById("registerDialog");
     const closeDialog = document.getElementById("closeDialog");
@@ -5384,7 +5367,7 @@ function renderTechLogbook() {
 }
 
 function updateArchiveStatusBar() {
-  statusQueueCount.textContent = randomInteger(410, 490);
+  statusQueueCount.textContent = `${randomInteger(410, 490)} Einreichungen`;
   statusTimecode.textContent = createRandomTimecode();
   statusMazError.textContent = randomItem(mazErrorMessages);
   statusTransferChannel.textContent = randomItem(activeTransferChannels);

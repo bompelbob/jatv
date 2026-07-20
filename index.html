@@ -2388,18 +2388,30 @@ dialog[open] {
   }
 }
   
+.story-and-sort-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 0 26px;
+}
+
 .story-strip {
   display: flex;
   align-items: center;
   gap: 18px;
-  margin: 0 0 26px;
-  padding: 14px 16px;
-  overflow-x: auto;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 20px;
-  background:
-    linear-gradient(135deg, rgba(255,0,51,0.06), rgba(255,255,255,0.025)),
-    #111;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.story-and-sort-row .sort-menu {
+  flex: 0 0 auto;
+  align-self: flex-end;
 }
 
 .story-button {
@@ -2534,24 +2546,55 @@ dialog[open] {
 }
 
 @media (max-width: 680px) {
-  .story-strip {
-    gap: 13px;
+  .story-and-sort-row {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
     margin-bottom: 22px;
-    padding: 12px;
+  }
+
+  .story-strip {
+    width: 100%;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    justify-content: flex-start;
+  }
+
+  .story-and-sort-row .sort-menu,
+  .story-and-sort-row .sort-button {
+    width: 100%;
+  }
+
+  .story-and-sort-row .sort-button {
+    justify-content: space-between;
+  }
+
+  .story-and-sort-row .sort-options {
+    left: 0;
+    right: auto;
+    width: 100%;
   }
 
   .story-button {
-    width: 68px;
+    width: 62px;
   }
 
   .story-ring {
-    width: 66px;
-    height: 66px;
+    width: 60px;
+    height: 60px;
+    padding: 3px;
   }
 
   .story-icon {
-    width: 54px;
-    height: 54px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .story-unread-badge {
+    right: 3px;
+    top: 41px;
   }
 }
 
@@ -2579,24 +2622,22 @@ dialog[open] {
  <main>
   <div id="archiveView">
 
-    <div class="section-header">
-      <h2 class="section-title"> </h2>
+<div class="story-and-sort-row">
+  <section class="story-strip" id="storyStrip" aria-label="jaTV Kurzservice"></section>
 
-      <div class="sort-menu">
-        <button class="sort-button" type="button" aria-haspopup="true" aria-expanded="false">
-          Sortierung: empfohlene
-        </button>
+  <div class="sort-menu">
+    <button class="sort-button" type="button" aria-haspopup="true" aria-expanded="false">
+      Sortierung: empfohlene
+    </button>
 
-        <div class="sort-options" role="menu" aria-label="Sortierung auswählen">
-          <button class="sort-option" type="button" role="menuitem">neueste</button>
-          <button class="sort-option" type="button" role="menuitem">beste</button>
-          <button class="sort-option" type="button" role="menuitem">kontroverseste</button>
-          <button class="sort-option" type="button" role="menuitem">nonchalanteste</button>
-        </div>
-      </div>
+    <div class="sort-options" role="menu" aria-label="Sortierung auswählen">
+      <button class="sort-option" type="button" role="menuitem">neueste</button>
+      <button class="sort-option" type="button" role="menuitem">beste</button>
+      <button class="sort-option" type="button" role="menuitem">kontroverseste</button>
+      <button class="sort-option" type="button" role="menuitem">nonchalanteste</button>
     </div>
-
-<section class="story-strip" id="storyStrip" aria-label="jaTV Kurzservice"></section>
+  </div>
+</div>
 
 <section class="video-grid" id="videoGrid" aria-live="polite"></section>
 
@@ -6327,9 +6368,9 @@ const storyItems = [
     icon: "images/led01.jpg",
     label: "Transfer",
     text: `
-      <p>Wir haben für dich einen kleinen Digitalisierungsservice vorbereitet, der dir den Einstieg in analoges Material deutlich leichter macht.</p>
-      <p>Wenn du VHS, Video 8, Hi8 oder andere Kassetten sichern willst, solltest du zuerst das Band äußerlich prüfen und beschädigte Bänder nicht einfach in den Rekorder drücken.</p>
-      <p>Reinige nach Möglichkeit die Wiedergabekette, nutze ein stabiles Abspielgerät und nimm das Signal in der besten verfügbaren Kabelverbindung auf.</p>
+      <p>Wir haben für dich einen kleinen Digitalisierungsservice vorbereitet, auf den wir ziemlich stolz sind, weil er dir den Einstieg in analoges Material deutlich leichter macht.</p>
+      <p>Wenn du VHS, Video 8, Hi8 oder andere Kassetten sichern willst, solltest du zuerst das Band äußerlich prüfen und beschädigte Gehäuse nicht einfach in den Rekorder drücken.</p>
+      <p>Reinige nach Möglichkeit die Wiedergabekette, nutze ein stabiles Abspielgerät und nimm das Signal in der besten verfügbaren Verbindung auf.</p>
       <p>Bei VHS ist S-Video meist besser als Composite, sofern dein Gerät wirklich ein sauberes Y/C-Signal ausgibt.</p>
       <p>Nimm lieber verlustarm oder mit hoher Datenrate auf, bevor du später kleinere Versionen erzeugst.</p>
       <p>Prüfe nach der Aufnahme Ton, Bildstand, Dropouts und Synchronität, bevor du das Originalband wieder weglegst.</p>
@@ -6340,9 +6381,9 @@ const storyItems = [
     icon: "images/led02.jpg",
     label: "TBC",
     text: `
-      <p>Mit diesem kompakten Erklärservice möchten wir dir eine Abkürzung durch die Technikbegriffe bieten.</p>
+      <p>Mit diesem kompakten Erklärservice möchten wir dir eine Abkürzung durch die Technikbegriffe bieten, und genau auf solche nützlichen Einstiege sind wir ziemlich stolz.</p>
       <p>Ein TBC ist ein Time Base Corrector. Er stabilisiert zeitliche Schwankungen im analogen Videosignal.</p>
-      <p>Alte Bänder laufen so gut wie nie vollkommen gleichmäßig. Das Bild kann mal zittern, seitlich wackeln oder an senkrechten Kanten unruhig wirken.</p>
+      <p>Alte Bänder laufen selten vollkommen gleichmäßig. Das Bild kann zittern, seitlich wackeln oder an senkrechten Kanten unruhig wirken.</p>
       <p>Ein TBC puffert das Signal kurz zwischen und gibt es mit stabilerer Zeitbasis wieder aus.</p>
       <p>Das ist besonders wichtig, wenn du Material digitalisieren willst, weil Capture-Geräte auf instabile Synchronimpulse oft empfindlich reagieren.</p>
       <p>Ein TBC macht kein schlechtes Bild plötzlich scharf, aber er kann verhindern, dass ein grundsätzlich brauchbares Signal beim Einlesen auseinanderfällt.</p>
@@ -6353,11 +6394,11 @@ const storyItems = [
     icon: "images/led03.jpg",
     label: "Video 8",
     text: `
-      <p>Für dich haben wir auch die kleineren Bandformate sauber einsortiert, weil gute Archivarbeit ja nicht erst bei großen Kassetten beginnt.</p>
+      <p>Für dich haben wir auch die kleineren Bandformate sauber einsortiert, weil gute Archivarbeit nicht erst bei großen Kassetten beginnt, und auf diesen Service sind wir durchaus stolz.</p>
       <p>Video 8 ist ein analoges Videobandformat, das vor allem in Camcordern der 1980er und 1990er Jahre verbreitet war.</p>
       <p>Die Kassetten sind deutlich kleiner als VHS-Kassetten und wurden deshalb gern für private Aufnahmen, Reisen und Familienmaterial genutzt.</p>
       <p>Video 8 speichert Bild und Ton magnetisch auf einem schmalen Band und wird meist direkt über den Camcorder oder ein passendes Abspielgerät ausgegeben.</p>
-      <p>Beim Digitalisieren ist ein funktionierender Camcorder oft wichtiger als ein exotischer Recorder, denn viele Geräte sind heute mechanisch empfindlich.</p>
+      <p>Beim Digitalisieren ist ein funktionierender Camcorder oft wichtiger als ein exotischer Adapter, denn viele Geräte sind heute mechanisch empfindlich.</p>
       <p>Wenn du solches Material sicherst, solltest du besonders auf Bandlauf, Tonstörungen und kurze Aussetzer achten.</p>
     `
   },
@@ -6366,8 +6407,8 @@ const storyItems = [
     icon: "images/led04.jpg",
     label: "Kabel",
     text: `
-      <p>Unser Kabelüberblick ist als kleiner, aber nützlicher Service für dich gedacht. Kabel können verwirrend, aber auch verworren sein. Wir sind auf diese Orientierungshilfe merklich stolz.</p>
-      <p>Composite überträgt das komplette Videosignal über eine gelbe Cinch-Leitung. Das jedoch nicht besonders sauber getrennt.</p>
+      <p>Unser Kabelüberblick ist als kleiner, aber nützlicher Service für dich gedacht, weil analoge Anschlüsse oft verwirrender wirken, als sie sein müssten, und wir sind auf diese Orientierungshilfe merklich stolz.</p>
+      <p>Composite überträgt das komplette Videosignal über eine gelbe Cinch-Leitung. Das ist einfach, aber nicht besonders sauber getrennt.</p>
       <p>S-Video trennt Helligkeit und Farbe in zwei Signalanteile und kann bei passenden Geräten sichtbar bessere Ergebnisse liefern.</p>
       <p>SCART ist kein eigenes Bildsignal, sondern ein Steckerstandard, der je nach Gerät Composite, RGB oder S-Video führen kann.</p>
       <p>Component Video nutzt mehrere Leitungen und kann bei späteren Geräten sehr gute analoge Qualität liefern, ist bei klassischen Heimvideoformaten aber nicht immer verfügbar.</p>

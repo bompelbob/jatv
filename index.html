@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6424,8 +6423,8 @@ function createStoryImagePath() {
 
 function openStory(story) {
   storyDialogTitle.textContent = story.title;
-  storyDialogImage.src = createStoryImagePath();
-  storyDialogImage.alt = `jaTV Archivbild zum Thema ${story.title}`;
+  storyDialogImage.src = "images/banner.jpg";
+  storyDialogImage.alt = `jaTV Bannerbild zum Thema ${story.title}`;
 
   storyDialogText.innerHTML = `
     ${story.text}

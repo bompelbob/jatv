@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -2386,6 +2387,174 @@ dialog[open] {
     gap: 1px;
   }
 }
+  
+.story-strip {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 26px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(255,0,51,0.06), rgba(255,255,255,0.025)),
+    #111;
+}
+
+.story-button {
+  position: relative;
+  flex: 0 0 auto;
+  width: 76px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.story-ring {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 4px;
+}
+
+.story-button.is-active .story-ring {
+  border-color: var(--accent);
+}
+
+.story-icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: var(--surface);
+}
+
+.story-unread-badge {
+  position: absolute;
+  right: 7px;
+  top: 49px;
+  width: 21px;
+  height: 21px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid var(--bg);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.story-label {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.story-button:hover .story-label {
+  color: var(--text);
+}
+
+.story-dialog {
+  width: min(560px, calc(100vw - 32px));
+}
+
+.story-image-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin-bottom: 18px;
+  border-radius: 16px;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.story-image-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: brightness(0.82) contrast(1.08);
+}
+
+.story-image-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.05), transparent 45%, rgba(0,0,0,0.32)),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.025),
+      rgba(255,255,255,0.025) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+}
+
+.story-text {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.58;
+}
+
+.story-text p {
+  margin: 0 0 12px;
+}
+
+.story-more-link {
+  border: 0;
+  border-bottom: 1px solid var(--accent);
+  background: transparent;
+  color: var(--text);
+  padding: 0;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.story-more-link:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 680px) {
+  .story-strip {
+    gap: 13px;
+    margin-bottom: 22px;
+    padding: 12px;
+  }
+
+  .story-button {
+    width: 68px;
+  }
+
+  .story-ring {
+    width: 66px;
+    height: 66px;
+  }
+
+  .story-icon {
+    width: 54px;
+    height: 54px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -2426,6 +2595,8 @@ dialog[open] {
         </div>
       </div>
     </div>
+
+<section class="story-strip" id="storyStrip" aria-label="jaTV Kurzservice"></section>
 
 <section class="video-grid" id="videoGrid" aria-live="polite"></section>
 
@@ -3605,6 +3776,22 @@ dialog[open] {
     </p>
 
     <button class="primary-button ai-summary-hidden" id="aiSummaryOkButton" type="button">Verstanden</button>
+  </div>
+</dialog>
+
+
+<dialog id="storyDialog" class="story-dialog">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h2 id="storyDialogTitle">Kurzservice</h2>
+      <button class="close-button" id="closeStoryDialog" aria-label="Dialog schließen">×</button>
+    </div>
+
+    <div class="story-image-frame">
+      <img id="storyDialogImage" src="" alt="">
+    </div>
+
+    <div class="story-text" id="storyDialogText"></div>
   </div>
 </dialog>
 
@@ -4986,6 +5173,13 @@ const techLogbookMessages = [
 ];
 
     const videoGrid = document.getElementById("videoGrid");
+const storyStrip = document.getElementById("storyStrip");
+const storyDialog = document.getElementById("storyDialog");
+const closeStoryDialog = document.getElementById("closeStoryDialog");
+const storyDialogTitle = document.getElementById("storyDialogTitle");
+const storyDialogImage = document.getElementById("storyDialogImage");
+const storyDialogText = document.getElementById("storyDialogText");
+
     const footerErrorDialog = document.getElementById("footerErrorDialog");
     const closeFooterErrorDialog = document.getElementById("closeFooterErrorDialog");
     const footerErrorOkButton = document.getElementById("footerErrorOkButton");
@@ -6126,6 +6320,120 @@ function openContactFlowDialog() {
   netiquetteDialog.showModal();
 }
     
+
+const storyItems = [
+  {
+    title: "Digitalisieren",
+    icon: "images/led01.jpg",
+    label: "Transfer",
+    text: `
+      <p>Wir haben für dich einen kleinen Digitalisierungsservice vorbereitet, der dir den Einstieg in analoges Material deutlich leichter macht.</p>
+      <p>Wenn du VHS, Video 8, Hi8 oder andere Kassetten sichern willst, solltest du zuerst das Band äußerlich prüfen und beschädigte Bänder nicht einfach in den Rekorder drücken.</p>
+      <p>Reinige nach Möglichkeit die Wiedergabekette, nutze ein stabiles Abspielgerät und nimm das Signal in der besten verfügbaren Kabelverbindung auf.</p>
+      <p>Bei VHS ist S-Video meist besser als Composite, sofern dein Gerät wirklich ein sauberes Y/C-Signal ausgibt.</p>
+      <p>Nimm lieber verlustarm oder mit hoher Datenrate auf, bevor du später kleinere Versionen erzeugst.</p>
+      <p>Prüfe nach der Aufnahme Ton, Bildstand, Dropouts und Synchronität, bevor du das Originalband wieder weglegst.</p>
+    `
+  },
+  {
+    title: "TBC",
+    icon: "images/led02.jpg",
+    label: "TBC",
+    text: `
+      <p>Mit diesem kompakten Erklärservice möchten wir dir eine Abkürzung durch die Technikbegriffe bieten.</p>
+      <p>Ein TBC ist ein Time Base Corrector. Er stabilisiert zeitliche Schwankungen im analogen Videosignal.</p>
+      <p>Alte Bänder laufen so gut wie nie vollkommen gleichmäßig. Das Bild kann mal zittern, seitlich wackeln oder an senkrechten Kanten unruhig wirken.</p>
+      <p>Ein TBC puffert das Signal kurz zwischen und gibt es mit stabilerer Zeitbasis wieder aus.</p>
+      <p>Das ist besonders wichtig, wenn du Material digitalisieren willst, weil Capture-Geräte auf instabile Synchronimpulse oft empfindlich reagieren.</p>
+      <p>Ein TBC macht kein schlechtes Bild plötzlich scharf, aber er kann verhindern, dass ein grundsätzlich brauchbares Signal beim Einlesen auseinanderfällt.</p>
+    `
+  },
+  {
+    title: "Video 8",
+    icon: "images/led03.jpg",
+    label: "Video 8",
+    text: `
+      <p>Für dich haben wir auch die kleineren Bandformate sauber einsortiert, weil gute Archivarbeit ja nicht erst bei großen Kassetten beginnt.</p>
+      <p>Video 8 ist ein analoges Videobandformat, das vor allem in Camcordern der 1980er und 1990er Jahre verbreitet war.</p>
+      <p>Die Kassetten sind deutlich kleiner als VHS-Kassetten und wurden deshalb gern für private Aufnahmen, Reisen und Familienmaterial genutzt.</p>
+      <p>Video 8 speichert Bild und Ton magnetisch auf einem schmalen Band und wird meist direkt über den Camcorder oder ein passendes Abspielgerät ausgegeben.</p>
+      <p>Beim Digitalisieren ist ein funktionierender Camcorder oft wichtiger als ein exotischer Recorder, denn viele Geräte sind heute mechanisch empfindlich.</p>
+      <p>Wenn du solches Material sicherst, solltest du besonders auf Bandlauf, Tonstörungen und kurze Aussetzer achten.</p>
+    `
+  },
+  {
+    title: "Kabel",
+    icon: "images/led04.jpg",
+    label: "Kabel",
+    text: `
+      <p>Unser Kabelüberblick ist als kleiner, aber nützlicher Service für dich gedacht. Kabel können verwirrend, aber auch verworren sein. Wir sind auf diese Orientierungshilfe merklich stolz.</p>
+      <p>Composite überträgt das komplette Videosignal über eine gelbe Cinch-Leitung. Das jedoch nicht besonders sauber getrennt.</p>
+      <p>S-Video trennt Helligkeit und Farbe in zwei Signalanteile und kann bei passenden Geräten sichtbar bessere Ergebnisse liefern.</p>
+      <p>SCART ist kein eigenes Bildsignal, sondern ein Steckerstandard, der je nach Gerät Composite, RGB oder S-Video führen kann.</p>
+      <p>Component Video nutzt mehrere Leitungen und kann bei späteren Geräten sehr gute analoge Qualität liefern, ist bei klassischen Heimvideoformaten aber nicht immer verfügbar.</p>
+      <p>Wichtig ist: Das beste Kabel hilft nur, wenn Quelle, Ausgang und Aufnahmegerät dasselbe Signal wirklich unterstützen.</p>
+    `
+  }
+];
+
+function createStoryImagePath() {
+  const imageNumber = randomInteger(FIRST_IMAGE, LAST_IMAGE);
+  return `${IMAGE_FOLDER}${padImageNumber(imageNumber)}${IMAGE_EXTENSION}`;
+}
+
+function openStory(story) {
+  storyDialogTitle.textContent = story.title;
+  storyDialogImage.src = createStoryImagePath();
+  storyDialogImage.alt = `jaTV Archivbild zum Thema ${story.title}`;
+
+  storyDialogText.innerHTML = `
+    ${story.text}
+    <button class="story-more-link" type="button" id="storyMoreLink">mehr ...</button>
+  `;
+
+  storyDialog.showModal();
+
+  document.getElementById("storyMoreLink").addEventListener("click", () => {
+    storyDialog.close();
+    openLoginDialog();
+  });
+}
+
+function renderStories() {
+  if (!storyStrip) {
+    return;
+  }
+
+  const unreadIndex = randomInteger(0, storyItems.length - 1);
+  const activeIndexes = new Set(
+    storyItems
+      .map((item, index) => index)
+      .filter((index) => index !== unreadIndex)
+  );
+
+  storyStrip.innerHTML = "";
+
+  storyItems.forEach((story, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `story-button${activeIndexes.has(index) ? " is-active" : ""}`;
+    button.setAttribute("aria-label", `${story.title} öffnen`);
+
+    button.innerHTML = `
+      <span class="story-ring">
+        <img class="story-icon" src="${story.icon}" alt="">
+      </span>
+      ${index === unreadIndex ? `<span class="story-unread-badge">1</span>` : ""}
+    `;
+
+    button.addEventListener("click", () => {
+      openStory(story);
+    });
+
+    storyStrip.appendChild(button);
+  });
+}
+
 function createVideoData(imageNumber) {
   const paddedNumber = padImageNumber(imageNumber);
   const imagePath = `${IMAGE_FOLDER}${paddedNumber}${IMAGE_EXTENSION}`;
@@ -7281,6 +7589,10 @@ registerStepConfirmationsNext.addEventListener("click", () => {
 });
 
 
+closeStoryDialog.addEventListener("click", () => {
+  storyDialog.close();
+});
+
 backToGridButton.addEventListener("click", closePlayer);
 
 fakePlayButton.addEventListener("click", openLoginDialog);
@@ -7290,7 +7602,8 @@ loginRequiredActions.forEach((button) => {
   button.addEventListener("click", openLoginDialog);
 });
 
-    renderCards();
+    renderStories();
+renderCards();
 updateArchiveStatusBar();
   </script>
 </body>

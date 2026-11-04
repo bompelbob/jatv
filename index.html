@@ -2602,9 +2602,36 @@ main {
 .video-card:hover .thumb-wrap::before, .video-card:focus-visible .thumb-wrap::before { opacity:1; transform:translate(-50%,-50%) scale(1); }
 .duration, .related-duration, .player-status { border-radius:7px; background:rgba(11,12,19,.82); backdrop-filter:blur(5px); padding:4px 7px; }
 .viewer-badge, .lock-badge { border-radius:7px; background:rgba(251,78,145,.92); padding:5px 8px; font-size:10px; letter-spacing:.015em; text-transform:none; }
-.video-info { grid-template-columns:34px minmax(0,1fr); gap:10px; margin:12px 4px 8px; align-items:start; }
+.video-info { grid-template-columns:34px minmax(0,1fr); gap:12px; margin:15px 6px 12px; align-items:start; }
+.video-info > div:last-child { min-width:0; }
 .avatar { width:34px; height:34px; border:1px solid rgba(255,255,255,.09); background:#282336; }
-.video-title { font-size:14px; letter-spacing:-.025em; line-height:1.34; margin:1px 0 8px; }
+/* Ruhigere, markantere Video-Headlines mit Social-Feed-Typografie. */
+.video-title {
+  margin: 0 0 9px;
+  font-size: clamp(16px, 1.23vw, 18px);
+  font-weight: 850;
+  line-height: 1.28;
+  letter-spacing: -.042em;
+  color: #faf7ff;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+  transition: color .23s var(--page-ease);
+}
+.video-title::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 3px;
+  margin: 0 0 10px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #fb4e91, #b3a1ff);
+  transition: width .25s var(--page-ease);
+}
+.video-card:hover .video-title,
+.video-card:focus-visible .video-title { color: #ffc7e0; }
+.video-card:hover .video-title::before,
+.video-card:focus-visible .video-title::before { width: 38px; }
+
 .meta { font-size:12px; color:#9498ac; line-height:1.35; }
 .rating-meta { margin-top:8px; gap:6px; color:#bebfd0; font-size:11px; }
 .rating-item { border:1px solid rgba(255,255,255,.07); border-radius:50px; padding:3px 7px; background:rgba(255,255,255,.035); }
@@ -2635,7 +2662,15 @@ main {
 .player-frame { border-radius:24px; border:1px solid #38374b; box-shadow:0 24px 55px rgba(0,0,0,.23); }
 .player-play-button { width:80px; height:80px; background:rgba(251,78,145,.88); box-shadow:0 12px 30px rgba(0,0,0,.22); transition:transform .2s var(--page-ease),background .2s; }
 .player-play-button:hover { background:#ff76ad; transform:translate(-50%,-50%) scale(1.09); }
-.watch-title { font-size:clamp(25px,3vw,35px); font-weight:850; letter-spacing:-.05em; margin-top:25px; }
+.watch-title {
+  font-size:clamp(29px,3.6vw,45px);
+  font-weight:900;
+  line-height:1.12;
+  letter-spacing:-.058em;
+  text-wrap:balance;
+  color:#faf7ff;
+  margin-top:25px;
+}
 .watch-meta { color:#a8acc0; }
 .watch-description-box { background:#1e2131; border-color:rgba(255,255,255,.09); border-radius:21px; padding:19px 21px; margin-top:19px; }
 .watch-actions-row { align-items:flex-start; flex-wrap:wrap; margin-top:18px; }
@@ -2658,7 +2693,17 @@ main {
 .related-card { padding:9px; border-radius:15px; transition:background .2s; grid-template-columns:120px 1fr; }
 .related-card:hover { background:#2a2d40; }
 .related-thumb { border-radius:10px; }
-.related-title { font-size:12px; }
+.related-title {
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:-.025em;
+  line-height:1.3;
+  text-wrap:pretty;
+  color:#f6f2ff;
+  transition:color .2s;
+}
+.related-card:hover .related-title,
+.related-card:focus-visible .related-title { color:#ffc7e0; }
 .related-meta { font-size:11px; }
 .archive-status-bar { border-radius:20px; background:#171925; box-shadow:none; border-color:rgba(255,255,255,.065); gap:12px 25px; }
 .archive-status-label { color:#8f94a9; }
@@ -2756,7 +2801,8 @@ dialog::backdrop { background:rgba(6,5,13,.77); backdrop-filter:blur(9px); }
   .thumb-wrap { border-radius:12px; }
   .video-info { grid-template-columns:1fr; margin:9px 4px 7px; }
   .video-info .avatar { display:none; }
-  .video-title { font-size:12px; margin-bottom:6px; }
+  .video-title { font-size:clamp(13px,1.8vw,15px); line-height:1.28; margin-bottom:7px; }
+  .video-title::before { width:17px; height:2px; margin-bottom:8px; }
   .meta { font-size:11px; }
   .rating-meta { gap:4px; margin-top:6px; }
   .rating-item { font-size:10px; padding:3px 5px; }
@@ -2767,7 +2813,7 @@ dialog::backdrop { background:rgba(6,5,13,.77); backdrop-filter:blur(9px); }
   .participation-card h2 { font-size:22px; }
   .watch-layout { grid-template-columns:1fr; gap:25px; }
   .player-frame { border-radius:17px; }
-  .watch-title { font-size:26px; }
+  .watch-title { font-size:clamp(29px,7.4vw,37px); }
   .watch-actions-row { display:grid; gap:13px; }
   .watch-actions { display:flex; flex-wrap:wrap; }
   .watch-extra-actions { justify-content:start; display:flex; flex-wrap:wrap; }
@@ -2783,7 +2829,7 @@ dialog::backdrop { background:rgba(6,5,13,.77); backdrop-filter:blur(9px); }
   .video-card { padding:8px; border-radius:20px; }
   .video-info { grid-template-columns:33px minmax(0,1fr); }
   .video-info .avatar { display:grid; width:33px; height:33px; }
-  .video-title { font-size:14px; }
+  .video-title { font-size:17px; }
   .meta { font-size:12px; }
   .section-title { font-size:22px; }
 }
@@ -2801,6 +2847,24 @@ dialog::backdrop { background:rgba(6,5,13,.77); backdrop-filter:blur(9px); }
   .hero-bottom { margin-top:15px; }
   .hero-state { font-size:11px; }
   .hero-discover-button { padding:11px 15px; }
+}
+
+
+/* Mobile Safari: keep editable fields at 16px to avoid automatic focus zoom.
+   Preserve pinch-to-zoom for accessibility. */
+@media (max-width: 720px) {
+  .searchbar input,
+  input[type="text"], input[type="email"], input[type="password"],
+  input[type="search"], input[type="tel"], input[type="url"],
+  input[type="number"], textarea, select {
+    font-size: 16px;
+  }
+
+  /* The tab bar is not useful while the on-screen keyboard is displayed.
+     Hiding it prevents Safari from painting it midway up the viewport. */
+  body.mobile-keyboard-open .mobile-nav {
+    display: none !important;
+  }
 }
 
   </style>
@@ -7819,6 +7883,46 @@ updateArchiveStatusBar();
         e.preventDefault(); document.querySelector('#searchForm input')?.focus();
       }
     });
+  })();
+  </script>
+
+  <script>
+  // Keep the fixed mobile tab bar out of the way of the iOS/Android keyboard.
+  (() => {
+    const mobileNav = document.querySelector('.mobile-nav');
+    if (!mobileNav) return;
+    const viewport = window.visualViewport;
+    const mobileQuery = window.matchMedia('(max-width: 720px)');
+    const editableSelector = 'input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not([type="button"]):not([type="submit"]), textarea, select, [contenteditable="true"]';
+    let blurTimer;
+
+    function isEditing() {
+      return document.activeElement?.matches?.(editableSelector) || false;
+    }
+    function keyboardStillVisible() {
+      // On iOS the visual viewport shrinks while the layout viewport keeps
+      // its original height. Browser bars alone are much smaller than 140px.
+      return viewport && viewport.scale <= 1.05 &&
+        window.innerHeight - viewport.height - viewport.offsetTop > 140;
+    }
+    function updateMobileKeyboardState() {
+      document.body.classList.toggle('mobile-keyboard-open',
+        mobileQuery.matches && (isEditing() || keyboardStillVisible()));
+    }
+    document.addEventListener('focusin', () => {
+      clearTimeout(blurTimer);
+      updateMobileKeyboardState();
+    });
+    document.addEventListener('focusout', () => {
+      clearTimeout(blurTimer);
+      // Wait for Safari's dismiss-keyboard animation to settle.
+      blurTimer = setTimeout(updateMobileKeyboardState, 300);
+    });
+    viewport?.addEventListener('resize', updateMobileKeyboardState);
+    viewport?.addEventListener('scroll', updateMobileKeyboardState);
+    window.addEventListener('resize', updateMobileKeyboardState);
+    window.addEventListener('pageshow', updateMobileKeyboardState);
+    updateMobileKeyboardState();
   })();
   </script>
 

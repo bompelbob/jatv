@@ -200,6 +200,39 @@ a:focus-visible { outline:2px solid var(--violet); outline-offset:4px; }
 @media (prefers-reduced-motion:reduce) {
   *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
 }
+
+/* Lokales Schrift-Duo für Just Another Tape Vault.
+   Die Dateien aus Google Fonts im Ordner /fonts auf dem Webserver speichern.
+   Keine Verbindungen zu Google beim Laden der Webseite. */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("fonts/BricolageGrotesque-variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("fonts/DMSans-variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+}
+:root {
+  --font-heading: "Bricolage Grotesque", "Arial Rounded MT Bold", Arial, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+}
+body { font-family: var(--font-body); }
+button, input, textarea, select { font-family: var(--font-body); }
+h1, h2, h3, h4, h5,
+.brand-label, .section-title, .video-title, .watch-title, .related-title {
+  font-family: var(--font-heading);
+}
+/* Die charaktervolle Titelschrift benötigt weniger künstliche Verdichtung. */
+.video-title, .related-title { letter-spacing: -.022em; }
+.watch-title, .discovery-hero h1, .legal-hero h1 { letter-spacing: -.04em; }
+.brand-label { letter-spacing: -.035em; }
+
 </style>
 </head>
 <body>

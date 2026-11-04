@@ -1,576 +1,369 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
-  <link rel="icon" type="image/x-icon" href="/favicon.png">
-  <title>Just Another Tape Vault - Impressum & Datenschutz</title>
-
-  <style>
-    :root {
-      --bg: #0f0f0f;
-      --surface: #181818;
-      --surface-light: #242424;
-      --text: #f1f1f1;
-      --muted: #aaa;
-      --accent: #ff0033;
-      --accent-dark: #b80025;
-      --border: #303030;
-      --input: #121212;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    header {
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(15, 15, 15, 0.96);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(12px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      text-decoration: none;
-      border-bottom: none;
-    }
-
-    .brand-logo {
-      width: 42px;
-      height: 42px;
-      display: block;
-      opacity: 0.96;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--border);
-    }
-
-    .brand span {
-      color: var(--text);
-      font-size: 16px;
-    }
-
-    .top-action {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 9px 16px;
-      font-size: 14px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .top-action:hover {
-      background: var(--surface-light);
-    }
-
-    main {
-      padding: 28px 24px 56px;
-      max-width: 1040px;
-      margin: 0 auto;
-    }
-
-    .legal-hero {
-      margin-bottom: 28px;
-      padding: 28px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #202020, #111 60%, #210009);
-      border: 1px solid var(--border);
-    }
-
-    .legal-hero h1 {
-      margin: 0 0 8px;
-      font-size: clamp(28px, 4vw, 48px);
-      letter-spacing: -0.06em;
-    }
-
-    .legal-hero p {
-      margin: 0;
-      max-width: 780px;
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 16px;
-    }
-
-    .legal-card {
-      padding: 28px;
-      border-radius: 24px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-
-    h1, h2, h3, h4 {
-      color: var(--text);
-      letter-spacing: -0.03em;
-    }
-
-    h1 {
-      margin: 0 0 18px;
-      font-size: 34px;
-    }
-
-    h2 {
-      margin: 34px 0 12px;
-      font-size: 24px;
-    }
-
-    h3 {
-      margin: 26px 0 10px;
-      font-size: 18px;
-    }
-
-    h4 {
-      margin: 20px 0 8px;
-      font-size: 15px;
-    }
-
-    p, li {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.65;
-    }
-
-    ul {
-      padding-left: 22px;
-    }
-
-    a {
-      color: var(--text);
-      text-decoration: none;
-      border-bottom: 1px solid var(--accent);
-    }
-
-    a:hover {
-      color: var(--accent);
-    }
-
-    .contact-block {
-      margin: 16px 0 22px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #121212;
-      border: 1px solid var(--border);
-    }
-
-    .site-footer {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0 24px 34px;
-      color: var(--muted);
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px 22px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      font-size: 13px;
-    }
-
-    .footer-links a {
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 0;
-    }
-
-    .footer-links a:hover {
-      color: var(--text);
-      text-decoration: underline;
-    }
-
-    @media (max-width: 680px) {
-      header {
-        height: auto;
-        padding: 14px 16px;
-        gap: 12px;
-      }
-
-      main {
-        padding: 18px 14px 42px;
-      }
-
-      .legal-hero,
-      .legal-card {
-        padding: 22px;
-        border-radius: 18px;
-      }
-
-      .site-footer {
-        padding: 0 14px 30px;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0c0d14">
+<link rel="icon" type="image/x-icon" href="/favicon.png">
+<title>Just Another Tape Vault - Impressum &amp; Datenschutz</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0c0d14;
+  --surface: #191b29;
+  --surface-light: #25283a;
+  --text: #f6f6fb;
+  --muted: #a4a8bb;
+  --accent: #fb4e91;
+  --accent-dark: #db3277;
+  --border: #303246;
+  --input: #171926;
+  --violet: #b3a1ff;
+  --mint: #b9f4de;
+  --page-ease: cubic-bezier(.2,.8,.2,1);
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:108px; }
+body {
+  margin:0; min-height:100dvh; color:var(--text);
+  font: 15px/1.65 Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background:radial-gradient(ellipse 660px 430px at 86% 0%,rgba(123,84,229,.13),transparent 72%),radial-gradient(ellipse 620px 500px at 12% 56%,rgba(251,78,145,.065),transparent 76%),var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+a { color:inherit; }
+a:focus-visible { outline:2px solid var(--violet); outline-offset:4px; }
+::selection { color:white; background:rgba(251,78,145,.4); }
+.site-header {
+  height:82px; padding:0 36px 0 26px; display:flex; align-items:center; justify-content:space-between; gap:24px;
+  position:sticky; top:0; z-index:40;
+  background:rgba(13,14,23,.79); border-bottom:1px solid rgba(255,255,255,.075);
+  box-shadow:0 8px 32px rgba(0,0,0,.11); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+}
+.brand { display:inline-flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; }
+.brand-logo-wrap { display:grid; place-items:center; width:46px; height:46px; position:relative; overflow:hidden; flex:none; border-radius:15px; background:linear-gradient(135deg,#fb4e91,#755bd1); color:white; font-size:13px; font-weight:900; letter-spacing:-.08em; box-shadow:0 5px 20px rgba(251,78,145,.15); }
+.brand-logo { display:block; position:absolute; inset:0; width:46px; height:46px; object-fit:cover; border-radius:15px; border:1px solid rgba(255,255,255,.14); box-shadow:0 5px 20px rgba(251,78,145,.15); }
+.brand-label { max-width:212px; font-size:17px; font-weight:900; letter-spacing:-.055em; line-height:1.08; }
+.brand:hover .brand-label { color:#ffd8e7; }
+.header-center { display:flex; align-items:center; gap:9px; color:#a8a5c0; font-size:11px; letter-spacing:.15em; font-weight:850; text-transform:uppercase; }
+.header-center .pulse-dot { width:8px; height:8px; flex:none; border-radius:50%; background:var(--accent); box-shadow:0 0 0 5px rgba(251,78,145,.1); }
+.top-action { display:inline-flex; gap:8px; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,.12); border-radius:999px; padding:9px 17px; background:#f2f0ff; color:#17152d; font-size:13px; line-height:1.2; font-weight:800; text-decoration:none; box-shadow:0 5px 22px rgba(180,161,255,.1); transition:transform .22s var(--page-ease),box-shadow .22s; }
+.top-action svg { width:18px; height:18px; }
+.top-action:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(179,161,255,.24); }
+.site-sidebar {
+  position:fixed; inset:82px auto 0 0; width:249px; padding:34px 18px 24px 20px; overflow-y:auto;
+  display:flex; flex-direction:column; gap:24px; z-index:22;
+  background:rgba(13,14,23,.52); border-right:1px solid rgba(255,255,255,.055);
+}
+.sidebar-eyebrow, .sidebar-note-label { padding-left:17px; color:#8f92a7; font-size:10px; font-weight:900; letter-spacing:.16em; }
+.sidebar-nav { display:grid; gap:8px; }
+.sidebar-link { display:flex; align-items:center; gap:14px; min-height:50px; padding:0 14px; width:100%; text-decoration:none; color:#aaaec0; border:1px solid transparent; border-radius:16px; font-size:14px; line-height:1.2; font-weight:750; transition:background .2s,color .2s,transform .2s; }
+.sidebar-link svg,.mobile-nav-button svg { width:21px; height:21px; flex:none; }
+.sidebar-link:hover { background:rgba(255,255,255,.055); color:var(--text); transform:translateX(3px); }
+.sidebar-link.is-current { color:#fff; background:linear-gradient(105deg,rgba(251,78,145,.2),rgba(179,161,255,.1)); border-color:rgba(251,78,145,.20); }
+.sidebar-link.is-current svg { color:#ff84b2; }
+.sidebar-note { margin-top:auto; border:1px solid rgba(179,161,255,.13); border-radius:20px; padding:20px; background:linear-gradient(145deg,rgba(166,140,255,.12),rgba(251,78,145,.055)); }
+.sidebar-note .sidebar-note-label { padding:0; color:#c5b7ff; }
+.sidebar-note p { margin:12px 0 0; color:#d2d1df; font-size:13px; line-height:1.55; }
+.mobile-nav { display:none; }
+.page-shell { max-width:1740px; margin:0 30px 0 249px; padding:32px 32px 60px; min-width:0; }
+.legal-hero {
+  display:grid; grid-template-columns:minmax(0,1.25fr) minmax(255px,.75fr); gap:25px;
+  min-height:290px; margin:0 0 23px; padding:31px 38px; overflow:hidden; position:relative;
+  border:1px solid rgba(255,255,255,.11); border-radius:30px;
+  background:radial-gradient(circle at 28% 160%,rgba(251,78,145,.18),transparent 46%),linear-gradient(116deg,#24213d 0%,#18172c 56%,#1e1e33 100%);
+}
+.legal-hero::before { content:""; width:480px; height:480px; position:absolute; top:-330px; left:-100px; pointer-events:none; border:1px solid rgba(255,255,255,.09); border-radius:50%; box-shadow:0 0 0 65px rgba(255,255,255,.016),0 0 0 131px rgba(255,255,255,.012); }
+.hero-copy { display:flex; flex-direction:column; justify-content:center; align-items:flex-start; position:relative; z-index:1; }
+.hero-eyebrow { display:inline-flex; align-items:center; gap:10px; color:#ffc7dc; font-size:11px; font-weight:850; letter-spacing:.145em; text-transform:uppercase; }
+.hero-eyebrow::before { content:""; width:8px; height:8px; border-radius:50%; background:#ff5996; box-shadow:0 0 0 5px rgba(255,89,150,.14); }
+.legal-hero h1 { max-width:680px; margin:17px 0 14px; font-size:clamp(35px,4.2vw,61px); font-weight:900; line-height:1.045; letter-spacing:-.077em; }
+.legal-hero h1 span { color:#c7b8ff; display:block; }
+.legal-hero p { margin:0; max-width:560px; color:#c7c5d9; font-size:14px; line-height:1.65; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:23px; }
+.hero-pill { display:inline-flex; align-items:center; gap:8px; padding:10px 15px; border-radius:999px; color:#e7e3ff; text-decoration:none; font-size:12px; font-weight:800; background:rgba(255,255,255,.075); border:1px solid rgba(255,255,255,.10); transition:transform .2s,background .2s; }
+.hero-pill:hover { transform:translateY(-2px); background:rgba(255,255,255,.12); }
+.hero-pill svg { width:16px; height:16px; }
+.hero-pill:first-child { color:white; background:#fa5794; border-color:#fa5794; box-shadow:0 12px 30px rgba(251,78,145,.23); }
+.hero-visual { display:flex; flex-direction:column; justify-content:space-between; position:relative; isolation:isolate; min-height:225px; overflow:hidden; padding:18px; border:1px solid rgba(255,255,255,.13); border-radius:23px; background:radial-gradient(circle at 50% 35%,rgba(251,78,145,.24),transparent 44%),linear-gradient(145deg,#383051,#222039 66%,#151828); box-shadow:0 18px 40px rgba(0,0,0,.19),inset 0 1px 0 rgba(255,255,255,.05); transform:rotate(2deg); transition:transform .4s var(--page-ease); }
+.legal-hero:hover .hero-visual { transform:rotate(0deg) translateY(-2px); }
+.hero-visual::after { content:""; position:absolute; inset:0; z-index:-1; background:repeating-linear-gradient(0deg,transparent 0 4px,rgba(255,255,255,.03) 5px 6px); }
+.visual-micro { display:flex; justify-content:space-between; align-items:center; color:#c8c3e6; font:750 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.07em; }
+.visual-symbol { margin:auto; display:grid; place-items:center; width:122px; height:122px; border-radius:27px; color:white; font-size:70px; line-height:1; font-weight:700; letter-spacing:-.08em; background:linear-gradient(135deg,#e95a9b,#7a5ed5); border:1px solid rgba(255,255,255,.33); box-shadow:0 10px 60px rgba(238,77,163,.24),0 0 0 12px rgba(255,255,255,.045); transform:rotate(-7deg); }
+.visual-micro strong { color:var(--mint); }
+.legal-layout { display:grid; grid-template-columns:minmax(0,1fr) 244px; gap:22px; align-items:start; }
+.legal-content { min-width:0; display:grid; grid-template-columns:minmax(0,1fr); gap:20px; }
+.legal-section,.chapter-card { min-width:0; border:1px solid rgba(255,255,255,.08); border-radius:25px; background:linear-gradient(145deg,rgba(32,33,50,.96),rgba(22,23,36,.96)); box-shadow:0 15px 35px rgba(0,0,0,.06); }
+.legal-section { padding:34px; }
+.section-kicker { display:block; margin-bottom:7px; color:var(--accent); font-size:10px; font-weight:900; text-transform:uppercase; letter-spacing:.16em; }
+.legal-section-title { margin:0 0 20px; font-size:clamp(29px,3vw,38px); line-height:1.1; font-weight:900; letter-spacing:-.055em; }
+.section-heading-row { display:flex; gap:20px; justify-content:space-between; align-items:start; }
+.section-graphic { display:grid; place-items:center; width:44px; height:44px; flex:none; border-radius:14px; color:#c5b7ff; background:rgba(179,161,255,.12); }
+.section-graphic svg { width:23px; height:23px; }
+.legal-section h3 { margin:26px 0 13px; font-size:20px; letter-spacing:-.04em; }
+.contact-block { margin:12px 0 22px; padding:19px 23px; border:1px solid rgba(179,161,255,.14); border-radius:18px; background:rgba(17,18,30,.72); }
+.contact-block p { margin:0; font-size:15px; line-height:1.85; color:#dbdbec; }
+.legal-section p,.chapter-card p,.chapter-card li { color:#bec1d1; font-size:14px; line-height:1.82; }
+.legal-section a,.chapter-card a { color:#f3c3e0; text-decoration-color:rgba(251,78,145,.55); text-underline-offset:3px; overflow-wrap:anywhere; }
+.legal-section a:hover,.chapter-card a:hover { color:#fff; text-decoration-color:#fff; }
+.privacy-heading { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:25px 28px 2px; }
+.privacy-heading h2 { margin:0; font-size:clamp(26px,3vw,33px); font-weight:900; letter-spacing:-.055em; }
+.privacy-heading .privacy-tag { padding:6px 12px; background:rgba(185,244,222,.09); color:var(--mint); border:1px solid rgba(185,244,222,.15); border-radius:999px; font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.chapter-card { padding:32px 34px 35px; }
+.chapter-heading { display:flex; align-items:start; gap:18px; padding-bottom:21px; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,.075); }
+.chapter-index { display:grid; place-items:center; width:49px; height:49px; flex:none; border-radius:15px; background:linear-gradient(135deg,rgba(251,78,145,.19),rgba(179,161,255,.14)); border:1px solid rgba(251,78,145,.17); color:#ff9fc7; font-weight:900; font-size:17px; }
+.chapter-heading-copy { min-width:0; padding-top:5px; }
+.chapter-title { margin:0; font-size:clamp(21px,2.1vw,27px); line-height:1.3; letter-spacing:-.045em; font-weight:850; }
+.chapter-content h4 { margin:29px 0 8px; font-size:18px; line-height:1.4; color:#f2efff; letter-spacing:-.025em; }
+.chapter-content h4:first-child { margin-top:0; }
+.chapter-content h5 { margin:22px 0 7px; font-size:14px; line-height:1.5; font-weight:800; color:#d8caff; }
+.chapter-content p { margin:0 0 16px; }
+.chapter-content ul { padding-left:25px; margin:0 0 19px; }
+.chapter-content li { padding-left:4px; margin-bottom:10px; }
+.chapter-content li::marker { color:var(--accent); }
+.chapter-content > :last-child { margin-bottom:0; }
+.jump-sidebar { position:sticky; top:110px; display:grid; gap:15px; }
+.jump-card { padding:21px 15px 18px; border:1px solid rgba(255,255,255,.08); border-radius:22px; background:linear-gradient(145deg,rgba(32,33,50,.95),rgba(22,23,36,.95)); }
+.jump-title { margin:0 9px 14px; color:#9c9ab4; text-transform:uppercase; letter-spacing:.14em; font-size:10px; font-weight:900; }
+.jump-link { display:block; padding:11px 12px; border-radius:12px; text-decoration:none; font-size:12px; font-weight:700; line-height:1.4; color:#b8bad0; transition:background .2s,color .2s; }
+.jump-link:hover,.jump-link.active { background:rgba(179,161,255,.11); color:#fff; }
+.jump-link.active { box-shadow:inset 3px 0 var(--accent); }
+.jump-hint { padding:17px 19px; border-radius:19px; border:1px solid rgba(179,161,255,.13); background:linear-gradient(145deg,rgba(166,140,255,.11),rgba(251,78,145,.05)); color:#bfc1d6; font-size:12px; line-height:1.65; }
+.jump-hint strong { color:#d0c6ff; }
+.legal-footer { margin:0 30px 0 249px; padding:0 32px 42px; max-width:1740px; }
+.footer-links { display:flex; flex-wrap:wrap; gap:14px 22px; padding-top:24px; border-top:1px solid rgba(255,255,255,.08); }
+.footer-links a { color:#aaaec0; font-size:13px; text-decoration:none; }
+.footer-links a:hover { color:var(--text); text-decoration:underline; }
+@media (max-width:1250px) {
+  .site-sidebar { width:83px; padding:28px 10px 18px; align-items:center; }
+  .sidebar-eyebrow,.sidebar-note,.sidebar-link span { display:none; }
+  .sidebar-nav { width:100%; }
+  .sidebar-link { padding:0; justify-content:center; }
+  .sidebar-link svg { width:23px; height:23px; }
+  .page-shell { margin-left:83px; }
+  .legal-footer { margin-left:83px; }
+}
+@media (max-width:1040px) {
+  .page-shell { margin-right:0; padding:23px; }
+  .legal-footer { margin-right:0; padding:0 23px 34px; }
+  .legal-layout { grid-template-columns:minmax(0,1fr) 198px; gap:14px; }
+  .legal-hero { grid-template-columns:minmax(0,1fr) 225px; padding:24px; }
+  .legal-section,.chapter-card { padding:25px; }
+}
+@media (max-width:840px) {
+  .legal-layout { display:block; }
+  .jump-sidebar { display:none; }
+  .legal-content { gap:15px; }
+  .legal-hero { grid-template-columns:1fr; min-height:0; }
+  .hero-visual { display:none; }
+}
+@media (max-width:720px) {
+  html { scroll-padding-top:83px; }
+  .site-header { height:69px; padding:10px 15px; gap:10px; }
+  .brand-logo-wrap, .brand-logo { width:39px; height:39px; border-radius:12px; }
+  .brand-label { font-size:15px; max-width:170px; }
+  .header-center { display:none; }
+  .top-action { padding:10px 12px; font-size:11px; }
+  .top-action svg { width:15px; height:15px; }
+  .site-sidebar { display:none; }
+  .mobile-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:2px; position:fixed; z-index:35; bottom:0; left:0; right:0; padding:8px 9px max(9px,env(safe-area-inset-bottom)); border-top:1px solid rgba(255,255,255,.13); background:rgba(18,19,30,.94); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); box-shadow:0 -9px 32px rgba(0,0,0,.18); }
+  .mobile-nav-button { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:50px; gap:4px; border:0; border-radius:12px; color:#a5a8bc; text-decoration:none; font-size:10px; line-height:1.15; font-weight:740; }
+  .mobile-nav-button.is-current { color:#ff8bb7; background:rgba(251,78,145,.09); }
+  .mobile-nav-button svg { width:21px; height:21px; }
+  .page-shell { margin:0; padding:17px 13px 38px; }
+  .legal-footer { margin:0; padding:0 15px 100px; }
+  .legal-hero { padding:22px 20px; margin-bottom:15px; border-radius:25px; }
+  .legal-hero h1 { font-size:clamp(34px,9vw,49px); margin:16px 0 11px; }
+  .legal-hero p { font-size:13px; }
+  .hero-actions { margin-top:19px; }
+  .hero-pill { padding:9px 13px; font-size:11px; }
+  .legal-section,.chapter-card { border-radius:21px; padding:22px 20px; }
+  .legal-section-title { font-size:29px; }
+  .section-graphic { width:41px; height:41px; }
+  .privacy-heading { padding:20px 7px 0; }
+  .privacy-heading h2 { font-size:27px; }
+  .privacy-heading .privacy-tag { display:none; }
+  .chapter-heading { gap:12px; padding-bottom:16px; margin-bottom:17px; }
+  .chapter-index { width:42px; height:42px; border-radius:13px; font-size:14px; }
+  .chapter-title { font-size:20px; }
+  .chapter-content h4 { font-size:17px; }
+  .chapter-content h5 { font-size:14px; }
+  .legal-section p,.chapter-card p,.chapter-card li { font-size:14px; line-height:1.75; }
+  .contact-block { padding:16px 18px; }
+}
+@media (max-width:370px) {
+  .brand-label { font-size:13px; max-width:137px; }
+  .top-action { padding:9px 10px; }
+  .hero-pill { padding:9px 11px; }
+  .privacy-heading .privacy-tag { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+}
+</style>
 </head>
 <body>
-<header>
-  <a class="brand" href="index.html" aria-label="Zur&uuml;ck zu Just Another Tape Vault">
-    <img class="brand-logo" src="logo.png" alt="jaTV Logo" />
-    <span>Just Another Tape Vault</span>
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="Zurück zu Just Another Tape Vault">
+    <span class="brand-logo-wrap"><span aria-hidden="true">jaTV</span><img class="brand-logo" src="logo.png" alt="jaTV Logo" onerror="this.style.display='none'"></span>
+    <span class="brand-label">Just Another Tape Vault</span>
   </a>
-
-  <a class="top-action" href="index.html">Zur&uuml;ck</a>
+  <div class="header-center"><span class="pulse-dot" aria-hidden="true"></span> DAS KLEINGEDRUCKTE</div>
+  <a class="top-action" href="index.html"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m14 5-7 7 7 7"/><path d="M7 12h14"/></svg><span>Zum Feed</span></a>
 </header>
-
-<main>
-
-  <section class="legal-hero">
-    <h1>Impressum & Datenschutz</h1>
-    <p>Rechtliche Angaben, Kontaktinformationen und Datenschutzhinweise f&uuml;r Just Another Tape Vault.</p>
-  </section>
-
-  <section class="legal-card">
-    <h1>Impressum</h1>
-
-    <div class="contact-block">
-      <p>
-        Alexander Marquardt<br>
-        Bostonring 19/1<br>
-        71686 Remseck am Neckar<br>
-        Deutschland
-      </p>
+<aside class="site-sidebar" aria-label="Seitennavigation">
+  <span class="sidebar-eyebrow">DEIN ARCHIV</span>
+  <nav class="sidebar-nav" aria-label="Archivbereiche">
+    <a class="sidebar-link" href="index.html"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-8h6v8"/></svg><span>Für dich</span></a>
+    <a class="sidebar-link is-current" href="#impressum"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/></svg><span>Impressum</span></a>
+    <a class="sidebar-link" href="#datenschutz"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="m9 12 2 2 4-4"/></svg><span>Datenschutz</span></a>
+    <a class="sidebar-link" href="#kontakt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/></svg><span>Kontakt</span></a>
+  </nav>
+  <div class="sidebar-note"><span class="sidebar-note-label">GUT ZU WISSEN</span><p>Alles Wichtige zur Website, übersichtlich an einem Ort.</p></div>
+</aside>
+<nav class="mobile-nav" aria-label="Mobile Seitennavigation">
+  <a class="mobile-nav-button" href="index.html"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-8h6v8"/></svg><span>Feed</span></a>
+  <a class="mobile-nav-button is-current" href="#impressum"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/></svg><span>Impressum</span></a>
+  <a class="mobile-nav-button" href="#datenschutz"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="m9 12 2 2 4-4"/></svg><span>Datenschutz</span></a>
+  <a class="mobile-nav-button" href="#kontakt"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/></svg><span>Kontakt</span></a>
+</nav>
+<main class="page-shell" id="hauptinhalt">
+  <section class="legal-hero" aria-labelledby="legal-page-title">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">Just Another Tape Vault / Rechtliches</div>
+      <h1 id="legal-page-title">Impressum &amp;<span>Datenschutz.</span></h1>
+      <p>Rechtliche Angaben, Kontaktinformationen und Datenschutzhinweise für Just Another Tape Vault.</p>
+      <nav class="hero-actions" aria-label="Direkt zu den Bereichen">
+        <a class="hero-pill" href="#impressum"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/></svg> Impressum</a>
+        <a class="hero-pill" href="#datenschutz"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="m9 12 2 2 4-4"/></svg> Datenschutz</a>
+      </nav>
     </div>
-
-    <h2>Kontakt</h2>
-
-    <div class="contact-block">
-      <p>
-        Telefon: 07146 4072318<br>
-        E-Mail: <a href="mailto:jatv@me.com">jatv@me.com</a>
-      </p>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="visual-micro"><span>JATV / DOCUMENTS</span><span>01 // 02</span></div>
+      <div class="visual-symbol">§</div>
+      <div class="visual-micro"><span>DOCUMENT VIEW</span><strong>PUBLIC</strong></div>
     </div>
-
-    <h1>Datenschutzerkl&auml;rung</h1>
-
-    <h2>1. Datenschutz auf einen Blick</h2>
-
-    <h3>Allgemeine Hinweise</h3>
-    <p>
-      Die folgenden Hinweise geben einen einfachen &Uuml;berblick dar&uuml;ber, was mit Ihren personenbezogenen Daten passiert,
-      wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie pers&ouml;nlich identifiziert
-      werden k&ouml;nnen. Ausf&uuml;hrliche Informationen zum Thema Datenschutz finden Sie in der nachfolgenden
-      Datenschutzerkl&auml;rung.
-    </p>
-
-    <h3>Datenerfassung auf dieser Website</h3>
-
-    <h4>Wer ist verantwortlich f&uuml;r die Datenerfassung auf dieser Website?</h4>
-    <p>
-      Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Die Kontaktdaten k&ouml;nnen Sie dem
-      Abschnitt &bdquo;Hinweis zur verantwortlichen Stelle&ldquo; in dieser Datenschutzerkl&auml;rung entnehmen.
-    </p>
-
-    <h4>Wie erfassen wir Ihre Daten?</h4>
-    <p>
-      Diese Website ist als statische Website angelegt. Sie enth&auml;lt derzeit kein Kontaktformular, keinen Login mit
-      echter Nutzerverwaltung, keine Bestellfunktion und keine Kommentarfunktion, &uuml;ber die personenbezogene Daten
-      direkt an den Websitebetreiber &uuml;bermittelt werden.
-    </p>
-    <p>
-      Beim Aufruf der Website werden jedoch technisch notwendige Zugriffsdaten durch den Hosting Anbieter verarbeitet.
-      Dazu k&ouml;nnen insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Datei, Referrer-URL,
-      Browsertyp, Betriebssystem und vergleichbare technische Informationen geh&ouml;ren.
-    </p>
-
-    <h4>Wof&uuml;r nutzen wir Ihre Daten?</h4>
-    <p>
-      Die technische Verarbeitung erfolgt, um diese Website sicher, stabil und korrekt auszuliefern. Eine eigene Analyse
-      Ihres Nutzerverhaltens durch den Websitebetreiber findet nicht statt.
-    </p>
-
-    <h4>Welche Rechte haben Sie bez&uuml;glich Ihrer Daten?</h4>
-    <p>
-      Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft &uuml;ber
-      Ihre gespeicherten personenbezogenen Daten, deren Herkunft, Empf&auml;nger und Zweck der Datenverarbeitung. Sie haben
-      au&szlig;erdem ein Recht auf Berichtigung oder L&ouml;schung dieser Daten sowie unter bestimmten Voraussetzungen ein
-      Recht auf Einschr&auml;nkung der Verarbeitung und ein Widerspruchsrecht gegen die Verarbeitung.
-    </p>
-    <p>
-      Au&szlig;erdem steht Ihnen ein Beschwerderecht bei der zust&auml;ndigen Aufsichtsbeh&ouml;rde zu. Hierzu sowie zu
-      weiteren Fragen zum Thema Datenschutz k&ouml;nnen Sie sich jederzeit an uns wenden.
-    </p>
-
-    <h2>2. Hosting</h2>
-
-    <p>Wir hosten die Inhalte unserer Website bei folgendem Anbieter:</p>
-
-    <h3>GitHub Pages</h3>
-    <p>
-      Diese Website wird als statische Website &uuml;ber GitHub Pages bereitgestellt. Anbieter ist:
-    </p>
-
-    <p>
-      GitHub Inc.<br>
-      88 Colin P. Kelly Jr. Street<br>
-      San Francisco, CA 94107<br>
-      United States
-    </p>
-
-    <p>
-      Beim Aufruf dieser Website k&ouml;nnen durch GitHub technische Zugriffsdaten verarbeitet werden. Hierzu k&ouml;nnen
-      insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, angeforderte Datei, Referrer-URL, Browsertyp, Betriebssystem,
-      &uuml;bertragene Datenmenge und vergleichbare technische Informationen geh&ouml;ren.
-    </p>
-
-    <p>
-      Die Verarbeitung erfolgt zur sicheren, stabilen und effizienten Bereitstellung dieser Website auf Grundlage von
-      Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der technischen Bereitstellung und Absicherung
-      dieses Online-Angebots.
-    </p>
-
-    <h3>Daten&uuml;bermittlung in die USA</h3>
-    <p>
-      Da GitHub ein Anbieter mit Sitz in den USA ist, kann eine Verarbeitung personenbezogener Daten in den USA stattfinden.
-      Die USA gelten datenschutzrechtlich als Drittland au&szlig;erhalb der Europ&auml;ischen Union. Eine Daten&uuml;bermittlung
-      in die USA kann mit datenschutzrechtlichen Risiken verbunden sein, insbesondere weil dort m&ouml;glicherweise kein
-      Datenschutzniveau besteht, das dem der Europ&auml;ischen Union vollst&auml;ndig entspricht.
-    </p>
-
-    <p>
-      Weitere Informationen zur Datenverarbeitung durch GitHub finden Sie in der Datenschutzerkl&auml;rung von GitHub:
-      <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">
-        GitHub Privacy Statement
-      </a>
-    </p>
-
-    <h2>3. Keine Cookies, kein Tracking, keine Analyse Tools</h2>
-
-    <p>
-      Diese Website setzt nach aktuellem Stand keine eigenen Cookies, keine Tracking Tools, keine Werbenetzwerke und keine
-      externen Analyse Dienste wie Google Analytics, Meta Pixel oder vergleichbare Dienste ein.
-    </p>
-
-    <p>
-      Es wird daher kein Cookie Banner angezeigt. Ein Banner w&auml;re insbesondere dann erforderlich, wenn vor dem Setzen
-      nicht notwendiger Cookies oder vergleichbarer Technologien eine Einwilligung eingeholt werden m&uuml;sste. Dies ist
-      bei dieser Website nach aktuellem Stand nicht der Fall.
-    </p>
-
-    <h2>4. Allgemeine Hinweise und Pflichtinformationen</h2>
-
-    <h3>Datenschutz</h3>
-    <p>
-      Die Betreiber dieser Seiten nehmen den Schutz Ihrer pers&ouml;nlichen Daten ernst. Wir behandeln Ihre personenbezogenen
-      Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerkl&auml;rung.
-    </p>
-
-    <p>
-      Wenn Sie diese Website benutzen, k&ouml;nnen personenbezogene Daten verarbeitet werden. Personenbezogene Daten sind
-      Daten, mit denen Sie pers&ouml;nlich identifiziert werden k&ouml;nnen. Die vorliegende Datenschutzerkl&auml;rung
-      erl&auml;utert, welche Daten verarbeitet werden und zu welchem Zweck dies geschieht.
-    </p>
-
-    <p>
-      Wir weisen darauf hin, dass die Daten&uuml;bertragung im Internet Sicherheitsl&uuml;cken aufweisen kann. Ein
-      l&uuml;ckenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht m&ouml;glich.
-    </p>
-
-    <h3>Hinweis zur verantwortlichen Stelle</h3>
-    <p>Die verantwortliche Stelle f&uuml;r die Datenverarbeitung auf dieser Website ist:</p>
-
-    <p>
-      Alexander Marquardt<br>
-      Bostonring 19/1<br>
-      71686 Remseck am Neckar<br>
-      Deutschland
-    </p>
-
-    <p>
-      Telefon: 07146 4072318<br>
-      E-Mail: <a href="mailto:jatv@me.com">jatv@me.com</a>
-    </p>
-
-    <p>
-      Verantwortliche Stelle ist die nat&uuml;rliche oder juristische Person, die allein oder gemeinsam mit anderen &uuml;ber
-      die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet.
-    </p>
-
-    <h3>Speicherdauer</h3>
-    <p>
-      Soweit innerhalb dieser Datenschutzerkl&auml;rung keine speziellere Speicherdauer genannt wurde, verbleiben
-      personenbezogene Daten nur so lange, wie der Zweck f&uuml;r die Datenverarbeitung besteht. Wenn Sie ein berechtigtes
-      L&ouml;schersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gel&ouml;scht,
-      sofern keine anderen rechtlich zul&auml;ssigen Gr&uuml;nde f&uuml;r die Speicherung bestehen.
-    </p>
-
-    <p>
-      Auf Speicherdauer und L&ouml;schung von Zugriffsdaten, die durch GitHub als Hosting Anbieter verarbeitet werden, hat
-      der Websitebetreiber nur begrenzten Einfluss. Es gelten insoweit die Datenschutzinformationen von GitHub.
-    </p>
-
-    <h3>Rechtsgrundlagen der Datenverarbeitung</h3>
-    <p>
-      Soweit personenbezogene Daten zur technischen Bereitstellung dieser Website verarbeitet werden, erfolgt die Verarbeitung
-      auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Das berechtigte Interesse liegt in der sicheren, stabilen und effizienten
-      Bereitstellung der Website.
-    </p>
-
-    <p>
-      Soweit Sie uns freiwillig per E-Mail kontaktieren, verarbeiten wir die von Ihnen &uuml;bermittelten Daten zur Bearbeitung
-      Ihrer Anfrage. Je nach Inhalt der Anfrage erfolgt die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO,
-      Art. 6 Abs. 1 lit. c DSGVO oder Art. 6 Abs. 1 lit. f DSGVO.
-    </p>
-
-    <h3>Empf&auml;nger von personenbezogenen Daten</h3>
-    <p>
-      Personenbezogene Daten werden nur dann an externe Stellen weitergegeben, wenn dies zur Bereitstellung der Website,
-      zur Bearbeitung einer Anfrage, zur Erf&uuml;llung gesetzlicher Pflichten oder auf Grundlage eines berechtigten
-      Interesses erforderlich ist.
-    </p>
-
-    <p>
-      Im Rahmen des Hostings k&ouml;nnen technische Zugriffsdaten durch GitHub Inc. verarbeitet werden.
-    </p>
-
-    <h3>Widerruf Ihrer Einwilligung zur Datenverarbeitung</h3>
-    <p>
-      Viele Datenverarbeitungsvorg&auml;nge sind nur mit Ihrer ausdr&uuml;cklichen Einwilligung m&ouml;glich. Sie k&ouml;nnen
-      eine bereits erteilte Einwilligung jederzeit mit Wirkung f&uuml;r die Zukunft widerrufen. Die Rechtm&auml;&szlig;igkeit
-      der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unber&uuml;hrt.
-    </p>
-
-    <h3>Widerspruchsrecht gegen die Datenerhebung in besonderen F&auml;llen sowie gegen Direktwerbung</h3>
-    <p>
-      Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, haben Sie jederzeit das Recht,
-      aus Gr&uuml;nden, die sich aus Ihrer besonderen Situation ergeben, gegen die Verarbeitung Ihrer personenbezogenen Daten
-      Widerspruch einzulegen. Wenn Sie Widerspruch einlegen, werden wir Ihre betroffenen personenbezogenen Daten nicht mehr
-      verarbeiten, es sei denn, wir k&ouml;nnen zwingende schutzw&uuml;rdige Gr&uuml;nde f&uuml;r die Verarbeitung nachweisen,
-      die Ihre Interessen, Rechte und Freiheiten &uuml;berwiegen, oder die Verarbeitung dient der Geltendmachung, Aus&uuml;bung
-      oder Verteidigung von Rechtsanspr&uuml;chen.
-    </p>
-
-    <p>
-      Werden Ihre personenbezogenen Daten verarbeitet, um Direktwerbung zu betreiben, haben Sie das Recht, jederzeit
-      Widerspruch gegen die Verarbeitung Sie betreffender personenbezogener Daten zum Zwecke derartiger Werbung einzulegen.
-      Diese Website betreibt nach aktuellem Stand keine Direktwerbung.
-    </p>
-
-    <h3>Beschwerderecht bei der zust&auml;ndigen Aufsichtsbeh&ouml;rde</h3>
-    <p>
-      Im Falle von Verst&ouml;&szlig;en gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbeh&ouml;rde
-      zu. Zust&auml;ndig ist insbesondere die Aufsichtsbeh&ouml;rde des Mitgliedstaats Ihres gew&ouml;hnlichen Aufenthalts,
-      Ihres Arbeitsplatzes oder des Orts des mutma&szlig;lichen Versto&szlig;es.
-    </p>
-
-    <h3>Recht auf Daten&uuml;bertragbarkeit</h3>
-    <p>
-      Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in Erf&uuml;llung eines Vertrags automatisiert
-      verarbeiten, an sich oder an einen Dritten in einem g&auml;ngigen, maschinenlesbaren Format aush&auml;ndigen zu lassen.
-      Sofern Sie die direkte &Uuml;bertragung der Daten an einen anderen Verantwortlichen verlangen, erfolgt dies nur, soweit
-      es technisch machbar ist.
-    </p>
-
-    <h3>Auskunft, Berichtigung und L&ouml;schung</h3>
-    <p>
-      Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft &uuml;ber
-      Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empf&auml;nger und den Zweck der Datenverarbeitung.
-      Sie haben au&szlig;erdem gegebenenfalls ein Recht auf Berichtigung oder L&ouml;schung dieser Daten.
-    </p>
-
-    <h3>Recht auf Einschr&auml;nkung der Verarbeitung</h3>
-    <p>
-      Sie haben das Recht, die Einschr&auml;nkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Hierzu k&ouml;nnen
-      Sie sich jederzeit an uns wenden. Das Recht auf Einschr&auml;nkung der Verarbeitung besteht insbesondere in folgenden
-      F&auml;llen:
-    </p>
-
-    <ul>
-      <li>
-        Wenn Sie die Richtigkeit Ihrer bei uns gespeicherten personenbezogenen Daten bestreiten, haben Sie f&uuml;r die Dauer
-        der Pr&uuml;fung das Recht, die Einschr&auml;nkung der Verarbeitung zu verlangen.
-      </li>
-      <li>
-        Wenn die Verarbeitung Ihrer personenbezogenen Daten unrechtm&auml;&szlig;ig erfolgt ist, k&ouml;nnen Sie statt der
-        L&ouml;schung die Einschr&auml;nkung der Datenverarbeitung verlangen.
-      </li>
-      <li>
-        Wenn wir Ihre personenbezogenen Daten nicht mehr ben&ouml;tigen, Sie sie jedoch zur Aus&uuml;bung, Verteidigung oder
-        Geltendmachung von Rechtsanspr&uuml;chen ben&ouml;tigen, haben Sie das Recht, statt der L&ouml;schung die
-        Einschr&auml;nkung der Verarbeitung zu verlangen.
-      </li>
-      <li>
-        Wenn Sie einen Widerspruch nach Art. 21 Abs. 1 DSGVO eingelegt haben, muss eine Abw&auml;gung zwischen Ihren und
-        unseren Interessen vorgenommen werden. Solange noch nicht feststeht, wessen Interessen &uuml;berwiegen, haben Sie
-        das Recht, die Einschr&auml;nkung der Verarbeitung zu verlangen.
-      </li>
-    </ul>
-
-    <p>
-      Wenn Sie die Verarbeitung Ihrer personenbezogenen Daten eingeschr&auml;nkt haben, d&uuml;rfen diese Daten abgesehen von
-      ihrer Speicherung nur mit Ihrer Einwilligung, zur Geltendmachung, Aus&uuml;bung oder Verteidigung von Rechtsanspr&uuml;chen,
-      zum Schutz der Rechte einer anderen nat&uuml;rlichen oder juristischen Person oder aus Gr&uuml;nden eines wichtigen
-      &ouml;ffentlichen Interesses verarbeitet werden.
-    </p>
-
-    <h3>SSL bzw. TLS Verschl&uuml;sselung</h3>
-    <p>
-      Diese Seite nutzt aus Sicherheitsgr&uuml;nden eine SSL bzw. TLS Verschl&uuml;sselung. Eine verschl&uuml;sselte Verbindung
-      erkennen Sie daran, dass die Adresszeile des Browsers mit &bdquo;https://&ldquo; beginnt und ein Schloss Symbol angezeigt
-      wird.
-    </p>
-
-    <p>
-      Wenn die SSL bzw. TLS Verschl&uuml;sselung aktiviert ist, k&ouml;nnen die Daten, die Sie an uns &uuml;bermitteln, nicht
-      ohne Weiteres von Dritten mitgelesen werden.
-    </p>
-
-    <h3>Kontakt per E-Mail</h3>
-    <p>
-      Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben aus der E-Mail inklusive der von Ihnen dort angegebenen
-      Kontaktdaten zwecks Bearbeitung der Anfrage und f&uuml;r den Fall von Anschlussfragen bei uns gespeichert. Diese Daten
-      geben wir nicht ohne Ihre Einwilligung weiter, sofern keine gesetzliche Pflicht oder ein berechtigtes Interesse an der
-      Weitergabe besteht.
-    </p>
-
-    <p>
-      Die Verarbeitung dieser Daten erfolgt je nach Inhalt der Anfrage auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO oder
-      Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der Bearbeitung der an uns gerichteten Anfrage.
-    </p>
-
-    <h3>Widerspruch gegen Werbe-E-Mails</h3>
-    <p>
-      Der Nutzung von im Rahmen der Impressumspflicht ver&ouml;ffentlichten Kontaktdaten zur &Uuml;bersendung von nicht
-      ausdr&uuml;cklich angeforderter Werbung und Informationsmaterialien wird hiermit widersprochen. Die Betreiber der Seiten
-      behalten sich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam E-Mails,
-      vor.
-    </p>
-
-    <p>
-      Diese Datenschutzerkl&auml;rung wurde f&uuml;r eine statische, privat betriebene Website ohne eigene Tracking Funktionen
-      angepasst.
-    </p>
-
   </section>
+  <div class="legal-layout">
+    <div class="legal-content">
+      <section class="legal-section" id="impressum" aria-labelledby="imprint-title">
+        <div class="section-heading-row"><div><span class="section-kicker">01 / Anbieterinformationen</span></div><div class="section-graphic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h4"/></svg></div></div>
+        <div class="source-content"><h2 class="legal-section-title" id="imprint-title">Impressum</h2>
+<div class="contact-block"> <p>         Alexander Marquardt<br/>         Bostonring 19/1<br/>         71686 Remseck am Neckar<br/>         Deutschland       </p> </div>
+<h3 id="kontakt">Kontakt</h3>
+<div class="contact-block"> <p>         Telefon: 07146 4072318<br/>         E-Mail: <a href="mailto:jatv@me.com">jatv@me.com</a> </p> </div></div>
+      </section>
+      <div class="privacy-heading" id="datenschutz">
+        <h2>Datenschutzerklärung</h2><span class="privacy-tag">4 Bereiche</span>
+      </div>
+      <section class="chapter-card" id="datenschutz-ueberblick" aria-labelledby="datenschutz-ueberblick-heading">
+      <div class="chapter-heading"><span class="chapter-index">01</span><div class="chapter-heading-copy"><h3 class="chapter-title" id="datenschutz-ueberblick-heading">1. Datenschutz auf einen Blick</h3></div></div>
+      <div class="chapter-content"><h4>Allgemeine Hinweise</h4>
+<p>       Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert,       wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert       werden können. Ausführliche Informationen zum Thema Datenschutz finden Sie in der nachfolgenden       Datenschutzerklärung.     </p>
+<h4>Datenerfassung auf dieser Website</h4>
+<h5>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</h5>
+<p>       Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Die Kontaktdaten können Sie dem       Abschnitt „Hinweis zur verantwortlichen Stelle“ in dieser Datenschutzerklärung entnehmen.     </p>
+<h5>Wie erfassen wir Ihre Daten?</h5>
+<p>       Diese Website ist als statische Website angelegt. Sie enthält derzeit kein Kontaktformular, keinen Login mit       echter Nutzerverwaltung, keine Bestellfunktion und keine Kommentarfunktion, über die personenbezogene Daten       direkt an den Websitebetreiber übermittelt werden.     </p>
+<p>       Beim Aufruf der Website werden jedoch technisch notwendige Zugriffsdaten durch den Hosting Anbieter verarbeitet.       Dazu können insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Datei, Referrer-URL,       Browsertyp, Betriebssystem und vergleichbare technische Informationen gehören.     </p>
+<h5>Wofür nutzen wir Ihre Daten?</h5>
+<p>       Die technische Verarbeitung erfolgt, um diese Website sicher, stabil und korrekt auszuliefern. Eine eigene Analyse       Ihres Nutzerverhaltens durch den Websitebetreiber findet nicht statt.     </p>
+<h5>Welche Rechte haben Sie bezüglich Ihrer Daten?</h5>
+<p>       Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über       Ihre gespeicherten personenbezogenen Daten, deren Herkunft, Empfänger und Zweck der Datenverarbeitung. Sie haben       außerdem ein Recht auf Berichtigung oder Löschung dieser Daten sowie unter bestimmten Voraussetzungen ein       Recht auf Einschränkung der Verarbeitung und ein Widerspruchsrecht gegen die Verarbeitung.     </p>
+<p>       Außerdem steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu. Hierzu sowie zu       weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit an uns wenden.     </p></div>
+    </section><section class="chapter-card" id="hosting" aria-labelledby="hosting-heading">
+      <div class="chapter-heading"><span class="chapter-index">02</span><div class="chapter-heading-copy"><h3 class="chapter-title" id="hosting-heading">2. Hosting</h3></div></div>
+      <div class="chapter-content"><p>Wir hosten die Inhalte unserer Website bei folgendem Anbieter:</p>
+<h4>GitHub Pages</h4>
+<p>       Diese Website wird als statische Website über GitHub Pages bereitgestellt. Anbieter ist:     </p>
+<p>       GitHub Inc.<br/>       88 Colin P. Kelly Jr. Street<br/>       San Francisco, CA 94107<br/>       United States     </p>
+<p>       Beim Aufruf dieser Website können durch GitHub technische Zugriffsdaten verarbeitet werden. Hierzu können       insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, angeforderte Datei, Referrer-URL, Browsertyp, Betriebssystem,       übertragene Datenmenge und vergleichbare technische Informationen gehören.     </p>
+<p>       Die Verarbeitung erfolgt zur sicheren, stabilen und effizienten Bereitstellung dieser Website auf Grundlage von       Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der technischen Bereitstellung und Absicherung       dieses Online-Angebots.     </p>
+<h4>Datenübermittlung in die USA</h4>
+<p>       Da GitHub ein Anbieter mit Sitz in den USA ist, kann eine Verarbeitung personenbezogener Daten in den USA stattfinden.       Die USA gelten datenschutzrechtlich als Drittland außerhalb der Europäischen Union. Eine Datenübermittlung       in die USA kann mit datenschutzrechtlichen Risiken verbunden sein, insbesondere weil dort möglicherweise kein       Datenschutzniveau besteht, das dem der Europäischen Union vollständig entspricht.     </p>
+<p>       Weitere Informationen zur Datenverarbeitung durch GitHub finden Sie in der Datenschutzerklärung von GitHub:       <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" rel="noopener noreferrer" target="_blank">         GitHub Privacy Statement       </a> </p></div>
+    </section><section class="chapter-card" id="cookies" aria-labelledby="cookies-heading">
+      <div class="chapter-heading"><span class="chapter-index">03</span><div class="chapter-heading-copy"><h3 class="chapter-title" id="cookies-heading">3. Keine Cookies, kein Tracking, keine Analyse Tools</h3></div></div>
+      <div class="chapter-content"><p>       Diese Website setzt nach aktuellem Stand keine eigenen Cookies, keine Tracking Tools, keine Werbenetzwerke und keine       externen Analyse Dienste wie Google Analytics, Meta Pixel oder vergleichbare Dienste ein.     </p>
+<p>       Es wird daher kein Cookie Banner angezeigt. Ein Banner wäre insbesondere dann erforderlich, wenn vor dem Setzen       nicht notwendiger Cookies oder vergleichbarer Technologien eine Einwilligung eingeholt werden müsste. Dies ist       bei dieser Website nach aktuellem Stand nicht der Fall.     </p></div>
+    </section><section class="chapter-card" id="pflichtinformationen" aria-labelledby="pflichtinformationen-heading">
+      <div class="chapter-heading"><span class="chapter-index">04</span><div class="chapter-heading-copy"><h3 class="chapter-title" id="pflichtinformationen-heading">4. Allgemeine Hinweise und Pflichtinformationen</h3></div></div>
+      <div class="chapter-content"><h4>Datenschutz</h4>
+<p>       Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten ernst. Wir behandeln Ihre personenbezogenen       Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.     </p>
+<p>       Wenn Sie diese Website benutzen, können personenbezogene Daten verarbeitet werden. Personenbezogene Daten sind       Daten, mit denen Sie persönlich identifiziert werden können. Die vorliegende Datenschutzerklärung       erläutert, welche Daten verarbeitet werden und zu welchem Zweck dies geschieht.     </p>
+<p>       Wir weisen darauf hin, dass die Datenübertragung im Internet Sicherheitslücken aufweisen kann. Ein       lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.     </p>
+<h4>Hinweis zur verantwortlichen Stelle</h4>
+<p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
+<p>       Alexander Marquardt<br/>       Bostonring 19/1<br/>       71686 Remseck am Neckar<br/>       Deutschland     </p>
+<p>       Telefon: 07146 4072318<br/>       E-Mail: <a href="mailto:jatv@me.com">jatv@me.com</a> </p>
+<p>       Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über       die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet.     </p>
+<h4>Speicherdauer</h4>
+<p>       Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben       personenbezogene Daten nur so lange, wie der Zweck für die Datenverarbeitung besteht. Wenn Sie ein berechtigtes       Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht,       sofern keine anderen rechtlich zulässigen Gründe für die Speicherung bestehen.     </p>
+<p>       Auf Speicherdauer und Löschung von Zugriffsdaten, die durch GitHub als Hosting Anbieter verarbeitet werden, hat       der Websitebetreiber nur begrenzten Einfluss. Es gelten insoweit die Datenschutzinformationen von GitHub.     </p>
+<h4>Rechtsgrundlagen der Datenverarbeitung</h4>
+<p>       Soweit personenbezogene Daten zur technischen Bereitstellung dieser Website verarbeitet werden, erfolgt die Verarbeitung       auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Das berechtigte Interesse liegt in der sicheren, stabilen und effizienten       Bereitstellung der Website.     </p>
+<p>       Soweit Sie uns freiwillig per E-Mail kontaktieren, verarbeiten wir die von Ihnen übermittelten Daten zur Bearbeitung       Ihrer Anfrage. Je nach Inhalt der Anfrage erfolgt die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO,       Art. 6 Abs. 1 lit. c DSGVO oder Art. 6 Abs. 1 lit. f DSGVO.     </p>
+<h4>Empfänger von personenbezogenen Daten</h4>
+<p>       Personenbezogene Daten werden nur dann an externe Stellen weitergegeben, wenn dies zur Bereitstellung der Website,       zur Bearbeitung einer Anfrage, zur Erfüllung gesetzlicher Pflichten oder auf Grundlage eines berechtigten       Interesses erforderlich ist.     </p>
+<p>       Im Rahmen des Hostings können technische Zugriffsdaten durch GitHub Inc. verarbeitet werden.     </p>
+<h4>Widerruf Ihrer Einwilligung zur Datenverarbeitung</h4>
+<p>       Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können       eine bereits erteilte Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Die Rechtmäßigkeit       der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.     </p>
+<h4>Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen Direktwerbung</h4>
+<p>       Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, haben Sie jederzeit das Recht,       aus Gründen, die sich aus Ihrer besonderen Situation ergeben, gegen die Verarbeitung Ihrer personenbezogenen Daten       Widerspruch einzulegen. Wenn Sie Widerspruch einlegen, werden wir Ihre betroffenen personenbezogenen Daten nicht mehr       verarbeiten, es sei denn, wir können zwingende schutzwürdige Gründe für die Verarbeitung nachweisen,       die Ihre Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung       oder Verteidigung von Rechtsansprüchen.     </p>
+<p>       Werden Ihre personenbezogenen Daten verarbeitet, um Direktwerbung zu betreiben, haben Sie das Recht, jederzeit       Widerspruch gegen die Verarbeitung Sie betreffender personenbezogener Daten zum Zwecke derartiger Werbung einzulegen.       Diese Website betreibt nach aktuellem Stand keine Direktwerbung.     </p>
+<h4>Beschwerderecht bei der zuständigen Aufsichtsbehörde</h4>
+<p>       Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde       zu. Zuständig ist insbesondere die Aufsichtsbehörde des Mitgliedstaats Ihres gewöhnlichen Aufenthalts,       Ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes.     </p>
+<h4>Recht auf Datenübertragbarkeit</h4>
+<p>       Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in Erfüllung eines Vertrags automatisiert       verarbeiten, an sich oder an einen Dritten in einem gängigen, maschinenlesbaren Format aushändigen zu lassen.       Sofern Sie die direkte Übertragung der Daten an einen anderen Verantwortlichen verlangen, erfolgt dies nur, soweit       es technisch machbar ist.     </p>
+<h4>Auskunft, Berichtigung und Löschung</h4>
+<p>       Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über       Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung.       Sie haben außerdem gegebenenfalls ein Recht auf Berichtigung oder Löschung dieser Daten.     </p>
+<h4>Recht auf Einschränkung der Verarbeitung</h4>
+<p>       Sie haben das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Hierzu können       Sie sich jederzeit an uns wenden. Das Recht auf Einschränkung der Verarbeitung besteht insbesondere in folgenden       Fällen:     </p>
+<ul> <li>         Wenn Sie die Richtigkeit Ihrer bei uns gespeicherten personenbezogenen Daten bestreiten, haben Sie für die Dauer         der Prüfung das Recht, die Einschränkung der Verarbeitung zu verlangen.       </li> <li>         Wenn die Verarbeitung Ihrer personenbezogenen Daten unrechtmäßig erfolgt ist, können Sie statt der         Löschung die Einschränkung der Datenverarbeitung verlangen.       </li> <li>         Wenn wir Ihre personenbezogenen Daten nicht mehr benötigen, Sie sie jedoch zur Ausübung, Verteidigung oder         Geltendmachung von Rechtsansprüchen benötigen, haben Sie das Recht, statt der Löschung die         Einschränkung der Verarbeitung zu verlangen.       </li> <li>         Wenn Sie einen Widerspruch nach Art. 21 Abs. 1 DSGVO eingelegt haben, muss eine Abwägung zwischen Ihren und         unseren Interessen vorgenommen werden. Solange noch nicht feststeht, wessen Interessen überwiegen, haben Sie         das Recht, die Einschränkung der Verarbeitung zu verlangen.       </li> </ul>
+<p>       Wenn Sie die Verarbeitung Ihrer personenbezogenen Daten eingeschränkt haben, dürfen diese Daten abgesehen von       ihrer Speicherung nur mit Ihrer Einwilligung, zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen,       zum Schutz der Rechte einer anderen natürlichen oder juristischen Person oder aus Gründen eines wichtigen       öffentlichen Interesses verarbeitet werden.     </p>
+<h4>SSL bzw. TLS Verschlüsselung</h4>
+<p>       Diese Seite nutzt aus Sicherheitsgründen eine SSL bzw. TLS Verschlüsselung. Eine verschlüsselte Verbindung       erkennen Sie daran, dass die Adresszeile des Browsers mit „https://“ beginnt und ein Schloss Symbol angezeigt       wird.     </p>
+<p>       Wenn die SSL bzw. TLS Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht       ohne Weiteres von Dritten mitgelesen werden.     </p>
+<h4>Kontakt per E-Mail</h4>
+<p>       Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben aus der E-Mail inklusive der von Ihnen dort angegebenen       Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten       geben wir nicht ohne Ihre Einwilligung weiter, sofern keine gesetzliche Pflicht oder ein berechtigtes Interesse an der       Weitergabe besteht.     </p>
+<p>       Die Verarbeitung dieser Daten erfolgt je nach Inhalt der Anfrage auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO oder       Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der Bearbeitung der an uns gerichteten Anfrage.     </p>
+<h4>Widerspruch gegen Werbe-E-Mails</h4>
+<p>       Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten zur Übersendung von nicht       ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit widersprochen. Die Betreiber der Seiten       behalten sich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam E-Mails,       vor.     </p>
+<p>       Diese Datenschutzerklärung wurde für eine statische, privat betriebene Website ohne eigene Tracking Funktionen       angepasst.     </p></div>
+    </section>
+    </div>
+    <aside class="jump-sidebar" aria-label="Inhaltsverzeichnis">
+      <nav class="jump-card">
+        <h2 class="jump-title">AUF DIESER SEITE</h2>
+        <a class="jump-link" href="#impressum">Impressum</a>
+        <a class="jump-link" href="#kontakt">Kontakt</a>
+        <a class="jump-link" href="#datenschutz-ueberblick">01 Datenschutz auf einen Blick</a>
+        <a class="jump-link" href="#hosting">02 Hosting</a>
+        <a class="jump-link" href="#cookies">03 Cookies &amp; Tracking</a>
+        <a class="jump-link" href="#pflichtinformationen">04 Pflichtinformationen</a>
+      </nav>
+      <div class="jump-hint"><strong>Direkt zum Abschnitt.</strong><br>Die Inhaltsübersicht bringt dich ohne langes Scrollen ans Ziel.</div>
+    </aside>
+  </div>
 </main>
-
-<footer class="site-footer">
+<footer class="legal-footer">
   <nav class="footer-links" aria-label="Footer Navigation">
     <a href="index.html">Startseite</a>
-    <a href="impdaten.html">Impressum & Datenschutz</a>
+    <a href="impdaten.html" aria-current="page">Impressum &amp; Datenschutz</a>
   </nav>
 </footer>
-
-</body>
-</html>
+<script>
+(() => {
+  const links = [...document.querySelectorAll('.jump-link')];
+  const sections = links.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+  if (!('IntersectionObserver' in window) || !sections.length) return;
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio);
+    if (!visible.length) return;
+    const id = visible[0].target.id;
+    links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + id));
+  }, { rootMargin:'-110px 0px -60% 0px', threshold:0 });
+  sections.forEach(el => observer.observe(el));
+})();
+</script>
+</body></html>

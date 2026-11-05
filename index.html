@@ -2564,6 +2564,72 @@ main {
   filter:saturate(.94) contrast(1.04) brightness(.82);
 }
 .hero-slide.is-visible { opacity:1; }
+/* A brief VHS tracking disturbance only during the existing 500ms crossfade.
+   The images stay still during the full two-second hold. */
+.hero-slide.is-entering {
+  animation: hero-vhs-in 500ms steps(1, end) both;
+}
+.hero-slide.is-leaving {
+  animation: hero-vhs-out 500ms steps(1, end) both;
+}
+@keyframes hero-vhs-in {
+  0%, 100% { transform: translateX(0) scale(1); }
+  9% { transform: translateX(-9px) scale(1.05); }
+  20% { transform: translateX(12px) scale(1.05); }
+  31% { transform: translateX(-5px) scale(1.04); }
+  43% { transform: translateX(8px) scale(1.03); }
+  55% { transform: translateX(-3px) scale(1.02); }
+  69% { transform: translateX(3px) scale(1.015); }
+  83% { transform: translateX(-1px) scale(1.008); }
+}
+@keyframes hero-vhs-out {
+  0%, 100% { transform:translateX(0) scale(1); }
+  15% { transform:translateX(7px) scale(1.04); }
+  29% { transform:translateX(-10px) scale(1.04); }
+  47% { transform:translateX(4px) scale(1.03); }
+  66% { transform:translateX(-3px) scale(1.02); }
+}
+/* A thin, tinted copy of the next frame produces the analog colour-channel tear. */
+.hero-slides::before {
+  content:""; position:absolute; inset:0; z-index:4; pointer-events:none;
+  background-image:var(--hero-glitch-image, none);
+  background-size:cover; background-position:center;
+  mix-blend-mode:screen; filter:sepia(1) saturate(5) hue-rotate(147deg) contrast(1.3);
+  opacity:0;
+}
+/* Travelling tracking band and fine luminance interference. */
+.hero-slides::after {
+  content:""; position:absolute; inset:0; z-index:5; pointer-events:none;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.34) 3px 4px, transparent 4px 7px),
+    linear-gradient(180deg, transparent 0%, rgba(218,237,255,.08) 25%, rgba(245,225,255,.75) 47%, rgba(25,15,45,.2) 54%, transparent 73%);
+  background-size:100% 100%, 100% 26%;
+  background-repeat:no-repeat;
+  background-position:center, center -25%;
+  mix-blend-mode:screen;
+  opacity:0;
+}
+.hero-slides.is-glitching::before { animation:hero-vhs-fringe 500ms steps(1,end) both; }
+.hero-slides.is-glitching::after { animation:hero-vhs-tracking 500ms steps(1,end) both; }
+@keyframes hero-vhs-fringe {
+  0%, 100% { opacity:0; transform:translateX(0); clip-path:inset(0 0 100% 0); }
+  11% { opacity:.46; transform:translateX(18px); clip-path:inset(18% 0 73% 0); }
+  23% { opacity:.6; transform:translateX(-15px); clip-path:inset(63% 0 29% 0); }
+  36% { opacity:.38; transform:translateX(9px); clip-path:inset(39% 0 52% 0); }
+  49% { opacity:.52; transform:translateX(-12px); clip-path:inset(78% 0 16% 0); }
+  63% { opacity:.27; transform:translateX(6px); clip-path:inset(24% 0 70% 0); }
+  77% { opacity:.16; transform:translateX(-4px); clip-path:inset(55% 0 41% 0); }
+  89% { opacity:0; transform:translateX(0); clip-path:inset(0 0 100% 0); }
+}
+@keyframes hero-vhs-tracking {
+  0%, 100% { opacity:0; background-position:center, center -25%; }
+  13% { opacity:.2; background-position:center, center 0%; }
+  29% { opacity:.52; background-position:center, center 25%; }
+  43% { opacity:.29; background-position:center, center 45%; }
+  58% { opacity:.44; background-position:center, center 65%; }
+  73% { opacity:.17; background-position:center, center 90%; }
+  87% { opacity:0; background-position:center, center 120%; }
+}
 /* Subtle readability gradient, with original scanlines remaining above the images. */
 .hero-visual::before {
   content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
@@ -6618,8 +6684,17 @@ function openRegisterFlowDialog() {
 
         visible.style.zIndex = '1';
         upcoming.style.zIndex = '2';
+        // Show the next frame through a split colour channel and tracking band.
+        // No glitch animation runs between image changes.
+        container.style.setProperty('--hero-glitch-image', `url("${upcoming.src}")`);
+        container.classList.add('is-glitching');
+        visible.classList.add('is-leaving');
+        upcoming.classList.add('is-entering');
         upcoming.classList.add('is-visible');
         schedule(() => {
+          container.classList.remove('is-glitching');
+          visible.classList.remove('is-leaving');
+          upcoming.classList.remove('is-entering');
           visible.classList.remove('is-visible');
           const oldVisible = visible;
           visible = upcoming;
